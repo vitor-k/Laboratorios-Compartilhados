@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nusp: 1
+  departamento: MyString
+  usuario: one
+
+two:
+  nusp: 1
+  departamento: MyString
+  usuario: two

@@ -34,6 +34,9 @@ gem 'rails-html-sanitizer', '~> 1.2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Devise for authentication
+gem 'devise'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

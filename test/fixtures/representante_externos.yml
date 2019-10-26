@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rg: 1
+  unidade: MyString
+  usuario: one
+
+two:
+  rg: 1
+  unidade: MyString
+  usuario: two
