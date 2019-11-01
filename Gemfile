@@ -24,11 +24,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '3.1.12'
 
 gem 'rails-html-sanitizer', '~> 1.2.0'
 
-gem 'bcrypt', '3.1.12'
+# Devise for authentication
 gem 'devise'
 
 # Use ActiveStorage variant
@@ -36,9 +36,6 @@ gem 'devise'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# Devise for authentication
-gem 'devise'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
