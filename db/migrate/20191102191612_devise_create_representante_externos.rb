@@ -2,6 +2,7 @@
 
 class DeviseCreateRepresentanteExternos < ActiveRecord::Migration[5.2]
   def change
+    # drop_table :representante_externos
     create_table :representante_externos do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""

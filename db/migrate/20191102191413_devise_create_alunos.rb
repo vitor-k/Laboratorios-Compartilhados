@@ -2,6 +2,7 @@
 
 class DeviseCreateAlunos < ActiveRecord::Migration[5.2]
   def change
+    # drop_table :alunos
     create_table :alunos do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""

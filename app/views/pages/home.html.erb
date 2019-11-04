@@ -1,1 +1,8 @@
 <h1> Hello World </h1>
+
+<% if aluno_signed_in? %>
+    Signed in as <%= current_aluno.email %>.
+    <%= link_to "Sign out", destroy_aluno_session_path, :method => :delete %>
+<% else %>
+    <%= link_to 'Register', new_aluno_registration_path %> or <%= link_to 'Sign in', new_aluno_session_path %>
+<% end %>
