@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   # end
 
   authenticated :aluno do
-    root 'pages#home', as: :authenticated_root
+    root 'pages#home', as: :authenticated_aluno_root
+  end
+
+  authenticated :docente do
+    root 'pages#home', as: :authenticated_docente_root
   end
   
   unauthenticated :aluno do
