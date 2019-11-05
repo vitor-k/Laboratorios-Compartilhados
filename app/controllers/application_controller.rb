@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
             user_params.permit(:username, :nusp, :email)
         end
         devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-            user_params.permit(:username, :nome, :nusp, :departamento, :email, :password, :password_confirmation)
+            user_params.permit(:username, :nome, :nusp, :departamento, :RG, :UF, :email, :password, :password_confirmation)
         end
         devise_parameter_sanitizer.permit(:account_update) do |user_params|
-            user_params.permit(:username, :nome, :nusp, :departamento, :email, :password, :password_confirmation, :current_password)
+            user_params.permit(:username, :nome, :nusp, :departamento, :RG, :UF, :email, :password, :password_confirmation, :current_password)
         end
     end
 end

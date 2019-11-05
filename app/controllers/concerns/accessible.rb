@@ -21,7 +21,7 @@ module Accessible
     elsif current_representante_externo
       flash.clear
       # The authenticated root path can be defined in your routes.rb in: devise_scope :user do...
-      redirect_to(root) && return
+      redirect_to(authenticated_representante_externo_root_path) && return
     end
   end
 end

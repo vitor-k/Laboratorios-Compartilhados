@@ -9,6 +9,21 @@
   </div>
 
   <div class="field">
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
+  </div>
+
+  <div class="field">
+    <%= f.label :RG %><br />
+    <%= f.text_field :RG %>
+  </div>
+
+  <div class="field">
+    <%= f.label :UF %><br />
+    <%= f.text_field :UF %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
