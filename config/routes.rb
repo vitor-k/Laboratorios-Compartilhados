@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # end
 
   get 'about_us', to: 'pages#about_us'
+  get 'account', to: 'pages#account'
 
   authenticated :aluno do
     root 'pages#home', as: :authenticated_aluno_root

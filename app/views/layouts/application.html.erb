@@ -13,11 +13,27 @@
   <body class='<%= controller.controller_name %>'>
     <div id="banner">
       <a href="http://localhost:3000"> <%= image_tag 'Logo.png'%> </a>
+      <div id="row">
+        <ul>
+          <% if aluno_signed_in? %>
+          <li><a href="http://localhost:3000/account"><%= current_aluno.nome %></a><li>
+          <% elsif representante_externo_signed_in? %>
+          <li><a href="http://localhost:3000/account"><%= current_representante_externo.nome %></a><li>
+          <% elsif docente_signed_in? %>
+          <li><a href="http://localhost:3000/account"><%= current_docente.nome %></a><li>
+          <% elsif admin_signed_in? %>
+          <li><a href="http://localhost:3000/account"><%= current_admin.nome %></a><li>
+          <% else %>
+          <li><a href="http://localhost:3000/account"> Conectar </a></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
     <div id = "columns">
       <div id = "side">
         <ul>
-          <li><a href = "http://localhost:3000">Home</a></li>
+          <li><a href = "http://localhost:3000">Página Principal</a></li>
+          <li><a href = "http://localhost:3000/about_us">Sobre nós</a></li>
           <li><a href = "http://localhost:3000/laboratorios">Laboratorios</a></li>
           <li><a href = "http://localhost:3000/postagems">Postagens</a></li>
           <li><a href = "http://localhost:3000/pedidos">Pedidos</a></li>
