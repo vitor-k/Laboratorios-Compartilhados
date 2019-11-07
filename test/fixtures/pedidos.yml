@@ -1,15 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  data: 2019-10-25 21:58:04
+  dataInicio: 2019-11-07 10:52:24
+  dataFim: 2019-11-07 10:52:24
   descricao: MyText
-  usuario: one
-  equipamento: one
-  servico: one
 
 two:
-  data: 2019-10-25 21:58:04
+  dataInicio: 2019-11-07 10:52:24
+  dataFim: 2019-11-07 10:52:24
   descricao: MyText
-  usuario: two
-  equipamento: two
-  servico: two

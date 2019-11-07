@@ -1,0 +1,24 @@
+<h1> Página Principal</h1>
+
+<% if aluno_signed_in? %>
+    Signed in as <%= current_aluno.email %>.
+    <%= link_to('Edit registration', edit_aluno_registration_path) %>
+    <%= link_to "Sign out", destroy_aluno_session_path, :method => :delete %>
+<% elsif docente_signed_in? %>
+    Signed in as <%= current_docente.email %>.
+    <%= link_to('Edit registration', edit_docente_registration_path) %>
+    <%= link_to "Sign out", destroy_docente_session_path, :method => :delete %>
+<% elsif admin_signed_in? %>
+    Signed in as <%= current_admin.email %>.
+    <%= link_to('Edit registration', edit_admin_registration_path) %>
+    <%= link_to "Sign out", destroy_admin_session_path, :method => :delete %>
+<% else %>
+    <p>Aluno</p>
+    <%= link_to 'Register', new_aluno_registration_path %> or <%= link_to 'Sign in', new_aluno_session_path %>
+    <p>Docente</p>
+    <%= link_to 'Register', new_docente_registration_path %> or <%= link_to 'Sign in', new_docente_session_path %>
+    <p>Representante Externo</p>
+    <%= link_to 'Register', new_representante_externo_registration_path %> or <%= link_to 'Sign in', new_representante_externo_session_path %>
+    <p>Administrador</p>
+    <%= link_to 'Sign in', new_admin_session_path %>
+<% end %>

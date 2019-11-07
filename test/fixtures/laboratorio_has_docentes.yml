@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  laboratorio: one
-  docente: one
-
-two:
-  laboratorio: two
-  docente: two

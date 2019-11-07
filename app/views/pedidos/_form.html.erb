@@ -12,28 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :data %>
-    <%= form.datetime_select :data %>
+    <%= form.label :dataInicio %>
+    <%= form.datetime_select :dataInicio %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dataFim %>
+    <%= form.datetime_select :dataFim %>
   </div>
 
   <div class="field">
     <%= form.label :descricao %>
     <%= form.text_area :descricao %>
-  </div>
-
-  <div class="field">
-    <%= form.label :usuario_id %>
-    <%= form.text_field :usuario_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :equipamento_id %>
-    <%= form.text_field :equipamento_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :servico_id %>
-    <%= form.text_field :servico_id %>
   </div>
 
   <div class="actions">

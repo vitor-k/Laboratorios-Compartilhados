@@ -6,8 +6,6 @@
   <thead>
     <tr>
       <th>Texto</th>
-      <th>Usuario</th>
-      <th>Laboratorio</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,8 +14,6 @@
     <% @postagems.each do |postagem| %>
       <tr>
         <td><%= postagem.texto %></td>
-        <td><%= postagem.usuario %></td>
-        <td><%= postagem.laboratorio %></td>
         <td><%= link_to 'Show', postagem %></td>
         <td><%= link_to 'Edit', edit_postagem_path(postagem) %></td>
         <td><%= link_to 'Destroy', postagem, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,6 +1,6 @@
 class Docente < ApplicationRecord
-  belongs_to :usuario
-  
-  has_many :laboratorio_has_docente
-  has_many :laboratorios, through: :laboratorio_has_docente
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 end

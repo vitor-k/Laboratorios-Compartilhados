@@ -14,9 +14,7 @@ class PostagemsTest < ApplicationSystemTestCase
     visit postagems_url
     click_on "New Postagem"
 
-    fill_in "Laboratorio", with: @postagem.laboratorio_id
     fill_in "Texto", with: @postagem.texto
-    fill_in "Usuario", with: @postagem.usuario_id
     click_on "Create Postagem"
 
     assert_text "Postagem was successfully created"
@@ -27,9 +25,7 @@ class PostagemsTest < ApplicationSystemTestCase
     visit postagems_url
     click_on "Edit", match: :first
 
-    fill_in "Laboratorio", with: @postagem.laboratorio_id
     fill_in "Texto", with: @postagem.texto
-    fill_in "Usuario", with: @postagem.usuario_id
     click_on "Update Postagem"
 
     assert_text "Postagem was successfully updated"

@@ -1,4 +1,6 @@
 class Aluno < ApplicationRecord
-  belongs_to :usuario
-  belongs_to :laboratorio
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 end

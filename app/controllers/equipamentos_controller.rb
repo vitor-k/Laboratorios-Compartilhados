@@ -69,6 +69,6 @@ class EquipamentosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipamento_params
-      params.require(:equipamento).permit(:nome, :funcao, :taxa, :laboratorio_id)
+      params.require(:equipamento).permit(:nome, :funcao, :taxa)
     end
 end
