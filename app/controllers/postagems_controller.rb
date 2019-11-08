@@ -1,5 +1,6 @@
 class PostagemsController < ApplicationController
   before_action :set_postagem, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:edit, :create, :update, :destroy, :new]
 
   # GET /postagems
   # GET /postagems.json
@@ -14,7 +15,10 @@ class PostagemsController < ApplicationController
 
   # GET /postagems/new
   def new
-    @postagem = Postagem.new
+    if (@user != nil)
+      # @postagem = Postagem.new
+      @postagem = @user.postagems.build(postagem_params)
+    end
   end
 
   # GET /postagems/1/edit
@@ -24,10 +28,11 @@ class PostagemsController < ApplicationController
   # POST /postagems
   # POST /postagems.json
   def create
-    @postagem = Postagem.new(postagem_params)
+    # @postagem = Postagem.new(postagem_params)
+    @postagem = @user.postagems.build(postagem_params)
 
     respond_to do |format|
-      if @postagem.save
+      if @postagem.save(postagem_params)
         format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
         format.json { render :show, status: :created, location: @postagem }
       else
@@ -69,6 +74,25 @@ class PostagemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def postagem_params
-      params.require(:postagem).permit(:texto)
+      params.require(:postagem).permit(:texto, :aluno_id, :docente_id, :admin_id, :representante_externo_id, :laboratorio_id)
+    end
+
+    def get_user
+      @user ||=
+        if aluno_signed_in?
+          id = current_aluno.id
+          @user = Aluno.find(id)
+        elsif representante_externo_signed_in?
+          id = current_representante_externo.id
+          @user = Representante_externo.find(id)
+        elsif admin_signed_in?
+          id = current_admin.id
+          @user = Admin.find(id)
+        elsif docente_signed_in?
+          id = current_docente.id
+          @user = Docente.find(id)
+        else
+          @user = nil;
+        end
     end
 end

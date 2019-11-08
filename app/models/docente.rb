@@ -4,6 +4,10 @@ class Docente < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+
+  has_many :postagems, dependent: :destroy
+  has_many :pedidos, dependent: :destroy
+  
   validates :nome, presence: true
   validates :nusp, presence: true
   validates :departamento, presence: true

@@ -82,6 +82,11 @@ ActiveRecord::Schema.define(version: 2019_11_07_135224) do
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
+    t.integer "aluno_id"
+    t.integer "docente_id"
+    t.integer "representante_externo_id"
+    t.integer "admin_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

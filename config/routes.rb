@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :laboratorios
   resources :servicos
   resources :equipamentos
+  
   devise_for :representante_externos, path: 'representante_externos', controllers: { 
     sessions: "representante_externos/sessions"
   }
