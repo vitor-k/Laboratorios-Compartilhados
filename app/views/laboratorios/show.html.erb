@@ -15,5 +15,10 @@
   <%= @laboratorio.descricao %>
 </p>
 
+<p>
+  <strong>Responsável:</strong>
+  <%= @laboratorio.responsavel.nome %>
+</p>
+
 <%= link_to 'Edit', edit_laboratorio_path(@laboratorio) %> |
 <%= link_to 'Back', laboratorios_path %>

@@ -26,6 +26,11 @@
     <%= form.text_area :descricao %>
   </div>
 
+  <div class="field">
+    <%= form.label "Responsável" %>
+    <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: true) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
