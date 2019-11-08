@@ -1,5 +1,6 @@
 class PostagemsController < ApplicationController
   before_action :set_postagem, only: [:show, :edit, :update, :destroy]
+  before_action :getPoster, only: [:show, :edit, :update, :destroy]
   before_action :get_user, only: [:edit, :create, :update, :destroy, :new]
 
   # GET /postagems
@@ -30,7 +31,6 @@ class PostagemsController < ApplicationController
   def create
     # @postagem = Postagem.new(postagem_params)
     @postagem = @user.postagems.build(postagem_params)
-
     respond_to do |format|
       if @postagem.save(postagem_params)
         format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
@@ -59,10 +59,17 @@ class PostagemsController < ApplicationController
   # DELETE /postagems/1
   # DELETE /postagems/1.json
   def destroy
-    @postagem.destroy
-    respond_to do |format|
-      format.html { redirect_to postagems_url, notice: 'Postagem was successfully destroyed.' }
-      format.json { head :no_content }
+    if (@user == @poster || admin_signed_in?)
+      @postagem.destroy
+      respond_to do |format|
+        format.html { redirect_to postagems_url, notice: 'Postagem was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+      else
+        respond_to do |format|
+        format.html { redirect_to postagems_url, notice: 'Você não tem permissão para deletar.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -77,6 +84,7 @@ class PostagemsController < ApplicationController
       params.require(:postagem).permit(:texto, :aluno_id, :docente_id, :admin_id, :representante_externo_id, :laboratorio_id)
     end
 
+    # current user 
     def get_user
       @user ||=
         if aluno_signed_in?
@@ -95,4 +103,17 @@ class PostagemsController < ApplicationController
           @user = nil;
         end
     end
+
+    # who created the post
+    def getPoster
+      if (@postagem.aluno_id != nil)
+          @poster = Aluno.find(@postagem.aluno_id)    
+      elsif (@postagem.docente_id != nil)
+          @poster = Docente.find(@postagem.docente_id)   
+      elsif (@postagem.representante_externo_id != nil)
+          @poster = Representante_externo.find(@postagem.representante_externo_id)
+      elsif (@postagem.admin_id != nil)
+          @poster = Admin.find(@postagem.admin_id)
+      end
+  end
 end
