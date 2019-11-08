@@ -17,8 +17,8 @@ class PostagemsController < ApplicationController
   # GET /postagems/new
   def new
     if (@user != nil)
-      # @postagem = Postagem.new
-      @postagem = @user.postagems.build(postagem_params)
+      @postagem = Postagem.new
+      #@postagem = @user.postagems.build(postagem_params)
     end
   end
 
@@ -81,6 +81,7 @@ class PostagemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def postagem_params
+      puts(params)
       params.require(:postagem).permit(:texto, :aluno_id, :docente_id, :admin_id, :representante_externo_id, :laboratorio_id)
     end
 
