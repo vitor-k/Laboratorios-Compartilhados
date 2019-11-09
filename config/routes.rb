@@ -1,22 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :representante_externos
+  resources :admins
+  resources :docentes
+  resources :alunos
   resources :pedidos
   resources :postagems
   resources :laboratorios
   resources :servicos
   resources :equipamentos
-  
-  devise_for :representante_externos, path: 'representante_externos', controllers: { 
-    sessions: "representante_externos/sessions"
-  }
-  devise_for :admins, path: 'admins', controllers: {
-    sessions: "admins/sessions"
-  }
-  devise_for :docentes, path: 'docentes', controllers: {
-    sessions: "docentes/sessions"
-  }
-  devise_for :alunos, path: 'alunos', controllers: { 
-    sessions: "alunos/sessions"
-  }
 
   # devise_scope :aluno do
   #   authenticated_aluno_root_path to: "pages#home"
