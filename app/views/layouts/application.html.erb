@@ -15,10 +15,11 @@
       <a href="http://localhost:3000"> <%= image_tag 'Logo.png'%> </a>
       <div id="row">
         <ul>
-          <% if (aluno_signed_in? || representante_externo_signed_in? || docente_signed_in? || admin_signed_in?) %>
-            <li><a href="http://localhost:3000/account"> Conta </a></li>
+          <% if user_signed_in? %>
+            <li><a href="http://localhost:3000/account"> <%= current_user.nome %> - <%= current_user.meta_type %> </a></li>
           <% else %>
             <li><a href="http://localhost:3000/account"> Conectar </a></li>
+            <!--<li><#%= link_to 'Conectar', controller: 'pages', action: 'account' %></li>-->
           <% end %>
         </ul>
       </div>

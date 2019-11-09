@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_09_172342) do
+ActiveRecord::Schema.define(version: 2019_11_09_173028) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -93,7 +93,10 @@ ActiveRecord::Schema.define(version: 2019_11_09_172342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "nome", default: "", null: false
+    t.string "meta_type"
+    t.integer "meta_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["meta_type", "meta_id"], name: "index_users_on_meta_type_and_meta_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

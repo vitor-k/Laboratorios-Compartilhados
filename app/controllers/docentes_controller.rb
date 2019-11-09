@@ -1,4 +1,6 @@
 class DocentesController < ApplicationController
+  before_action :authenticate_user!, :authenticate_docente, except: [:new, :create, :update, :show]
+  before_action :new_registration, only: [:create]
   before_action :set_docente, only: [:show, :edit, :update, :destroy]
 
   # GET /docentes
@@ -15,6 +17,7 @@ class DocentesController < ApplicationController
   # GET /docentes/new
   def new
     @docente = Docente.new
+    @docente.build_user
   end
 
   # GET /docentes/1/edit
@@ -69,6 +72,14 @@ class DocentesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def docente_params
-      params.require(:docente).permit(:nusp, :departamento)
+      params.require(:docente).permit(:nusp, :departamento, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
+    end
+
+    def authenticate_docente
+      redirect_to(new_user_session_path) unless current_user.meta_type == 'Docente'
+    end
+
+    def new_registration
+      redirect_to(docente_path) if user_signed_in?
     end
 end

@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, skip: [:registrations]
   resources :representante_externos
   resources :admins
   resources :docentes
   resources :alunos
+
   resources :pedidos
   resources :postagems
   resources :laboratorios
@@ -17,25 +18,7 @@ Rails.application.routes.draw do
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
 
-  authenticated :aluno do
-    root 'pages#home', as: :authenticated_aluno_root
-  end
-
-  authenticated :docente do
-    root 'pages#home', as: :authenticated_docente_root
-  end
-
-  authenticated :representante_externo do
-    root 'pages#home', as: :authenticated_representante_externo_root
-  end
-
-  authenticated :admin do
-    root 'pages#home', as: :authenticated_admin_root
-  end
-  
-  unauthenticated do
-    root 'pages#home', as: :unauthenticated_root
-  end
+  root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # root to: 'pages#home'
 end

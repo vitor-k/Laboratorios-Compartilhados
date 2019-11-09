@@ -1,4 +1,6 @@
 class AlunosController < ApplicationController
+  before_action :authenticate_user!, :authenticate_aluno, except: [:new, :create, :update, :show]
+  before_action :new_registration, only: [:create]
   before_action :set_aluno, only: [:show, :edit, :update, :destroy]
 
   # GET /alunos
@@ -15,6 +17,7 @@ class AlunosController < ApplicationController
   # GET /alunos/new
   def new
     @aluno = Aluno.new
+    @aluno.build_user
   end
 
   # GET /alunos/1/edit
@@ -69,6 +72,14 @@ class AlunosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aluno_params
-      params.require(:aluno).permit(:nusp, :departamento)
+      params.require(:aluno).permit(:nusp, :departamento, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
+    end
+
+    def authenticate_aluno
+      redirect_to(new_user_session_path) unless current_user.meta_type == 'Aluno'
+    end
+
+    def new_registration
+      redirect_to(aluno_path) if user_signed_in?
     end
 end

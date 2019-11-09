@@ -1,4 +1,6 @@
 class RepresentanteExternosController < ApplicationController
+  before_action :authenticate_user!, :authenticate_representante, except: [:new, :create, :update, :show]
+  before_action :new_registration, only: [:create]
   before_action :set_representante_externo, only: [:show, :edit, :update, :destroy]
 
   # GET /representante_externos
@@ -15,6 +17,7 @@ class RepresentanteExternosController < ApplicationController
   # GET /representante_externos/new
   def new
     @representante_externo = RepresentanteExterno.new
+    @representante_externo.build_user
   end
 
   # GET /representante_externos/1/edit
@@ -69,6 +72,15 @@ class RepresentanteExternosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def representante_externo_params
-      params.require(:representante_externo).permit(:RG, :UF)
+      params.require(:representante_externo).permit(:RG, :UF, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
     end
+
+    def authenticate_admin
+      redirect_to(new_user_session_path) unless current_user.meta_type == 'RepresentanteExterno'
+    end
+
+    def new_registration
+      redirect_to(representante_externo_path) if user_signed_in?
+    end
+
 end
