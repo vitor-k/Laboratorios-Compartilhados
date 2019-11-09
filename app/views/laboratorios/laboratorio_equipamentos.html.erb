@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h2> Página de Equipamentos do Laboratório: <%= @laboratorio.nome %></h2>
+
+<% if !@laboratorio.equipamentos.empty? %>
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Função</th>
+      <th>Taxa</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @laboratorio.equipamentos.each do |equipamento| %>
+      <tr>
+        <td><%= equipamento.nome %></td>
+        <td><%= equipamento.funcao %></td>
+        <td><%= equipamento.taxa %></td>
+        <% if (@user == @responsavel) %>
+            <td><%= link_to 'Show', [@laboratorio, equipamento] %></td>
+            <td><%= link_to 'Edit', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
+            <td><%= link_to 'Destroy', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+    <p> Não há equipamentos registrados </p>
+<% end %>
+
+<p><%= link_to 'Página do laboratório', @laboratorio %></p>

@@ -7,10 +7,11 @@ Rails.application.routes.draw do
 
   resources :pedidos
   resources :postagems
-  resources :laboratorios
-  resources :servicos
-  resources :equipamentos
 
+  resources :laboratorios do
+    resources :servicos
+    resources :equipamentos
+  end
   # devise_scope :aluno do
   #   authenticated_aluno_root_path to: "pages#home"
   # end
