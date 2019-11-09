@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
   resources :pedidos
+
   resources :postagems
-  resources :laboratorios
-  resources :servicos
-  resources :equipamentos
+
+  resources :laboratorios do
+    resources :servicos
+    resources :equipamentos
+  end
+
+  # get '/laboratorios/:id/lab_equipamentos', to: 'laboratorios#laboratorio_equipamentos', as: 'lab_equipamentos'
+  # get '/laboratorios/:id/lab_servicos', to: 'laboratorios#laboratorio_servicos', as: 'lab_servicos'
   
   devise_for :representante_externos, path: 'representante_externos', controllers: { 
     sessions: "representante_externos/sessions"

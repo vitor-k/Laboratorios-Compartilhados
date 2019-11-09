@@ -1,5 +1,11 @@
 <h1>New Servico</h1>
 
-<%= render 'form', servico: @servico %>
+<% if (admin_signed_in? || @user == @responsavel) %>
+    <%= render 'form', servico: @servico %>
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para criar um serviço </h2>
+    </div>
+<% end %>
 
-<%= link_to 'Back', servicos_path %>
+<%= link_to 'Página de serviços', laboratorio_servicos_path(@laboratorio) %>

@@ -1,5 +1,7 @@
 class LaboratoriosController < ApplicationController
-  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy]
+  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
+  before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
+  before_action :getResponsavel, only: [:show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
 
   # GET /laboratorios
   # GET /laboratorios.json
@@ -12,11 +14,20 @@ class LaboratoriosController < ApplicationController
   def show
   end
 
+  #def showPaginaLab
+  #end
+
   # GET /laboratorios/new
   def new
     if (admin_signed_in?)
       @laboratorio = Laboratorio.new
     end
+  end
+
+  def laboratorio_equipamentos
+  end
+
+  def laboratorio_servicos
   end
 
   # GET /laboratorios/1/edit
@@ -41,14 +52,16 @@ class LaboratoriosController < ApplicationController
   # PATCH/PUT /laboratorios/1
   # PATCH/PUT /laboratorios/1.json
   def update
+    if (@user == @responsavel || admin_signed_in?)
     respond_to do |format|
       if @laboratorio.update(laboratorio_params)
         format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
         format.json { render :show, status: :ok, location: @laboratorio }
       else
-        format.html { render :edit }
-        format.json { render json: @laboratorio.errors, status: :unprocessable_entity }
+        format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
+        format.json { head :no_content }
       end
+    end
     end
   end
 
@@ -80,6 +93,7 @@ class LaboratoriosController < ApplicationController
       params.require(:laboratorio).permit(:nome, :localizacao, :descricao, :responsavel_id)
     end
 
+    # current user
     def get_user
       @user ||=
         if aluno_signed_in?
@@ -97,5 +111,10 @@ class LaboratoriosController < ApplicationController
         else
           @user = nil;
         end
+    end
+
+    #get responsável
+    def getResponsavel
+      @responsavel = Docente.find(@laboratorio.responsavel_id)
     end
 end

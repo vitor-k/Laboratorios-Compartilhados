@@ -20,5 +20,6 @@
   <%= @equipamento.laboratorio.nome %> [<%=@equipamento.laboratorio.id %>]
 </p>
 
-<%= link_to 'Edit', edit_equipamento_path(@equipamento) %> |
-<%= link_to 'Back', equipamentos_path %>
+<%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %>
+<%= link_to 'Editar equipamento', edit_laboratorio_equipamento_path(@laboratorio) %>
+
