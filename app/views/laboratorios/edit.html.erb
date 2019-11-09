@@ -1,6 +1,11 @@
 <h1>Editing Laboratorio</h1>
 
-<%= render 'form', laboratorio: @laboratorio %>
-
+<% if (admin_signed_in? || @user == Docente.find(@laboratorio.responsavel_id)) %>
+    <%= render 'form', laboratorio: @laboratorio %>
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para editar o laboratório </h2>
+    </div>
+<% end %>
 <%= link_to 'Show', @laboratorio %> |
 <%= link_to 'Back', laboratorios_path %>

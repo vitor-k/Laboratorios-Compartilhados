@@ -15,5 +15,10 @@
   <%= @pedido.descricao %>
 </p>
 
+<p>
+  <strong>Nome solicitante:</strong>
+  <%= @solicitador.nome %>
+</p>
+
 <%= link_to 'Edit', edit_pedido_path(@pedido) %> |
 <%= link_to 'Back', pedidos_path %>

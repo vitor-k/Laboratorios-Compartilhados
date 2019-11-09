@@ -36,6 +36,10 @@ Rails.application.routes.draw do
   authenticated :representante_externo do
     root 'pages#home', as: :authenticated_representante_externo_root
   end
+
+  authenticated :admin do
+    root 'pages#home', as: :authenticated_admin_root
+  end
   
   unauthenticated do
     root 'pages#home', as: :unauthenticated_root

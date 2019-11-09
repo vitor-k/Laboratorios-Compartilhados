@@ -15,5 +15,10 @@
   <%= @servico.taxa %>
 </p>
 
+<p>
+  <strong>Laboratorio "[id]":</strong>
+  <%= @servico.laboratorio.nome %> [<%=@servico.laboratorio.id %>]
+</p>
+
 <%= link_to 'Edit', edit_servico_path(@servico) %> |
 <%= link_to 'Back', servicos_path %>

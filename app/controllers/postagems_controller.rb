@@ -82,7 +82,7 @@ class PostagemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def postagem_params
       puts(params)
-      params.require(:postagem).permit(:texto, :aluno_id, :docente_id, :admin_id, :representante_externo_id, :laboratorio_id)
+      params.require(:postagem).permit(:texto)
     end
 
     # current user 

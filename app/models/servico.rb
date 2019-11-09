@@ -1,4 +1,4 @@
 class Servico < ApplicationRecord
     belongs_to :laboratorio
-    belongs_to :pedido
+    has_many :pedidos, dependent: :destroy
 end

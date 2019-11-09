@@ -2,11 +2,13 @@ class CreatePostagems < ActiveRecord::Migration[5.2]
   def change
     create_table :postagems do |t|
       t.text :texto
-      t.integer :aluno_id
-      t.integer :docente_id
-      t.integer :representante_externo_id
-      t.integer :admin_id
-      t.integer :laboratorio_id      
+
+      t.belongs_to :aluno, optional: true
+      t.belongs_to :admin, optional: true
+      t.belongs_to :representante_externo, optional: true
+      t.belongs_to :docente, optional: true
+      t.belongs_to :laboratorio, optional: true
+
       t.timestamps
     end
   end

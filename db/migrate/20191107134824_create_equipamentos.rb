@@ -5,6 +5,8 @@ class CreateEquipamentos < ActiveRecord::Migration[5.2]
       t.text :funcao
       t.decimal :taxa
 
+      t.belongs_to :laboratorio
+
       t.timestamps
     end
   end

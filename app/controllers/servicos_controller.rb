@@ -25,7 +25,6 @@ class ServicosController < ApplicationController
   # POST /servicos.json
   def create
     @servico = Servico.new(servico_params)
-
     respond_to do |format|
       if @servico.save
         format.html { redirect_to @servico, notice: 'Servico was successfully created.' }
@@ -69,6 +68,6 @@ class ServicosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def servico_params
-      params.require(:servico).permit(:nome, :descricao, :taxa)
+      params.require(:servico).permit(:nome, :descricao, :taxa, :laboratorio_id)
     end
 end

@@ -14,7 +14,9 @@ class LaboratoriosController < ApplicationController
 
   # GET /laboratorios/new
   def new
-    @laboratorio = Laboratorio.new
+    if (admin_signed_in?)
+      @laboratorio = Laboratorio.new
+    end
   end
 
   # GET /laboratorios/1/edit
@@ -25,7 +27,6 @@ class LaboratoriosController < ApplicationController
   # POST /laboratorios.json
   def create
     @laboratorio = Laboratorio.new(laboratorio_params)
-
     respond_to do |format|
       if @laboratorio.save
         format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully created.' }
@@ -54,10 +55,17 @@ class LaboratoriosController < ApplicationController
   # DELETE /laboratorios/1
   # DELETE /laboratorios/1.json
   def destroy
-    @laboratorio.destroy
-    respond_to do |format|
-      format.html { redirect_to laboratorios_url, notice: 'Laboratorio was successfully destroyed.' }
-      format.json { head :no_content }
+    if (admin_signed_in?)
+      @laboratorio.destroy
+      respond_to do |format|
+        format.html { redirect_to laboratorios_url, notice: 'Laboratorio was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to laboratorios_url, notice: 'Sem permissão para deletar laboratório.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -70,5 +78,24 @@ class LaboratoriosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def laboratorio_params
       params.require(:laboratorio).permit(:nome, :localizacao, :descricao, :responsavel_id)
+    end
+
+    def get_user
+      @user ||=
+        if aluno_signed_in?
+          id = current_aluno.id
+          @user = Aluno.find(id)
+        elsif representante_externo_signed_in?
+          id = current_representante_externo.id
+          @user = Representante_externo.find(id)
+        elsif admin_signed_in?
+          id = current_admin.id
+          @user = Admin.find(id)
+        elsif docente_signed_in?
+          id = current_docente.id
+          @user = Docente.find(id)
+        else
+          @user = nil;
+        end
     end
 end

@@ -1,5 +1,7 @@
 class PedidosController < ApplicationController
   before_action :set_pedido, only: [:show, :edit, :update, :destroy]
+  before_action :getSolicitador, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:edit, :create, :update, :destroy, :new]
 
   # GET /pedidos
   # GET /pedidos.json
@@ -14,7 +16,9 @@ class PedidosController < ApplicationController
 
   # GET /pedidos/new
   def new
-    @pedido = Pedido.new
+    if (@user != nil)
+      @pedido = Pedido.new
+    end
   end
 
   # GET /pedidos/1/edit
@@ -24,8 +28,7 @@ class PedidosController < ApplicationController
   # POST /pedidos
   # POST /pedidos.json
   def create
-    @pedido = Pedido.new(pedido_params)
-
+    @pedido = @user.pedidos.build(pedido_params)
     respond_to do |format|
       if @pedido.save
         format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
@@ -69,6 +72,37 @@ class PedidosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pedido_params
-      params.require(:pedido).permit(:dataInicio, :dataFim, :descricao)
+      params.require(:pedido).permit(:dataInicio, :dataFim, :descricao, :laboratorio_id, :servico_id, :equipamento_id)
+    end
+
+    def get_user
+      @user ||=
+        if aluno_signed_in?
+          id = current_aluno.id
+          @user = Aluno.find(id)
+        elsif representante_externo_signed_in?
+          id = current_representante_externo.id
+          @user = Representante_externo.find(id)
+        elsif admin_signed_in?
+          id = current_admin.id
+          @user = Admin.find(id)
+        elsif docente_signed_in?
+          id = current_docente.id
+          @user = Docente.find(id)
+        else
+          @user = nil;
+        end
+    end
+
+    def getSolicitador
+      if (@pedido.aluno_id != nil)
+          @solicitador = Aluno.find(@pedido.aluno_id)    
+      elsif (@pedido.docente_id != nil)
+          @solicitador = Docente.find(@pedido.docente_id)   
+      elsif (@pedido.representante_externo_id != nil)
+          @solicitador = Representante_externo.find(@pedido.representante_externo_id)
+      elsif (@pedido.admin_id != nil)
+          @solicitador = Admin.find(@pedido.admin_id)
+      end
     end
 end

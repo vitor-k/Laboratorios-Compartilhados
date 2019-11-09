@@ -15,5 +15,10 @@
   <%= @equipamento.taxa %>
 </p>
 
+<p>
+  <strong>Laboratorio "[id]":</strong>
+  <%= @equipamento.laboratorio.nome %> [<%=@equipamento.laboratorio.id %>]
+</p>
+
 <%= link_to 'Edit', edit_equipamento_path(@equipamento) %> |
 <%= link_to 'Back', equipamentos_path %>

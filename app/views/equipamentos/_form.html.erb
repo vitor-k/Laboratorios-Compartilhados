@@ -26,6 +26,12 @@
     <%= form.text_field :taxa %>
   </div>
 
+  <div class="field">
+    <%= form.label "Laboratorio" %>
+    <%= form.collection_select(:laboratorio_id, Laboratorio.all, :id, :nome, prompt: true) %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>

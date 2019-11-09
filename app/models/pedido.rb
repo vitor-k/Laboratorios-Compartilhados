@@ -1,7 +1,7 @@
 class Pedido < ApplicationRecord
-    has_many :equipamentos
-    has_many :recursos
-    belongs_to :aluno
-    belongs_to :representante_externo
-    belongs_to :docente
+    belongs_to :equipamento, optional: true
+    belongs_to :servico, optional: true
+    belongs_to :aluno, optional: true
+    belongs_to :representante_externo, optional: true
+    belongs_to :docente, optional: true
 end

@@ -5,6 +5,7 @@ class CreateServicos < ActiveRecord::Migration[5.2]
       t.text :descricao
       t.decimal :taxa
 
+      t.belongs_to :laboratorio
       t.timestamps
     end
   end

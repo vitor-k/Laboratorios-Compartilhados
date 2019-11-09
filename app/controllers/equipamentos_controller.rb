@@ -25,7 +25,6 @@ class EquipamentosController < ApplicationController
   # POST /equipamentos.json
   def create
     @equipamento = Equipamento.new(equipamento_params)
-
     respond_to do |format|
       if @equipamento.save
         format.html { redirect_to @equipamento, notice: 'Equipamento was successfully created.' }
@@ -69,6 +68,6 @@ class EquipamentosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipamento_params
-      params.require(:equipamento).permit(:nome, :funcao, :taxa)
+      params.require(:equipamento).permit(:nome, :funcao, :taxa, :laboratorio_id)
     end
 end

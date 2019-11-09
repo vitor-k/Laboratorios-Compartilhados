@@ -1,4 +1,4 @@
 class Equipamento < ApplicationRecord
     belongs_to :laboratorio
-    belongs_to :pedido, dependent: :destroy
+    has_many :pedidos, dependent: :destroy
 end

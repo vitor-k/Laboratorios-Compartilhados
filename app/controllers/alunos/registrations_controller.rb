@@ -29,9 +29,27 @@ class Alunos::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    # deleta postagens
+    @posts = Postagems.all
+    @posts.each do |post|
+      if (post.aluno_id != nil)
+        if (Alunos.find(post.aluno_id) == current_aluno)
+          post.destroy
+        end
+      end
+    end
+    # deleta pedidos
+    @pedidos = Pedidos.all
+    @pedidos.each do |pedido|
+      if (pedido.aluno_id != nil)
+        if (Pedidos.find(pedido.aluno_id) == current_aluno)
+          pedido.destroy
+        end
+      end
+    end
+    super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
