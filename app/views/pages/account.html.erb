@@ -4,8 +4,8 @@
     Signed in as <%= current_user.email %> of type <%= current_user.meta_type %>.
     <%= link_to('Edit registration', edit_user_path) %>
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-    <p> laboratorio </p>
     <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
+        <p> laboratorio </p>
         <%= Aluno.find(current_user.meta_id).laboratorio.name %>
     <% end %>
 
