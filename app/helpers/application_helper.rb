@@ -31,4 +31,18 @@ module ApplicationHelper
   def current_admin
       Admin.find(current_user.meta_id) if current_user.admin?
   end
+
+  def edit_user_path
+    if user_signed_in?
+        if current_user.aluno?
+            edit_aluno_path(Aluno.find(current_user.meta_id))
+        elsif current_user.docente?
+            edit_docente_path(Docente.find(current_user.meta_id))
+        elsif current_user.representante_externo?
+            edit_representante_externo_path(RepresentanteExterno.find(current_user.meta_id))
+        else
+            edit_admin_path(Admin.find(current_user.meta_id))
+        end    
+    end
+  end
 end
