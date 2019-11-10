@@ -11,4 +11,8 @@ class Docente < ApplicationRecord
   validates :nusp, presence: true
   validates :departamento, presence: true
   validates :nusp, numericality: { only_integer: true }
+
+  def nome
+    self.user.nome
+  end
 end
