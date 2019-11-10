@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <th>Nome</th>
+      <th>Email</th>
       <th>Nusp</th>
       <th>Departamento</th>
       <th colspan="3"></th>
@@ -14,7 +16,8 @@
   <tbody>
     <% @docentes.each do |docente| %>
       <tr>
-        <td><%= docente.nusp %></td>
+        <td><%= docente.user.nome %></td>
+        <td><%= docente.user.email %></td>
         <td><%= docente.departamento %></td>
         <td><%= link_to 'Show', docente %></td>
         <td><%= link_to 'Edit', edit_docente_path(docente) %></td>

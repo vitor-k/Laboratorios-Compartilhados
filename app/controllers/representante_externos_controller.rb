@@ -1,6 +1,6 @@
 class RepresentanteExternosController < ApplicationController
   before_action :authenticate_user!, :authenticate_representante, except: [:new, :create, :update, :show]
-  before_action :new_registration, only: [:create]
+  before_action :new_registration, only: [:new, :create]
   before_action :set_representante_externo, only: [:show, :edit, :update, :destroy]
 
   # GET /representante_externos
@@ -31,7 +31,10 @@ class RepresentanteExternosController < ApplicationController
 
     respond_to do |format|
       if @representante_externo.save
-        format.html { redirect_to @representante_externo, notice: 'Representante externo was successfully created.' }
+        format.html do
+          sign_in @representante_externo.user
+          redirect_to @representante_externo, notice: 'Representante externo was successfully created.'
+        end
         format.json { render :show, status: :created, location: @representante_externo }
       else
         format.html { render :new }
@@ -45,7 +48,10 @@ class RepresentanteExternosController < ApplicationController
   def update
     respond_to do |format|
       if @representante_externo.update(representante_externo_params)
-        format.html { redirect_to @representante_externo, notice: 'Representante externo was successfully updated.' }
+        format.html do 
+          sign_in @representante_externo.user
+          redirect_to @representante_externo, notice: 'Representante externo was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @representante_externo }
       else
         format.html { render :edit }
@@ -75,12 +81,12 @@ class RepresentanteExternosController < ApplicationController
       params.require(:representante_externo).permit(:RG, :UF, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
     end
 
-    def authenticate_admin
+    def authenticate_representante
       redirect_to(new_user_session_path) unless current_user.meta_type == 'RepresentanteExterno'
     end
 
     def new_registration
-      redirect_to(representante_externo_path) if user_signed_in?
+      redirect_to(representante_externos_path, alert: 'You can\'t create a new user while logged in') if user_signed_in? && !current_user.admin?
     end
 
 end

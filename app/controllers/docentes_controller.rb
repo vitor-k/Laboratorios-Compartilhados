@@ -1,6 +1,6 @@
 class DocentesController < ApplicationController
   before_action :authenticate_user!, :authenticate_docente, except: [:new, :create, :update, :show]
-  before_action :new_registration, only: [:create]
+  before_action :new_registration, only: [:new, :create]
   before_action :set_docente, only: [:show, :edit, :update, :destroy]
 
   # GET /docentes
@@ -31,7 +31,10 @@ class DocentesController < ApplicationController
 
     respond_to do |format|
       if @docente.save
-        format.html { redirect_to @docente, notice: 'Docente was successfully created.' }
+        format.html do 
+          sign_in @docente.user
+          redirect_to @docente, notice: 'Docente was successfully created.' 
+        end
         format.json { render :show, status: :created, location: @docente }
       else
         format.html { render :new }
@@ -45,7 +48,10 @@ class DocentesController < ApplicationController
   def update
     respond_to do |format|
       if @docente.update(docente_params)
-        format.html { redirect_to @docente, notice: 'Docente was successfully updated.' }
+        format.html do 
+          sign_in @docente.user
+          redirect_to @docente, notice: 'Docente was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @docente }
       else
         format.html { render :edit }
@@ -80,6 +86,6 @@ class DocentesController < ApplicationController
     end
 
     def new_registration
-      redirect_to(docente_path) if user_signed_in?
+      redirect_to(docentes_path, alert: 'You can\'t create a new user while logged in') if user_signed_in?
     end
 end

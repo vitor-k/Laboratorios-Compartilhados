@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <th>Nome</th>
+      <th>Email</th>
       <th>Rg</th>
       <th>Uf</th>
       <th colspan="3"></th>
@@ -14,6 +16,8 @@
   <tbody>
     <% @representante_externos.each do |representante_externo| %>
       <tr>
+        <td><%= representante_externo.user.nome %></td>
+        <td><%= representante_externo.user.email %></td>
         <td><%= representante_externo.RG %></td>
         <td><%= representante_externo.UF %></td>
         <td><%= link_to 'Show', representante_externo %></td>

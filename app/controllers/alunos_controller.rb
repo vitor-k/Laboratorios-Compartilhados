@@ -31,7 +31,10 @@ class AlunosController < ApplicationController
 
     respond_to do |format|
       if @aluno.save
-        format.html { redirect_to @aluno, notice: 'Aluno was successfully created.' }
+        format.html do 
+          sign_in(@aluno.user)
+          redirect_to @aluno, notice: 'Aluno was successfully created.'
+        end
         format.json { render :show, status: :created, location: @aluno }
       else
         format.html { render :new }
@@ -45,7 +48,10 @@ class AlunosController < ApplicationController
   def update
     respond_to do |format|
       if @aluno.update(aluno_params)
-        format.html { redirect_to @aluno, notice: 'Aluno was successfully updated.' }
+        format.html do 
+          sign_in @aluno.user
+          redirect_to @aluno, notice: 'Aluno was successfully updated.' 
+        end
         format.json { render :show, status: :ok, location: @aluno }
       else
         format.html { render :edit }

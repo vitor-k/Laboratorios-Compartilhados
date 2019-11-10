@@ -31,7 +31,10 @@ class AdminsController < ApplicationController
 
     respond_to do |format|
       if @admin.save
-        format.html { redirect_to @admin, notice: 'Admin was successfully created.' }
+        format.html do 
+          sign_in @admin.user
+          redirect_to @admin, notice: 'Admin was successfully created.' 
+        end
         format.json { render :show, status: :created, location: @admin }
       else
         format.html { render :new }
@@ -45,7 +48,10 @@ class AdminsController < ApplicationController
   def update
     respond_to do |format|
       if @admin.update(admin_params)
-        format.html { redirect_to @admin, notice: 'Admin was successfully updated.' }
+        format.html do 
+          sign_in @admin.user
+          redirect_to @admin, notice: 'Admin was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @admin }
       else
         format.html { render :edit }
@@ -80,7 +86,7 @@ class AdminsController < ApplicationController
     end
 
     def new_registration
-      redirect_to(admin_path) if user_signed_in?
+      redirect_to(root_path, alert: 'Only an admin can do that') if user_signed_in? && !current_user.admin?
     end
 
 end

@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(version: 2019_11_09_173028) do
     t.text "nome"
     t.text "funcao"
     t.decimal "taxa"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["laboratorio_id"], name: "index_equipamentos_on_laboratorio_id"
   end
 
   create_table "laboratorios", force: :cascade do |t|
@@ -54,19 +56,34 @@ ActiveRecord::Schema.define(version: 2019_11_09_173028) do
     t.datetime "dataInicio"
     t.datetime "dataFim"
     t.text "descricao"
+    t.integer "equipamento_id"
+    t.integer "servico_id"
+    t.integer "aluno_id"
+    t.integer "docente_id"
+    t.integer "representante_externo_id_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["aluno_id"], name: "index_pedidos_on_aluno_id"
+    t.index ["docente_id"], name: "index_pedidos_on_docente_id"
+    t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
+    t.index ["representante_externo_id_id"], name: "index_pedidos_on_representante_externo_id_id"
+    t.index ["servico_id"], name: "index_pedidos_on_servico_id"
   end
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
     t.integer "aluno_id"
-    t.integer "docente_id"
-    t.integer "representante_externo_id"
     t.integer "admin_id"
+    t.integer "representante_externo_id"
+    t.integer "docente_id"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_postagems_on_admin_id"
+    t.index ["aluno_id"], name: "index_postagems_on_aluno_id"
+    t.index ["docente_id"], name: "index_postagems_on_docente_id"
+    t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
+    t.index ["representante_externo_id"], name: "index_postagems_on_representante_externo_id"
   end
 
   create_table "representante_externos", force: :cascade do |t|
@@ -80,8 +97,10 @@ ActiveRecord::Schema.define(version: 2019_11_09_173028) do
     t.text "nome"
     t.text "descricao"
     t.decimal "taxa"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["laboratorio_id"], name: "index_servicos_on_laboratorio_id"
   end
 
   create_table "users", force: :cascade do |t|
