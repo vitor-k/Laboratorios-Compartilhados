@@ -4,6 +4,7 @@ class DeviseCreateDocentes < ActiveRecord::Migration[5.2]
   def change
     # drop_table :docentes
     create_table :docentes do |t|
+      t.belongs_to :laboratorio
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""

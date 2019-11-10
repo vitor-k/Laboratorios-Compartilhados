@@ -4,6 +4,10 @@
     Signed in as <%= current_aluno.email %>.
     <%= link_to('Edit registration', edit_aluno_registration_path) %>
     <%= link_to "Sign out", destroy_aluno_session_path, :method => :delete %>
+    <p> laboratorio </p>
+    <% if current_aluno.laboratorio != nil%>
+        <%= current_aluno.laboratorio.nome %>
+    <% end %>
 <% elsif docente_signed_in? %>
     Signed in as <%= current_docente.email %>.
     <%= link_to('Edit registration', edit_docente_registration_path) %>

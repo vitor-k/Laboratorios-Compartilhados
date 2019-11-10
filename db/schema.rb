@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_210600) do
   end
 
   create_table "alunos", force: :cascade do |t|
+    t.integer "laboratorio_id"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "nome", default: "", null: false
@@ -38,10 +39,12 @@ ActiveRecord::Schema.define(version: 2019_11_08_210600) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_alunos_on_email", unique: true
+    t.index ["laboratorio_id"], name: "index_alunos_on_laboratorio_id"
     t.index ["reset_password_token"], name: "index_alunos_on_reset_password_token", unique: true
   end
 
   create_table "docentes", force: :cascade do |t|
+    t.integer "laboratorio_id"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "nome", default: "", null: false
@@ -53,6 +56,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_210600) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_docentes_on_email", unique: true
+    t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
     t.index ["reset_password_token"], name: "index_docentes_on_reset_password_token", unique: true
   end
 

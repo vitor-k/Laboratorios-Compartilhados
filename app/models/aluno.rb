@@ -7,6 +7,7 @@ class Aluno < ApplicationRecord
 
   has_many :postagems, dependent: :destroy
   has_many :pedidos, dependent: :destroy
+  belongs_to :laboratorio, optional: true
 
   validates :nome, presence: true
   validates :nusp, presence: true
