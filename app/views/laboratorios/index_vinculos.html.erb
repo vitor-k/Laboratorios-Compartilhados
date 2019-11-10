@@ -17,11 +17,11 @@
   <tbody>
     <% Docente.where(laboratorio_id: @laboratorio.id).each do |docente| %>
       <tr>
-        <td><%= docente.nome %></td>
+        <td><%= docente.user.nome %></td>
         <td><%= docente.nusp %></td>
         <td><%= docente.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) %>
-            <td><%= link_to 'Destroy', remove_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Destroy', remove_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.user.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
@@ -47,11 +47,11 @@
   <tbody>
     <% Aluno.where(laboratorio_id: @laboratorio.id).each do |aluno| %>
       <tr>
-        <td><%= aluno.nome %></td>
+        <td><%= aluno.user.nome %></td>
         <td><%= aluno.nusp %></td>
         <td><%= aluno.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) %>
-             <td><%= link_to 'Destroy', remove_vinculo_path(id: @laboratorio.id, nomeCompleto: aluno.nome, nUSP: aluno.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
+             <td><%= link_to 'Destroy', remove_vinculo_path(id: @laboratorio.id, nomeCompleto: aluno.user.nome, nUSP: aluno.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
       <% end %>
       </tr>
     <% end %>

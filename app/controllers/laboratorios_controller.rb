@@ -84,15 +84,17 @@ class LaboratoriosController < ApplicationController
   def create_vinculo
     nomecompleto = params[:nomeCompleto]
     nusp = params[:nUSP]
+    puts(params)
 
-    membro ||=
-    if (Docente.where(nusp: nusp, nome: nomecompleto).exists?)
-      membro = Docente.find_by(nusp: nusp, nome: nomecompleto)      
-    elsif (Aluno.where(nusp: nusp, nome: nomecompleto).exists?)
-      membro = Aluno.find_by(nusp: nusp, nome: nomecompleto)      
+    if (Docente.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
+      membro = Docente.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
+    elsif (Aluno.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
+      membro = Aluno.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
     else
       membro = nil
     end 
+
+    puts membro
 
     if (membro == nil)
       respond_to do |format|
@@ -100,7 +102,7 @@ class LaboratoriosController < ApplicationController
         format.json { head :no_content }
       end
     elsif (membro.laboratorio == nil)
-      @membro.update(laboratorio_id: @laboratorio.id)
+      membro.update(laboratorio_id: @laboratorio.id)
       respond_to do |format|
         format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Criado com sucesso' }
         format.json { head :no_content }
@@ -117,14 +119,13 @@ class LaboratoriosController < ApplicationController
     nomecompleto = params[:nomeCompleto]
     nusp = params[:nUSP]
 
-    membro ||=
-    if (Docente.where(nusp: nusp, nome: nomecompleto).exists?)
-      membro = Docente.find_by(nusp: nusp, nome: nomecompleto)      
-    elsif (Aluno.where(nusp: nusp, nome: nomecompleto).exists?)
-      membro = Aluno.find_by(nusp: nusp, nome: nomecompleto)  
+    if (Docente.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
+      membro = Docente.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
+    elsif (Aluno.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
+      membro = Aluno.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
     else
       membro = nil
-    end
+    end 
 
     if (membro == nil)
       respond_to do |format|
