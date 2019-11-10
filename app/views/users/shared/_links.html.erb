@@ -3,6 +3,8 @@
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%= link_to "Registre-se como aluno", new_aluno_path(resource_name) %><br />
+  <%= link_to "Registre-se como docente", new_docente_path(resource_name) %><br />
   <%= link_to "Registre-se como representante externo", new_representante_externo_path(resource_name) %><br />
 <% end %>
 

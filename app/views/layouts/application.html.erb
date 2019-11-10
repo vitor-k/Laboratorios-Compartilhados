@@ -19,8 +19,8 @@
             <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
             <li><a href="http://localhost:3000/account"> <%= current_user.nome %> - <%= current_user.meta_type %> </a></li>
           <% else %>
-            <li><a href="http://localhost:3000/account"> Conectar </a></li>
-            <!--<li><#%= link_to 'Conectar', controller: 'pages', action: 'account' %></li>-->
+            <!--<li><a href="http://localhost:3000/account"> Conectar </a></li>-->
+            <li><%= link_to 'Conectar', new_user_session_path %></li>
           <% end %>
         </ul>
       </div>

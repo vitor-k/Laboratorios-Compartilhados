@@ -8,6 +8,64 @@
     <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
         <%= Aluno.find(current_user.meta_id).laboratorio.name %>
     <% end %>
+
+    <%# VIEW DO ALUNO%>
+    <% if (current_user.aluno?)%>
+        <p> Número USP: <%= Aluno.find(current_user.meta_id).nusp %> </p>
+        <p> Departamento: <%= Aluno.find(current_user.meta_id).departamento %> </p>
+        <p> 
+            Laboratorio vinculado: 
+            <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
+                <%= Aluno.find(current_user.meta_id).laboratorio.name %>
+            <% else %>
+                Não está vinculado a nenhum laboratório
+            <% end %>
+        </p>
+    <% end %>
+
+    <%# VIEW DO DOCENTE%>
+    <% if (current_user.docente?)%>
+        <p> Número USP: <%= Docente.find(current_user.meta_id).nusp %> </p>
+        <p> Departamento: <%= Docente.find(current_user.meta_id).departamento %> </p>
+        <p> 
+            Laboratorio vinculado: 
+            <% if current_user.aluno? && Docente.find(current_user.meta_id).laboratorio != nil %>
+                <%= Docente.find(current_user.meta_id).laboratorio.name %>
+            <% else %>
+                Não está vinculado a nenhum laboratório.
+            <% end %>
+        </p>
+        <p>
+            Responsável dos laboratórios:
+            <% if (Laboratorio.where(responsavel_id: current_user.meta_id).exists?) %>
+                <table>
+                <thead>
+                    <tr>
+                    <th>Nome</th>
+                    <th>Localização</th>
+                    <th colspan="3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% Laboratorio.where(responsavel_id: current_user.meta_id).each do |lab| %>
+                    <tr>
+                        <td><%= lab.nome %></td>
+                        <td><%= lab.localizacao %></td>
+                        <td><%= link_to 'Página do laboratório', laboratorio_path(lab), method: :get %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+                </table>
+            <% else %>
+                <p> Não é responsável de nenhum laboratório. </p>
+            <% end %>
+        </p>
+        <%= link_to "Solicitar responsabilidade", account_path, :method => :get %> <%# IMPLEMENTAR%>
+    <% end %>
+    
+
+    <p><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></p>
 <% else %>
     <p><%= link_to 'Sign in', new_user_session_path %></p>
 
