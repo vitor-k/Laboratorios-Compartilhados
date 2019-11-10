@@ -1,6 +1,18 @@
 class Docente < ApplicationRecord
-  belongs_to :usuario
+
+  has_one :user, as: :meta, dependent: :destroy
+  accepts_nested_attributes_for :user
+
+  has_many :postagems, dependent: :destroy
+  has_many :pedidos, dependent: :destroy
+  has_many :laboratorios, class_name: 'Laboratorio', foreign_key: 'responsavel_id' 
+  belongs_to :laboratorio, optional: true
   
-  has_many :laboratorio_has_docente
-  has_many :laboratorios, through: :laboratorio_has_docente
+  validates :nusp, presence: true
+  validates :departamento, presence: true
+  validates :nusp, numericality: { only_integer: true }
+
+  def nome
+    self.user.nome
+  end
 end

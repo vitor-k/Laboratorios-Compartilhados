@@ -15,7 +15,6 @@ class EquipamentosTest < ApplicationSystemTestCase
     click_on "New Equipamento"
 
     fill_in "Funcao", with: @equipamento.funcao
-    fill_in "Laboratorio", with: @equipamento.laboratorio_id
     fill_in "Nome", with: @equipamento.nome
     fill_in "Taxa", with: @equipamento.taxa
     click_on "Create Equipamento"
@@ -29,7 +28,6 @@ class EquipamentosTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Funcao", with: @equipamento.funcao
-    fill_in "Laboratorio", with: @equipamento.laboratorio_id
     fill_in "Nome", with: @equipamento.nome
     fill_in "Taxa", with: @equipamento.taxa
     click_on "Update Equipamento"

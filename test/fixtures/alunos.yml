@@ -3,9 +3,7 @@
 one:
   nusp: 1
   departamento: MyString
-  usuario: one
 
 two:
   nusp: 1
   departamento: MyString
-  usuario: two

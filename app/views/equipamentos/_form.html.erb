@@ -1,4 +1,4 @@
-<%= form_with(model: equipamento, local: true) do |form| %>
+<%= form_with(model: [@laboratorio, equipamento], local: true) do |form| %>
   <% if equipamento.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(equipamento.errors.count, "error") %> prohibited this equipamento from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :nome %>
-    <%= form.text_field :nome %>
+    <%= form.text_area :nome %>
   </div>
 
   <div class="field">
@@ -24,11 +24,6 @@
   <div class="field">
     <%= form.label :taxa %>
     <%= form.text_field :taxa %>
-  </div>
-
-  <div class="field">
-    <%= form.label :laboratorio_id %>
-    <%= form.text_field :laboratorio_id %>
   </div>
 
   <div class="actions">

@@ -1,0 +1,49 @@
+<%= form_with(model: docente, local: true) do |form| %>
+  <% if docente.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(docente.errors.count, "error") %> prohibited this docente from being saved:</h2>
+
+      <ul>
+      <% docente.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= form.fields_for :user do |u| %>
+    <div class="field">
+      <%= u.label :nome %>
+      <%= u.text_field :nome %>
+    </div>
+
+    <div class="field">
+      <%= u.label :email %>
+      <%= u.text_field :email %>
+    </div>
+
+    <div class="field">
+      <%= u.label :password %>
+      <%= u.password_field :password %>
+    </div>
+
+    <div class="field">
+      <%= u.label :password_confirmation %>
+      <%= u.password_field :password_confirmation %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nusp %>
+    <%= form.number_field :nusp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :departamento %>
+    <%= form.text_field :departamento %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @representante_externo.user.nome %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @representante_externo.user.email %>
+</p>
+
+<p>
+  <strong>Rg:</strong>
+  <%= @representante_externo.RG %>
+</p>
+
+<p>
+  <strong>Uf:</strong>
+  <%= @representante_externo.UF %>
+</p>
+
+<%= link_to 'Edit', edit_representante_externo_path(@representante_externo) %> |
+<%= link_to 'Back', representante_externos_path %>

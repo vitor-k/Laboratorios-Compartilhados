@@ -14,8 +14,7 @@ class ServicosTest < ApplicationSystemTestCase
     visit servicos_url
     click_on "New Servico"
 
-    fill_in "Funcao", with: @servico.funcao
-    fill_in "Laboratorio", with: @servico.laboratorio_id
+    fill_in "Descricao", with: @servico.descricao
     fill_in "Nome", with: @servico.nome
     fill_in "Taxa", with: @servico.taxa
     click_on "Create Servico"
@@ -28,8 +27,7 @@ class ServicosTest < ApplicationSystemTestCase
     visit servicos_url
     click_on "Edit", match: :first
 
-    fill_in "Funcao", with: @servico.funcao
-    fill_in "Laboratorio", with: @servico.laboratorio_id
+    fill_in "Descricao", with: @servico.descricao
     fill_in "Nome", with: @servico.nome
     fill_in "Taxa", with: @servico.taxa
     click_on "Update Servico"

@@ -17,7 +17,7 @@ class PostagemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create postagem" do
     assert_difference('Postagem.count') do
-      post postagems_url, params: { postagem: { laboratorio_id: @postagem.laboratorio_id, texto: @postagem.texto, usuario_id: @postagem.usuario_id } }
+      post postagems_url, params: { postagem: { texto: @postagem.texto } }
     end
 
     assert_redirected_to postagem_url(Postagem.last)
@@ -34,7 +34,7 @@ class PostagemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update postagem" do
-    patch postagem_url(@postagem), params: { postagem: { laboratorio_id: @postagem.laboratorio_id, texto: @postagem.texto, usuario_id: @postagem.usuario_id } }
+    patch postagem_url(@postagem), params: { postagem: { texto: @postagem.texto } }
     assert_redirected_to postagem_url(@postagem)
   end
 

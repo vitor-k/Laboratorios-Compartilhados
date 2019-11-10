@@ -14,11 +14,9 @@ class PedidosTest < ApplicationSystemTestCase
     visit pedidos_url
     click_on "New Pedido"
 
-    fill_in "Data", with: @pedido.data
+    fill_in "Datafim", with: @pedido.dataFim
+    fill_in "Datainicio", with: @pedido.dataInicio
     fill_in "Descricao", with: @pedido.descricao
-    fill_in "Equipamento", with: @pedido.equipamento_id
-    fill_in "Servico", with: @pedido.servico_id
-    fill_in "Usuario", with: @pedido.usuario_id
     click_on "Create Pedido"
 
     assert_text "Pedido was successfully created"
@@ -29,11 +27,9 @@ class PedidosTest < ApplicationSystemTestCase
     visit pedidos_url
     click_on "Edit", match: :first
 
-    fill_in "Data", with: @pedido.data
+    fill_in "Datafim", with: @pedido.dataFim
+    fill_in "Datainicio", with: @pedido.dataInicio
     fill_in "Descricao", with: @pedido.descricao
-    fill_in "Equipamento", with: @pedido.equipamento_id
-    fill_in "Servico", with: @pedido.servico_id
-    fill_in "Usuario", with: @pedido.usuario_id
     click_on "Update Pedido"
 
     assert_text "Pedido was successfully updated"

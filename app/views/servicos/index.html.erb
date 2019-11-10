@@ -1,33 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Servicos</h1>
+<h2> Página de Serviços do Laboratório: <%= @laboratorio.nome %></h2>
 
+<% if !@laboratorio.servicos.empty? %>
 <table>
   <thead>
     <tr>
       <th>Nome</th>
-      <th>Funcao</th>
+      <th>Função</th>
       <th>Taxa</th>
-      <th>Laboratorio</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @servicos.each do |servico| %>
+    <% @laboratorio.servicos.each do |servico| %>
       <tr>
         <td><%= servico.nome %></td>
-        <td><%= servico.funcao %></td>
+        <td><%= servico.descricao %></td>
         <td><%= servico.taxa %></td>
-        <td><%= servico.laboratorio %></td>
-        <td><%= link_to 'Show', servico %></td>
-        <td><%= link_to 'Edit', edit_servico_path(servico) %></td>
-        <td><%= link_to 'Destroy', servico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if (@user == @responsavel) %>
+            <td><%= link_to 'Show', [@laboratorio, servico] %></td>
+            <td><%= link_to 'Edit', edit_laboratorio_servico_path(@laboratorio, servico) %></td>
+            <td><%= link_to 'Destroy', [@laboratorio, servico], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<% else %>
+    <p> Não há serviços registrados </p>
+<% end %>
 
-<%= link_to 'New Servico', new_servico_path %>
+<% if (@user == @responsavel) %>
+  <p><%= link_to 'Criar servico', new_laboratorio_servico_path(@laboratorio) %></p>
+<% end %>
+
+<p><%= link_to 'Página do laboratório', @laboratorio %></p>

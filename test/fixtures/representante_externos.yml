@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rg: 1
-  unidade: MyString
-  usuario: one
+  RG: 1
+  UF: MyString
 
 two:
-  rg: 1
-  unidade: MyString
-  usuario: two
+  RG: 1
+  UF: MyString

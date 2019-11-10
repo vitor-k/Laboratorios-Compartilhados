@@ -1,6 +1,16 @@
 <h1>Editing Postagem</h1>
 
-<%= render 'form', postagem: @postagem %>
+<% if (@user == nil) %>
+    <div id="error_explanation">
+        <h2> Deve estar logado para editar </h2>
+    </div>
+<% elsif (@user == @poster || admin_signed_in?)%>
+    <%= render 'form', postagem: @postagem %>
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para editar </h2>
+    </div>
+<% end %>
 
 <%= link_to 'Show', @postagem %> |
 <%= link_to 'Back', postagems_path %>

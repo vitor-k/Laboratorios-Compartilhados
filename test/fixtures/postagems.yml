@@ -2,10 +2,6 @@
 
 one:
   texto: MyText
-  usuario: one
-  laboratorio: one
 
 two:
   texto: MyText
-  usuario: two
-  laboratorio: two

@@ -1,6 +1,12 @@
 <h1>Editing Equipamento</h1>
 
-<%= render 'form', equipamento: @equipamento %>
+<% if (admin_signed_in? || @user == @responsavel) %>
+    <%= render 'form', equipamento: @equipamento %>
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para editar o equipamento </h2>
+    </div>
+<% end %>
 
-<%= link_to 'Show', @equipamento %> |
-<%= link_to 'Back', equipamentos_path %>
+<%= link_to 'Show', [@laboratorio, @equipamento] %> |
+<%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %>

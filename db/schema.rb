@@ -10,38 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_26_010309) do
+ActiveRecord::Schema.define(version: 2019_11_10_144532) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
-    t.integer "usuario_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["usuario_id"], name: "index_admins_on_usuario_id"
   end
 
   create_table "alunos", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
-    t.integer "usuario_id"
-    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "laboratorio_id"
     t.index ["laboratorio_id"], name: "index_alunos_on_laboratorio_id"
-    t.index ["usuario_id"], name: "index_alunos_on_usuario_id"
   end
 
   create_table "docentes", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
-    t.integer "usuario_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["usuario_id"], name: "index_docentes_on_usuario_id"
+    t.integer "laboratorio_id"
+    t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
   end
 
   create_table "equipamentos", force: :cascade do |t|
-    t.string "nome"
+    t.text "nome"
     t.text "funcao"
     t.decimal "taxa"
     t.integer "laboratorio_id"
@@ -50,58 +46,60 @@ ActiveRecord::Schema.define(version: 2019_10_26_010309) do
     t.index ["laboratorio_id"], name: "index_equipamentos_on_laboratorio_id"
   end
 
-  create_table "laboratorio_has_docentes", force: :cascade do |t|
-    t.integer "laboratorio_id"
-    t.integer "docente_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["docente_id"], name: "index_laboratorio_has_docentes_on_docente_id"
-    t.index ["laboratorio_id"], name: "index_laboratorio_has_docentes_on_laboratorio_id"
-  end
-
   create_table "laboratorios", force: :cascade do |t|
-    t.string "nome"
-    t.string "localizacao"
+    t.text "nome"
+    t.text "localizacao"
     t.text "descricao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "responsavel_id"
+    t.index ["responsavel_id"], name: "index_laboratorios_on_responsavel_id"
   end
 
   create_table "pedidos", force: :cascade do |t|
-    t.datetime "data"
+    t.datetime "dataInicio"
+    t.datetime "dataFim"
     t.text "descricao"
-    t.integer "usuario_id"
     t.integer "equipamento_id"
     t.integer "servico_id"
+    t.integer "aluno_id"
+    t.integer "docente_id"
+    t.integer "representante_externo_id_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["aluno_id"], name: "index_pedidos_on_aluno_id"
+    t.index ["docente_id"], name: "index_pedidos_on_docente_id"
     t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
+    t.index ["representante_externo_id_id"], name: "index_pedidos_on_representante_externo_id_id"
     t.index ["servico_id"], name: "index_pedidos_on_servico_id"
-    t.index ["usuario_id"], name: "index_pedidos_on_usuario_id"
   end
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
-    t.integer "usuario_id"
+    t.integer "aluno_id"
+    t.integer "admin_id"
+    t.integer "representante_externo_id"
+    t.integer "docente_id"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_postagems_on_admin_id"
+    t.index ["aluno_id"], name: "index_postagems_on_aluno_id"
+    t.index ["docente_id"], name: "index_postagems_on_docente_id"
     t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
-    t.index ["usuario_id"], name: "index_postagems_on_usuario_id"
+    t.index ["representante_externo_id"], name: "index_postagems_on_representante_externo_id"
   end
 
   create_table "representante_externos", force: :cascade do |t|
-    t.integer "rg"
-    t.string "unidade"
-    t.integer "usuario_id"
+    t.integer "RG"
+    t.string "UF"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["usuario_id"], name: "index_representante_externos_on_usuario_id"
   end
 
   create_table "servicos", force: :cascade do |t|
-    t.string "nome"
-    t.text "funcao"
+    t.text "nome"
+    t.text "descricao"
     t.decimal "taxa"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
@@ -109,17 +107,20 @@ ActiveRecord::Schema.define(version: 2019_10_26_010309) do
     t.index ["laboratorio_id"], name: "index_servicos_on_laboratorio_id"
   end
 
-  create_table "usuarios", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "nome", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_usuarios_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true
+    t.string "nome", default: "", null: false
+    t.string "meta_type"
+    t.integer "meta_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["meta_type", "meta_id"], name: "index_users_on_meta_type_and_meta_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
