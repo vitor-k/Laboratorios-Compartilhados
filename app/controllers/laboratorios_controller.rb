@@ -94,8 +94,6 @@ class LaboratoriosController < ApplicationController
       membro = nil
     end 
 
-    puts membro
-
     if (membro == nil)
       respond_to do |format|
         format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível criar vínculo' }

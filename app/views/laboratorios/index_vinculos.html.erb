@@ -20,7 +20,7 @@
         <td><%= docente.user.nome %></td>
         <td><%= docente.nusp %></td>
         <td><%= docente.departamento %></td>
-        <% if (@user == @responsavel || admin_signed_in?) %>
+        <% if (admin_signed_in? || @user == @responsavel) %>
             <td><%= link_to 'Destroy', remove_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.user.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>

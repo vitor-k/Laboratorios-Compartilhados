@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <h1>Adicionando Vinculo</h1>
 
-<% if (admin_signed_in? || @user == @responsavel || true) %> 
+<% if (admin_signed_in? || @user == @responsavel) %> 
  
     <%= form_with(url: create_vinculo_path) do |form|%>
         <div class="field">

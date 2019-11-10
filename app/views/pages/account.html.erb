@@ -2,8 +2,6 @@
 
 <% if user_signed_in? %>
     Signed in as <%= current_user.email %> of type <%= current_user.meta_type %>.
-    <%= link_to('Edit registration', edit_user_path) %>
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
     <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
         <p> laboratorio </p>
         <%= Aluno.find(current_user.meta_id).laboratorio.name %>
@@ -64,7 +62,7 @@
         <%= link_to "Solicitar responsabilidade", account_path, :method => :get %> <%# IMPLEMENTAR%>
     <% end %>
     
-
+    <p><%= link_to('Edit registration', edit_user_path) %></p>
     <p><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></p>
 <% else %>
     <p><%= link_to 'Sign in', new_user_session_path %></p>
