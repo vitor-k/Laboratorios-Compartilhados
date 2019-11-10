@@ -1,8 +1,8 @@
 class LaboratoriosController < ApplicationController
-  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
-  before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
-  before_action :getResponsavel, only: [:show, :edit, :update, :destroy, :laboratorio_equipamentos, :laboratorio_servicos]
-
+  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
+  before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
+  before_action :getResponsavel, only: [:show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
+ 
   # GET /laboratorios
   # GET /laboratorios.json
   def index
@@ -14,20 +14,11 @@ class LaboratoriosController < ApplicationController
   def show
   end
 
-  #def showPaginaLab
-  #end
-
   # GET /laboratorios/new
   def new
     if (admin_signed_in?)
       @laboratorio = Laboratorio.new
     end
-  end
-
-  def laboratorio_equipamentos
-  end
-
-  def laboratorio_servicos
   end
 
   # GET /laboratorios/1/edit
@@ -81,6 +72,74 @@ class LaboratoriosController < ApplicationController
       end
     end
   end
+
+  # Vincular pessoa com laboratorio
+
+  def index_vinculos
+  end
+
+  def vinculo    
+  end
+
+  def create_vinculo
+    nomecompleto = params[:nomeCompleto]
+    nusp = params[:nUSP]
+
+    membro ||=
+    if (Docente.where(nusp: nusp, nome: nomecompleto).exists?)
+      membro = Docente.find_by(nusp: nusp, nome: nomecompleto)      
+    elsif (Aluno.where(nusp: nusp, nome: nomecompleto).exists?)
+      membro = Aluno.find_by(nusp: nusp, nome: nomecompleto)      
+    else
+      membro = nil
+    end 
+
+    if (membro == nil)
+      respond_to do |format|
+        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
+        format.json { head :no_content }
+      end
+    elsif (membro.laboratorio == nil)
+      @membro.update(laboratorio_id: @laboratorio.id)
+      respond_to do |format|
+        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Criado com sucesso' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def remove_vinculo
+    nomecompleto = params[:nomeCompleto]
+    nusp = params[:nUSP]
+
+    membro ||=
+    if (Docente.where(nusp: nusp, nome: nomecompleto).exists?)
+      membro = Docente.find_by(nusp: nusp, nome: nomecompleto)      
+    elsif (Aluno.where(nusp: nusp, nome: nomecompleto).exists?)
+      membro = Aluno.find_by(nusp: nusp, nome: nomecompleto)  
+    else
+      membro = nil
+    end
+
+    if (membro == nil)
+      respond_to do |format|
+        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível remover vínculo' }
+        format.json { head :no_content }
+      end
+    else
+      membro.update(laboratorio_id: nil)
+      respond_to do |format|
+        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Vinculo removido com sucesso' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

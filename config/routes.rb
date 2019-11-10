@@ -12,10 +12,12 @@ Rails.application.routes.draw do
     resources :servicos
     resources :equipamentos
   end
-  # devise_scope :aluno do
-  #   authenticated_aluno_root_path to: "pages#home"
-  # end
 
+  get '/laboratorios/:id/vinculos', to: 'laboratorios#index_vinculos', as: 'index_vinculos'
+  get '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#vinculo', as: 'new_vinculo'
+  post '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#create_vinculo', as: 'create_vinculo'
+  put '/laboratorios/:id/vinculos/vinculo/(:nomeCompleto)/(:nUSP)', to: 'laboratorios#remove_vinculo', as: 'remove_vinculo'
+  
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
 

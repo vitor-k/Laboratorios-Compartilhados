@@ -1,4 +1,6 @@
 class Laboratorio < ApplicationRecord
+    attr_accessor :nUSP, :nomeCompleto
+
     has_many :equipamentos, dependent: :destroy
     has_many :servicos, dependent: :destroy
     has_many :postagems, dependent: :destroy

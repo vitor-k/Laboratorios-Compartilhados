@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_09_173028) do
+ActiveRecord::Schema.define(version: 2019_11_10_144532) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2019_11_09_173028) do
     t.string "departamento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "laboratorio_id"
+    t.index ["laboratorio_id"], name: "index_alunos_on_laboratorio_id"
   end
 
   create_table "docentes", force: :cascade do |t|
@@ -30,6 +32,8 @@ ActiveRecord::Schema.define(version: 2019_11_09_173028) do
     t.string "departamento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "laboratorio_id"
+    t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
   end
 
   create_table "equipamentos", force: :cascade do |t|

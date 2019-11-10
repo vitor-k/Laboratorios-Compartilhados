@@ -23,10 +23,11 @@
 </p>
 
 
-<% if @user == @responsavel %>  
+<% if (@user == @responsavel || admin_signed_in?) %>  
     <%= link_to "Modificar dados", edit_laboratorio_path(@laboratorio) %>
 <% end %>
 
-<%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio) %>
-<%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio) %>
-<%= link_to "Lista de laboratórios", laboratorios_path %>
+<p><%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio) %></p>
+<p><%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio) %></p>
+<p><%= link_to "Lista de vinculos", index_vinculos_path(@laboratorio) %></p>
+<p><%= link_to "Lista de laboratórios", laboratorios_path %></p>

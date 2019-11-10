@@ -6,6 +6,7 @@ class Docente < ApplicationRecord
   has_many :postagems, dependent: :destroy
   has_many :pedidos, dependent: :destroy
   has_many :laboratorios, class_name: 'Laboratorio', foreign_key: 'responsavel_id' 
+  belongs_to :laboratorio, optional: true
   
   validates :nusp, presence: true
   validates :departamento, presence: true
