@@ -2,6 +2,11 @@
 
 <h1> Página do Laboratório </h1>
 
+<%= form_with(model: @laboratorio, method: :get, url: :busca_laboratorio) do |f| %>
+  <%= f.text_field :termo, placeholder: 'Pesquisar serviço, equipamento ou postagem' %>
+  <%= f.submit 'Pesquisar' %>
+<% end %>
+
 <p>
   <strong>Laboratório:</strong>
   <%= @laboratorio.nome %>
