@@ -79,16 +79,10 @@ class LaboratoriosController < ApplicationController
   def busca
     if params[:laboratorio][:termo]
       @termo = params[:laboratorio][:termo]
-      puts(@termo)
-      puts(@laboratorio)
-      @equipamentos = @laboratorio.equipamentos.where('nome LIKE ?', "%#{@termo}%")
-      @servicos = @laboratorio.servicos.where('nome LIKE ?', "%#{@termo}%")
-      @postagem = Postagem.where(laboratorio_id: @laboratorio.id).where('texto LIKE ?', "%#{@termo}%")
-      respond_to do |format|
-        format.html { redirect_to :busca_laboratorio }
-        format.js { redirect_to :busca_laboratorio }
-        format.json { head :no_content }
-      end
+      var = "%#{@termo}%"
+      @equipamentos = @laboratorio.equipamentos.where('nome LIKE ? OR funcao LIKE ?', var, var)
+      @servicos = @laboratorio.servicos.where('nome LIKE ? OR descricao LIKE ?', var, var)
+      @postagems = Postagem.where(laboratorio_id: @laboratorio.id).where('texto LIKE ?', "%#{@termo}%")
     else
       respond_to do |format|
         format.html { redirect_to laboratorios_url, alert: 'É preciso inserir um termo para pesquisar' }
