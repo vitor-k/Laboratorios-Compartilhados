@@ -4,7 +4,7 @@
   <strong>Texto:</strong>
   <%= @postagem.texto %>
   <strong>Autor:</strong>
-  <%= @poster.nome %>
+  <%= @poster.user.nome %>
 </p>
 
 <%= link_to 'Edit', edit_postagem_path(@postagem) %> |
