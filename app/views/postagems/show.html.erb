@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Texto:</strong>
+  <strong>Título:</strong>
+  <%= @postagem.titulo %>
+  <strong>Descrição:</strong>
   <%= @postagem.texto %>
   <strong>Autor:</strong>
   <%= @poster.user.nome %>
