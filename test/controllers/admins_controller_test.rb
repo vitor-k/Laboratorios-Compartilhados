@@ -1,8 +1,17 @@
 require 'test_helper'
 
+
 class AdminsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
-    @admin = admins(:one)
+    @admin = admins(:admin1)
+    #puts(@admin.attributes)
+    #puts(@admin.user.attributes)
+    sign_in @admin.user
+  end
+
+  teardown do
+    sign_out(@admin.user)
   end
 
   test "should get index" do
@@ -17,7 +26,10 @@ class AdminsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create admin" do
     assert_difference('Admin.count') do
-      post admins_url, params: { admin: { nusp: @admin.nusp } }
+      post admins_url, params: { admin: { nusp: @admin.nusp, user_attributes: {
+        nome: @admin.user.nome, email: "new_#{@admin.user.email}", password: @admin.user.encrypted_password,
+        password_confirmation: @admin.user.encrypted_password
+      } } }
     end
 
     assert_redirected_to admin_url(Admin.last)

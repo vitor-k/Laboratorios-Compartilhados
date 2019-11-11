@@ -9,6 +9,8 @@ class User < ApplicationRecord
   end
 
   belongs_to :meta, polymorphic: true
+  
+  validates :email, uniqueness: true
 
   def admin?
     self.meta_type == 'Admin'
