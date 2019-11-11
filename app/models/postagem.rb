@@ -3,3 +3,4 @@ class Postagem < ApplicationRecord
     belongs_to :admin, optional: true
     belongs_to :laboratorio, optional: true #retirar o optional depois
 end
+
