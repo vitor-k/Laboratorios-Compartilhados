@@ -21,6 +21,11 @@
     <%= form.text_area :texto %>
   </div>
 
+  <div class="field">
+    <%= form.label :laboratorio_id %>
+    <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
