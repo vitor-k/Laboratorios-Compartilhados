@@ -5,3 +5,4 @@ class Postagem < ApplicationRecord
     belongs_to :docente,  optional: true
     belongs_to :laboratorio, optional: true #retirar o optional depois
 end
+

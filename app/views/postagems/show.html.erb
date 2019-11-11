@@ -9,6 +9,13 @@
   <br>
   <strong>Autor:</strong>
   <%= @poster.user.nome %>
+  <br>
+  <strong>Laboratório:</strong>
+  <% if @postagem.laboratorio != nil %>
+    <%= @postagem.laboratorio.nome %>
+  <% else %>
+  nao tem né
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_postagem_path(@postagem) %> |
