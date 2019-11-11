@@ -19,7 +19,11 @@
         <td><%= laboratorio.nome %></td>
         <td><%= laboratorio.localizacao %></td>
         <td><%= laboratorio.descricao %></td>
-        <td><%= laboratorio.responsavel.user.nome %></td>
+        <% if laboratorio.responsavel.nil? %>
+          <td>Sem responsável</td>
+        <% else %>
+          <td><%= laboratorio.responsavel.user.nome %></td>
+        <% end %>
         <td><%= link_to 'Show', laboratorio %></td>
         <td><%= link_to 'Edit', edit_laboratorio_path(laboratorio) %></td>
         <td><%= link_to 'Destroy', laboratorio, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,5 +1,5 @@
 class LaboratoriosController < ApplicationController
-  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
+  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :busca, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
   before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
   before_action :getResponsavel, only: [:show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
  
@@ -68,6 +68,27 @@ class LaboratoriosController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to laboratorios_url, notice: 'Sem permissão para deletar laboratório.' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  # Pesquisa
+
+  # GET /laboratorios/1/busca
+  def busca
+    if params[:laboratorio][:termo] && !params[:laboratorio][:termo].empty?
+      @termo = params[:laboratorio][:termo]
+      var = "%#{@termo}%"
+      @equipamentos = @laboratorio.equipamentos.where('nome LIKE ? OR funcao LIKE ?', var, var)
+      @servicos = @laboratorio.servicos.where('nome LIKE ? OR descricao LIKE ?', var, var)
+      @postagems = Postagem.where(laboratorio_id: @laboratorio.id).where('texto LIKE ?', "%#{@termo}%")
+      if @equipamentos.empty? && @servicos.empty? && @postagems.empty?
+        redirect_to laboratorio_url(@laboratorio), alert: 'Não há resultados com esse termo'
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to laboratorio_url(@laboratorio), alert: 'É preciso inserir um termo para pesquisar' }
         format.json { head :no_content }
       end
     end

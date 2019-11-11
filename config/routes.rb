@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :postagems
 
   resources :laboratorios do
+    member do
+      get :busca
+    end
     resources :servicos
     resources :equipamentos
   end
