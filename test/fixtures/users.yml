@@ -5,10 +5,16 @@
 # below each fixture, per the syntax in the comments below
 #
 user1:
-  email: test@test.com
+  email: admin@test.com
   nome: John Doe
   encrypted_password: <%= User.new.send(:password_digest, 'test123') %>
   meta: admin1 (Admin)
+
+user2:
+  email: aluno@test.com
+  nome: Laus Bohr
+  encrypted_password: <%= User.new.send(:password_digest, 'test234') %>
+  meta: aluno1 (Aluno)
   
 # column: value
 #

@@ -33,7 +33,7 @@ class AlunosController < ApplicationController
       if @aluno.save
         format.html do 
           sign_in(@aluno.user)
-          redirect_to @aluno, notice: 'Aluno was successfully created.'
+          redirect_to aluno_url(@aluno), notice: 'Aluno was successfully created.'
         end
         format.json { render :show, status: :created, location: @aluno }
       else
@@ -86,6 +86,6 @@ class AlunosController < ApplicationController
     end
 
     def new_registration
-      redirect_to(aluno_path) if user_signed_in?
+      redirect_to(alunos_path) if user_signed_in? && !current_user.admin?
     end
 end

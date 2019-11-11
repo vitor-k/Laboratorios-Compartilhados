@@ -1,9 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  nusp: 1
-  departamento: MyString
+aluno1:
+  nusp: 1093209
+  departamento: PME
 
-two:
-  nusp: 1
-  departamento: MyString

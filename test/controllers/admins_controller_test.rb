@@ -6,7 +6,7 @@ class AdminsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @admin = admins(:admin1)
     #puts(@admin.attributes)
-    #puts(@admin.user.attributes)
+    # puts(@admin.user.attributes)
     sign_in @admin.user
   end
 
