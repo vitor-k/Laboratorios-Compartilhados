@@ -4,7 +4,7 @@
     Signed in as <%= current_user.email %> of type <%= current_user.meta_type %>.
     <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
         <p> laboratorio </p>
-        <%= Aluno.find(current_user.meta_id).laboratorio.name %>
+        <%= Aluno.find(current_user.meta_id).laboratorio.nome %>
     <% end %>
 
     <%# VIEW DO ALUNO%>
@@ -14,7 +14,7 @@
         <p> 
             Laboratorio vinculado: 
             <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
-                <%= Aluno.find(current_user.meta_id).laboratorio.name %>
+                <%= Aluno.find(current_user.meta_id).laboratorio.nome %>
             <% else %>
                 Não está vinculado a nenhum laboratório
             <% end %>
@@ -28,7 +28,7 @@
         <p> 
             Laboratorio vinculado: 
             <% if current_user.aluno? && Docente.find(current_user.meta_id).laboratorio != nil %>
-                <%= Docente.find(current_user.meta_id).laboratorio.name %>
+                <%= Docente.find(current_user.meta_id).laboratorio.nome %>
             <% else %>
                 Não está vinculado a nenhum laboratório.
             <% end %>
