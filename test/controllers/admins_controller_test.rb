@@ -4,8 +4,11 @@ require 'test_helper'
 class AdminsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @admin = admins(:admin1)
-    #puts(@admin.attributes)
+    # @admin = admins(:admin1)
+    @admin = create(:admin_user)
+    
+    puts(@admin.attributes)
+    puts(@admin)
     # puts(@admin.user.attributes)
     sign_in @admin.user
   end

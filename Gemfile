@@ -59,6 +59,9 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   #gem 'chromedriver-helper'
   gem 'webdrivers', '>= 4.1.0'
+
+  gem 'factory_bot_rails'
+  gem 'ffaker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
