@@ -86,7 +86,7 @@ class RepresentanteExternosController < ApplicationController
     end
 
     def new_registration
-      redirect_to(representante_externos_path, alert: 'You can\'t create a new user while logged in') if user_signed_in? && !current_user.admin?
+      redirect_to(representante_externos_path, alert: 'Você não pode criar um usuário estando logado') if user_signed_in? && !current_user.admin?
     end
 
 end
