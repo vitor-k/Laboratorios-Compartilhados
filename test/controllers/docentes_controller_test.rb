@@ -1,8 +1,16 @@
 require 'test_helper'
 
 class DocentesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
-    @docente = docentes(:one)
+    @docente_user = create(:user, :docente)
+    @docente = Docente.find(@docente_user.meta_id)
+
+    sign_in @docente.user
+  end
+
+  teardown do
+    sign_out @docente.user
   end
 
   test "should get index" do
@@ -10,17 +18,21 @@ class DocentesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
+  test "should get new if admin" do
+    sign_out @docente_user
+    @admin_user = create(:user, :admin)
     get new_docente_url
     assert_response :success
+    sign_out @admin_user
+    sign_in @docente_user
   end
 
-  test "should create docente" do
-    assert_difference('Docente.count') do
+  test "should not create docente when logged in" do
+    assert_no_difference('Docente.count') do
       post docentes_url, params: { docente: { departamento: @docente.departamento, nusp: @docente.nusp } }
     end
 
-    assert_redirected_to docente_url(Docente.last)
+    assert_redirected_to docentes_url
   end
 
   test "should show docente" do

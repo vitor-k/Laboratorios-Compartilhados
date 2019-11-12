@@ -3,8 +3,6 @@ require 'test_helper'
 class AlunosControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    # @aluno = alunos(:aluno1)
-    # puts(@aluno.user.attributes)
     @aluno_user = create(:user, :aluno)
     @aluno = Aluno.find(@aluno_user.meta_id)
 
@@ -39,8 +37,8 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create aluno when admin" do
     sign_out(@aluno.user)
-    admin = admins(:admin1)
-    sign_in(admin.user)
+    admin = create(:user, :admin)
+    sign_in(admin)
     assert_difference('Aluno.count') do
       post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp,
         user_attributes: { nome: @aluno.user.nome, email: "new_#{@aluno.user.email}", 
@@ -50,7 +48,7 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to aluno_url(Aluno.last)
-    sign_out(admin.user)
+    sign_out(admin)
     sign_in(@aluno.user)
   end
 

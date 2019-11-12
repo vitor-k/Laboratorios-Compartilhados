@@ -1,6 +1,4 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-aluno1:
-  nusp: 1093209
-  departamento: PME
+
 

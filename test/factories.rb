@@ -10,7 +10,6 @@ FactoryBot.define do
   # end
 
   factory :user do
-    # association :meta, factory: :admin
     nome { FFaker::Name.name }
     email { FFaker::Internet.email }
     password { FFaker::Internet.password }
@@ -22,8 +21,15 @@ FactoryBot.define do
     trait :aluno do
       association :meta, factory: :aluno
     end
-  end
 
+    trait :docente do
+      association :meta, factory: :docente
+    end
+
+    trait :representante_externo do
+      association :meta, factory: :representante_externo
+    end
+  end
 
   factory :admin do
     nusp { rand(100000..11000000) }
@@ -33,5 +39,16 @@ FactoryBot.define do
     nusp { rand(100000..11000000) }
     departamento { FFaker::Vehicle.make }
   end
+
+  factory :docente do
+    nusp { rand(100000..11000000) }
+    departamento { FFaker::Vehicle.make }
+  end
+
+  factory :representante_externo do
+    RG { rand(100000..11000000) }
+    UF { FFaker::AddressBR.state }
+  end
+
 
 end
