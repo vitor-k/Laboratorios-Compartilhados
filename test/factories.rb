@@ -50,5 +50,33 @@ FactoryBot.define do
     UF { FFaker::AddressBR.state }
   end
 
+  factory :laboratorio do
+    nome { FFaker::CompanyIT.name }
+    localizacao { FFaker::AddressBR.street }
+    descricao { FFaker::Book.description }
+    association :responsavel, factory: :docente
+
+    after(:build) do |laboratorio|
+      docente_user = create(:user, :docente)
+      laboratorio.responsavel = Docente.find(docente_user.meta_id)
+    end
+  end
+
+  factory :equipamento do
+    nome { FFaker::Product.product }
+    funcao { FFaker::Product.product_name }
+    taxa { rand(100, 10000) }
+    laboratorio
+  end
+
+  factory :servico do
+    nome { FFaker::Product.product }
+    funcao { FFaker::Product.product_name }
+    taxa { rand(100, 10000) }
+    laboratorio
+  end
+
+  
+
 
 end
