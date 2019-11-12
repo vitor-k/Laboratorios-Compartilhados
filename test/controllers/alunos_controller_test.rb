@@ -3,8 +3,11 @@ require 'test_helper'
 class AlunosControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @aluno = alunos(:aluno1)
+    # @aluno = alunos(:aluno1)
     # puts(@aluno.user.attributes)
+    @aluno_user = create(:user, :aluno)
+    @aluno = Aluno.find(@aluno_user.meta_id)
+
     sign_in @aluno.user
   end
 

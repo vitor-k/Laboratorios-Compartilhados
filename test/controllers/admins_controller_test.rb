@@ -5,10 +5,10 @@ class AdminsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     # @admin = admins(:admin1)
-    @admin = create(:admin_user)
+    @admin_user = create(:user, :admin)
     
-    puts(@admin.attributes)
-    puts(@admin)
+    # puts(@admin_user.attributes)
+    @admin = Admin.find(@admin_user.meta_id)
     # puts(@admin.user.attributes)
     sign_in @admin.user
   end
