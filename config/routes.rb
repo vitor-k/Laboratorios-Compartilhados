@@ -12,14 +12,15 @@ Rails.application.routes.draw do
     member do
       get :busca
     end
+    resources :vinculo, only: [:index, :new, :create, :update]
     resources :servicos
     resources :equipamentos
   end
 
-  get '/laboratorios/:id/vinculos', to: 'laboratorios#index_vinculos', as: 'index_vinculos'
-  get '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#vinculo', as: 'new_vinculo'
-  post '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#create_vinculo', as: 'create_vinculo'
-  put '/laboratorios/:id/vinculos/vinculo/(:nomeCompleto)/(:nUSP)', to: 'laboratorios#remove_vinculo', as: 'remove_vinculo'
+  # get '/laboratorios/:id/vinculos', to: 'laboratorios#index_vinculos', as: 'index_vinculos'
+  # get '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#vinculo', as: 'new_vinculo'
+  # post '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#create_vinculo', as: 'create_vinculo'
+  # put '/laboratorios/:id/vinculos/vinculo/(:nomeCompleto)/(:nUSP)', to: 'laboratorios#remove_vinculo', as: 'remove_vinculo'
   
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
