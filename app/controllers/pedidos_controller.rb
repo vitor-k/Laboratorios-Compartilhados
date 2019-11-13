@@ -82,7 +82,7 @@ class PedidosController < ApplicationController
           @user = Aluno.find(id)
         elsif representante_externo_signed_in?
           id = current_representante_externo.id
-          @user = Representante_externo.find(id)
+          @user = RepresentanteExterno.find(id)
         elsif admin_signed_in?
           id = current_admin.id
           @user = Admin.find(id)
@@ -100,7 +100,7 @@ class PedidosController < ApplicationController
       elsif (@pedido.docente_id != nil)
           @solicitador = Docente.find(@pedido.docente_id)   
       elsif (@pedido.representante_externo_id != nil)
-          @solicitador = Representante_externo.find(@pedido.representante_externo_id)
+          @solicitador = RepresentanteExterno.find(@pedido.representante_externo_id)
       elsif (@pedido.admin_id != nil)
           @solicitador = Admin.find(@pedido.admin_id)
       end

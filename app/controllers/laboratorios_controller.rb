@@ -114,7 +114,7 @@ class LaboratoriosController < ApplicationController
           @user = Aluno.find(id)
         elsif representante_externo_signed_in?
           id = current_representante_externo.id
-          @user = Representante_externo.find(id)
+          @user = RepresentanteExterno.find(id)
         elsif admin_signed_in?
           id = current_admin.id
           @user = Admin.find(id)

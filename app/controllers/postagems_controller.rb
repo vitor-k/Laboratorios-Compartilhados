@@ -93,7 +93,7 @@ class PostagemsController < ApplicationController
           @user = Aluno.find(id)
         elsif representante_externo_signed_in?
           id = current_representante_externo.id
-          @user = Representante_externo.find(id)
+          @user = RepresentanteExterno.find(id)
         elsif admin_signed_in?
           id = current_admin.id
           @user = Admin.find(id)
@@ -112,7 +112,7 @@ class PostagemsController < ApplicationController
       elsif (@postagem.docente_id != nil)
           @poster = Docente.find(@postagem.docente_id)   
       elsif (@postagem.representante_externo_id != nil)
-          @poster = Representante_externo.find(@postagem.representante_externo_id)
+          @poster = RepresentanteExterno.find(@postagem.representante_externo_id)
       elsif (@postagem.admin_id != nil)
           @poster = Admin.find(@postagem.admin_id)
       end
