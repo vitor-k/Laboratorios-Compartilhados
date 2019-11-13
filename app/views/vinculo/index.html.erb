@@ -3,7 +3,7 @@
 <h2>Lista de vínculos</h2>
 <br><br/>
 <p> Docentes </p>
-<% if (Docente.where(laboratorio_id: @laboratorio.id).exists?) %>
+<% if @laboratorio.docentes.any? %>
 <table>
   <thead>
     <tr>
@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    <% Docente.where(laboratorio_id: @laboratorio.id).each do |docente| %>
+    <% @laboratorio.docentes.each do |docente| %>
       <tr>
         <td><%= docente.user.nome %></td>
         <td><%= docente.nusp %></td>

@@ -31,10 +31,12 @@ admin1 = Admin.create({nusp: 10343122, user_attributes: {nome: 'Gabriel',
 lmo = Laboratorio.create({nome: 'LMO', localizacao: 'Escola Politécnica (EPUSP)', 
   descricao: 'Offshore Mechanics Laboratory', responsavel: docente1
 })
+lmo.docentes << docente1
 
 gmsie = Laboratorio.create({nome: 'GMSIE', localizacao: 'Escola Politécnica (EPUSP)',
   descricao: 'Grupo de Mecanica dos Solidos e Impacto em Estruturas', responsavel: docente3 
 })
+gmsie.docentes << docente3
 
 aluno2 = Aluno.create!({nusp: 1, departamento: 'PMR', user_attributes: {nome: 'aluno1',
   email: 'aluno@aluno1', password: '111111', password_confirmation: '111111'

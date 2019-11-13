@@ -28,8 +28,14 @@ class VinculoController < ApplicationController
         format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
         format.json { head :no_content }
       end
-    elsif (membro.laboratorio == nil)
+    elsif (membro.user.aluno? && membro.laboratorio == nil)
       membro.update(laboratorio_id: @laboratorio.id)
+      respond_to do |format|
+        format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Criado com sucesso' }
+        format.json { head :no_content }
+      end
+    elsif (membro.user.docente? && !@laboratorio.docentes.exists?(membro.id))
+      @laboratorio.docentes << membro
       respond_to do |format|
         format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Criado com sucesso' }
         format.json { head :no_content }
@@ -57,6 +63,18 @@ class VinculoController < ApplicationController
     if (membro == nil)
       respond_to do |format|
         format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Não foi possível remover vínculo' }
+        format.json { head :no_content }
+      end
+    elsif (membro.user.docente? && membro.responsavel?(@laboratorio))
+      respond_to do |format|
+        format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Não se pode remover o vínculo do responsável' }
+        format.json { head :no_content }
+      end
+    elsif (membro.user.docente?)
+      @laboratorio.docentes.delete(membro)
+      membro.update(laboratorio_id: nil)
+      respond_to do |format|
+        format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Vinculo removido com sucesso' }
         format.json { head :no_content }
       end
     else

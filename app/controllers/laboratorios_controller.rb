@@ -29,6 +29,8 @@ class LaboratoriosController < ApplicationController
   # POST /laboratorios.json
   def create
     @laboratorio = Laboratorio.new(laboratorio_params)
+    @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
+    puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
     respond_to do |format|
       if @laboratorio.save
         format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully created.' }
@@ -44,15 +46,15 @@ class LaboratoriosController < ApplicationController
   # PATCH/PUT /laboratorios/1.json
   def update
     if (@user == @responsavel || admin_signed_in?)
-    respond_to do |format|
-      if @laboratorio.update(laboratorio_params)
-        format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
-        format.json { render :show, status: :ok, location: @laboratorio }
-      else
-        format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
-        format.json { head :no_content }
+      respond_to do |format|
+        if @laboratorio.update(laboratorio_params)
+          format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
+          format.json { render :show, status: :ok, location: @laboratorio }
+        else
+          format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
+          format.json { head :no_content }
+        end
       end
-    end
     end
   end
 

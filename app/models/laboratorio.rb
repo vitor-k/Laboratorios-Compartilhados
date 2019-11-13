@@ -9,6 +9,7 @@ class Laboratorio < ApplicationRecord
     has_many :docentes
 
     belongs_to :responsavel, class_name: 'Docente', foreign_key: 'responsavel_id'  
+    has_and_belongs_to_many :docentes
     
     # add responsavel
     
