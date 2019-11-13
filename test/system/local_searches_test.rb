@@ -19,10 +19,10 @@ class LocalSearchesTest < ApplicationSystemTestCase
   test 'pesquisa por um termo que não tem e redireciona de volta' do
     visit laboratorio_path(@laboratorio)
 
-    #fill_in 'Pesquisar serviço, equipamento ou postagem', with: ''
+    fill_in 'Pesquisar serviço, equipamento ou postagem', with: ''
     click_button 'Pesquisar'
 
-    #assert_redirected_to laboratorio_path(@laboratorio)
-    assert_selector 'p', text: 'Não há resultados com esse termo'
+    # assert_redirected_to laboratorio_path(@laboratorio)
+    assert_selector 'p', text: 'É preciso inserir um termo para pesquisar'
   end
 end
