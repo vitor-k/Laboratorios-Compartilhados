@@ -9,6 +9,9 @@ class User < ApplicationRecord
   end
 
   belongs_to :meta, polymorphic: true
+
+  has_many :postagems, dependent: :destroy
+  has_many :pedidos, dependent: :destroy
   
   validates :email, uniqueness: true
 

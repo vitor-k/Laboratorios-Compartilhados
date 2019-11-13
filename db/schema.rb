@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_205424) do
+ActiveRecord::Schema.define(version: 2019_11_13_164125) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -62,32 +62,24 @@ ActiveRecord::Schema.define(version: 2019_11_12_205424) do
     t.text "descricao"
     t.integer "equipamento_id"
     t.integer "servico_id"
-    t.integer "aluno_id"
-    t.integer "docente_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "representante_externo_id"
-    t.index ["aluno_id"], name: "index_pedidos_on_aluno_id"
-    t.index ["docente_id"], name: "index_pedidos_on_docente_id"
+    t.integer "user_id"
     t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
-    t.index ["representante_externo_id"], name: "index_pedidos_on_representante_externo_id"
     t.index ["servico_id"], name: "index_pedidos_on_servico_id"
+    t.index ["user_id"], name: "index_pedidos_on_user_id"
   end
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
-    t.integer "aluno_id"
     t.integer "admin_id"
-    t.integer "representante_externo_id"
-    t.integer "docente_id"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["admin_id"], name: "index_postagems_on_admin_id"
-    t.index ["aluno_id"], name: "index_postagems_on_aluno_id"
-    t.index ["docente_id"], name: "index_postagems_on_docente_id"
     t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
-    t.index ["representante_externo_id"], name: "index_postagems_on_representante_externo_id"
+    t.index ["user_id"], name: "index_postagems_on_user_id"
   end
 
   create_table "representante_externos", force: :cascade do |t|
