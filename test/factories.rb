@@ -65,14 +65,14 @@ FactoryBot.define do
   factory :equipamento do
     nome { FFaker::Product.product }
     funcao { FFaker::Product.product_name }
-    taxa { rand(100, 10000) }
+    taxa { rand(100..10000) }
     laboratorio
   end
 
   factory :servico do
     nome { FFaker::Product.product }
-    funcao { FFaker::Product.product_name }
-    taxa { rand(100, 10000) }
+    descricao { FFaker::Product.product_name }
+    taxa { rand(100..10000) }
     laboratorio
   end
 

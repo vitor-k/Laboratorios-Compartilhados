@@ -25,4 +25,23 @@ class LocalSearchesTest < ApplicationSystemTestCase
     # assert_redirected_to laboratorio_path(@laboratorio)
     assert_selector 'p', text: 'É preciso inserir um termo para pesquisar'
   end
+
+  test 'pesquisa por um termo que tem e renderiza a página com o resultado' do
+    visit laboratorio_path(@laboratorio)
+    equipamento = create(:equipamento, laboratorio: @laboratorio)
+    servico = create(:servico, laboratorio: @laboratorio)
+
+    fill_in 'Pesquisar serviço, equipamento ou postagem', with: equipamento.nome
+    click_button 'Pesquisar'
+
+    #assert_redirected_to busca_laboratorio_path(@laboratorio)
+    assert_selector 'td', text: equipamento.nome
+
+    click_link 'Voltar'
+
+    fill_in 'Pesquisar serviço, equipamento ou postagem', with: servico.nome
+    click_button 'Pesquisar'
+
+    assert_selector 'td', text: servico.nome
+  end
 end
