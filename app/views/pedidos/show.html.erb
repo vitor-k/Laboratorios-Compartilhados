@@ -20,5 +20,12 @@
   <%= @solicitador.user.nome %>
 </p>
 
+#Equipamento.where(equipamento_id: @pedido.equipamento_id).nome#
+
+<p>
+  <strong>Equipamento:</strong>
+  <%= @pedido.equipamento_id %>
+</p>
+
 <%= link_to 'Edit', edit_pedido_path(@pedido) %> |
 <%= link_to 'Back', pedidos_path %>
