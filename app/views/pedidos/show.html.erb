@@ -20,11 +20,14 @@
   <%= @solicitador.user.nome %>
 </p>
 
-#Equipamento.where(equipamento_id: @pedido.equipamento_id).nome#
-
 <p>
   <strong>Equipamento:</strong>
-  <%= @pedido.equipamento_id %>
+  <%= Equipamento.find(@pedido.equipamento_id).nome %>
+</p>
+
+<p>
+  <strong>Taxa total:</strong>
+  <%= (((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil) * Equipamento.find(@pedido.equipamento_id).taxa%>
 </p>
 
 <%= link_to 'Edit', edit_pedido_path(@pedido) %> |
