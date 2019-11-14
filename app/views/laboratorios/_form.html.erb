@@ -26,14 +26,14 @@
     <%= form.text_area :descricao %>
   </div>
 
-  <% if admin_signed_in?%>
+  <% if admin_signed_in? %>
     <div class="field">
-      <%= form.label "Responsável (opcional):" %>
+      <%= form.label "Responsável:" %>
       <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: true) %>
     </div>
   <% end %>
 
-  <div class="actions">
+  <div class="actions">   
     <%= form.submit %>
   </div>
 <% end %>

@@ -1,0 +1,22 @@
+<%= form_with(model: pedido_responsabilidade, local: true) do |form| %>
+  <% if pedido_responsabilidade.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pedido_responsabilidade.errors.count, "error") %> prohibited this pedido_responsabilidade from being saved:</h2>
+
+      <ul>
+      <% pedido_responsabilidade.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label "Nome do laboratório:" %>
+    <%= form.collection_select(:id_laboratorio, Laboratorio.all, :id, :nome, prompt: true) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome do laboratorio:</strong>
+  <%= Laboratorio.find(@pedido_responsabilidade.id_laboratorio) %>
+</p>
+
+<%= link_to 'Edit', edit_pedido_responsabilidade_path(@pedido_responsabilidade) %> |
+<%= link_to 'Back', pedido_responsabilidades_path %>

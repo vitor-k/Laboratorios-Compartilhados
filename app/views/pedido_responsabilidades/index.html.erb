@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pedido Responsabilidades</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome do laboratório</th>
+      <th>Nome do docente</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pedido_responsabilidades.each do |pedido_responsabilidade| %>
+      <tr>
+        <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
+        <td><%= Docente.find(pedido_responsabilidade.id_docente).nome %></td>
+        <td><%= link_to 'Show', pedido_responsabilidade %></td>
+        <td><%= link_to 'Edit', edit_pedido_responsabilidade_path(pedido_responsabilidade) %></td>
+        <td><%= link_to 'Destroy', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Pedido Responsabilidade', new_pedido_responsabilidade_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_205142) do
+ActiveRecord::Schema.define(version: 2019_11_14_014845) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 2019_11_13_205142) do
     t.datetime "updated_at", null: false
     t.integer "responsavel_id"
     t.index ["responsavel_id"], name: "index_laboratorios_on_responsavel_id"
+  end
+
+  create_table "pedido_responsabilidades", force: :cascade do |t|
+    t.integer "id_laboratorio"
+    t.integer "id_docente"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pedidos", force: :cascade do |t|

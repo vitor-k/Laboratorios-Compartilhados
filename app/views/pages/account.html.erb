@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <h1> Conta </h1>
 
 <% if user_signed_in? %>
@@ -27,8 +29,26 @@
         <p> Departamento: <%= Docente.find(current_user.meta_id).departamento %> </p>
         <p> 
             Laboratorio vinculado: 
-            <% if current_user.aluno? && Docente.find(current_user.meta_id).laboratorio != nil %>
-                <%= Docente.find(current_user.meta_id).laboratorio.nome %>
+            <% if @laboratorio_docente.size != 0 %> <%# Lista de laboratórios no controller %>
+                <table>
+                <thead>
+                    <tr>
+                    <th>Nome</th>
+                    <th>Localização</th>
+                    <th colspan="3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @laboratorio_docente.each do |lab| %>
+                    <tr>
+                        <td><%= lab.nome %></td>
+                        <td><%= lab.localizacao %></td>
+                        <td><%= link_to 'Página do laboratório', laboratorio_path(lab), method: :get %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+                </table>
             <% else %>
                 Não está vinculado a nenhum laboratório.
             <% end %>
@@ -59,7 +79,8 @@
                 <p> Não é responsável de nenhum laboratório. </p>
             <% end %>
         </p>
-        <%= link_to "Solicitar responsabilidade", account_path, :method => :get %> <%# IMPLEMENTAR%>
+        <p><%= link_to "Solicitar responsabilidade", new_pedido_responsabilidade_path %></p>
+        <p><%= link_to "Checar solicitações de responsabilidade", index_docente_path(current_user.id) %></p>
     <% end %>
     
     <p><%= link_to('Edit registration', edit_user_path) %></p>

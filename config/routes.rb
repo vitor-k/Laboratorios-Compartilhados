@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :admins
   resources :docentes
   resources :alunos
-
+  resources :pedido_responsabilidades
+  get '/account/:id/pedido_responsabilidade', to: 'pedido_responsabilidades#index_docente', as: 'index_docente'
   resources :pedidos
   resources :postagems
 

@@ -1,0 +1,11 @@
+<h1>New Pedido Responsabilidade</h1>
+
+<% if @permissao %>
+    <%= render 'form', pedido_responsabilidade: @pedido_responsabilidade %>
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para solicitar o pedido de responsabilidade. </h2>
+    </div>
+<% end %>
+
+<%= link_to 'Back', pedido_responsabilidades_path %>
