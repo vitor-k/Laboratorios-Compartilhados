@@ -1,6 +1,6 @@
 <h1>Editing Pedido Responsabilidade</h1>
 
-<% if @permissao %>
+<% if @permissao_existente %>
     <%= render 'form', pedido_responsabilidade: @pedido_responsabilidade %>
 <% else %>
     Não tem permissão para editar solicitação de responsabilidade.
