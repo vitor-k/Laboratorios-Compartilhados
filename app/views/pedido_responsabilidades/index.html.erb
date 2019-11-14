@@ -15,10 +15,9 @@
     <% @pedido_responsabilidades.each do |pedido_responsabilidade| %>
       <tr>
         <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
-        <td><%= Docente.find(pedido_responsabilidade.id_docente).nome %></td>
-        <td><%= link_to 'Show', pedido_responsabilidade %></td>
-        <td><%= link_to 'Edit', edit_pedido_responsabilidade_path(pedido_responsabilidade) %></td>
-        <td><%= link_to 'Destroy', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= User.find(pedido_responsabilidade.id_docente).nome %></td>
+        <td><%= link_to 'Aceitar (set_responsavel)', aceitar_path(pedido_responsabilidade), method: :put %></td>
+        <td><%= link_to 'Rejeitar (Destroy)', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

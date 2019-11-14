@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :alunos
   resources :pedido_responsabilidades
   get '/account/:id/pedido_responsabilidade', to: 'pedido_responsabilidades#index_docente', as: 'index_docente'
+  put '/pedido_responsabilidades/aceitar/(:id)', to: 'pedido_responsabilidades#aceitar', as: 'aceitar'
   resources :pedidos
   resources :postagems
 

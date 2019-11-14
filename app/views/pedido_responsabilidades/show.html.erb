@@ -2,7 +2,7 @@
 
 <p>
   <strong>Nome do laboratorio:</strong>
-  <%= Laboratorio.find(@pedido_responsabilidade.id_laboratorio) %>
+  <%= Laboratorio.find(@pedido_responsabilidade.id_laboratorio).nome %>
 </p>
 
 <%= link_to 'Edit', edit_pedido_responsabilidade_path(@pedido_responsabilidade) %> |
