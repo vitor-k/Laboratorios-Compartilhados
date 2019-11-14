@@ -24,7 +24,11 @@
 
 <p>
   <strong>Responsável:</strong>
-  <%= @laboratorio.responsavel.nome %>
+  <% if @responsavel == "sem_responsavel" %>
+    Sem responsável
+  <% else %>
+    <%= @responsavel.nome %>
+  <% end %>
 </p>
 
 

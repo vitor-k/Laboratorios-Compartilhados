@@ -28,7 +28,7 @@
 
   <% if admin_signed_in?%>
     <div class="field">
-      <%= form.label "Responsável" %>
+      <%= form.label "Responsável (opcional):" %>
       <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: true) %>
     </div>
   <% end %>

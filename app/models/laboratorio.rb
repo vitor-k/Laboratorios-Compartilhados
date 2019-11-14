@@ -8,7 +8,7 @@ class Laboratorio < ApplicationRecord
     has_many :alunos
     has_many :docentes
 
-    belongs_to :responsavel, class_name: 'Docente', foreign_key: 'responsavel_id'  
+    belongs_to :responsavel, class_name: 'Docente', foreign_key: 'responsavel_id', optional: true
     has_and_belongs_to_many :docentes
     
     # add responsavel

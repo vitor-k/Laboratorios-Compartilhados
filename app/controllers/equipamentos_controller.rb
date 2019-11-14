@@ -123,6 +123,10 @@ class EquipamentosController < ApplicationController
     end
 
     def get_responsavel
-      @responsavel = Docente.find(@laboratorio.responsavel_id)
+      if (@laboratorio.responsavel_id != nil)
+        @responsavel = Docente.find(@laboratorio.responsavel_id)
+      else
+        @responsavel = "sem_responsavel"
+      end
     end
 end

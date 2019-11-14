@@ -19,7 +19,7 @@
         <td><%= laboratorio.nome %></td>
         <td><%= laboratorio.localizacao %></td>
         <td><%= laboratorio.descricao %></td>
-        <% if laboratorio.responsavel.nil? %>
+        <% if laboratorio.responsavel == "sem_responsavel" %>
           <td>Sem responsável</td>
         <% else %>
           <td><%= laboratorio.responsavel.user.nome %></td>

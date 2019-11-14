@@ -29,8 +29,12 @@ class LaboratoriosController < ApplicationController
   # POST /laboratorios.json
   def create
     @laboratorio = Laboratorio.new(laboratorio_params)
-    @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
-    puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
+    get_responsavel
+    puts "O responsavel é: #{@laboratorio.responsavel_id}"
+    if (@responsavel != "sem_responsavel")
+      @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
+      puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
+    end
     respond_to do |format|
       if @laboratorio.save
         format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully created.' }
@@ -130,6 +134,10 @@ class LaboratoriosController < ApplicationController
 
     #get responsável
     def get_responsavel
-      @responsavel = Docente.find(@laboratorio.responsavel_id)
+      if (@laboratorio.responsavel_id != nil)
+        @responsavel = Docente.find(@laboratorio.responsavel_id)
+      else
+        @responsavel = "sem_responsavel"
+      end
     end
 end
