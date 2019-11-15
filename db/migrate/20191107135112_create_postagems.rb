@@ -2,7 +2,6 @@ class CreatePostagems < ActiveRecord::Migration[5.2]
   def change
     create_table :postagems do |t|
       t.text :texto
-      t.text :titulo
 
       t.belongs_to :aluno, optional: true
       t.belongs_to :admin, optional: true
