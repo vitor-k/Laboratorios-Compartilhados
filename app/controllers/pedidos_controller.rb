@@ -1,7 +1,7 @@
 class PedidosController < ApplicationController
   before_action :set_pedido, only: [:show, :edit, :update, :destroy]
   before_action :getSolicitador, only: [:show, :edit, :update, :destroy]
-  before_action :get_user, only: [:edit, :create, :update, :destroy, :new]
+  before_action :get_user, only: [:edit, :create, :update, :destroy, :new, :show]
 
   # GET /pedidos
   # GET /pedidos.json

@@ -19,8 +19,10 @@
         <td><%= pedido.dataFim %></td>
         <td><%= pedido.descricao %></td>
         <td><%= link_to 'Show', pedido %></td>
-        <td><%= link_to 'Edit', edit_pedido_path(pedido) %></td>
-        <td><%= link_to 'Destroy', pedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if (admin_signed_in?) %>
+          <td><%= link_to 'Edit', edit_pedido_path(pedido) %></td>
+          <td><%= link_to 'Destroy', pedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
