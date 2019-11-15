@@ -17,7 +17,17 @@
 
 <p>
   <strong>Nome solicitante:</strong>
-  <%= @solicitador.nome %>
+  <%= @solicitador.user.nome %>
+</p>
+
+<p>
+  <strong>Equipamento:</strong>
+  <%= Equipamento.find(@pedido.equipamento_id).nome %>
+</p>
+
+<p>
+  <strong>Taxa total:</strong>
+  <%= (((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil) * Equipamento.find(@pedido.equipamento_id).taxa%>
 </p>
 
 <% if (@pedido.equipamento_id != nil) %>

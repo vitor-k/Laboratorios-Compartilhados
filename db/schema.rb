@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.string "titulo"
     t.index ["admin_id"], name: "index_postagems_on_admin_id"
     t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
     t.index ["user_id"], name: "index_postagems_on_user_id"

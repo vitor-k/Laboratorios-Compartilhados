@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  nome: MyText
-  descricao: MyText
-  taxa: 9.99
+# one:
+#   nome: MyText
+#   descricao: MyText
+#   taxa: 9.99
+#   laboratorio: lmo
 
-two:
-  nome: MyText
-  descricao: MyText
-  taxa: 9.99
+# two:
+#   nome: MyText
+#   descricao: MyText
+#   taxa: 9.99
+#   laboratorio: lmo

@@ -1,10 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Texto:</strong>
+  <strong>Título:</strong>
+  <%= @postagem.titulo %>
+  <br>
+  <strong>Descrição:</strong>
   <%= @postagem.texto %>
+  <br>
   <strong>Autor:</strong>
-  <%= @poster.nome %>
+  <%= @poster.user.nome %>
+  <br>
+  <strong>Laboratório:</strong>
+  <% if @postagem.laboratorio != nil %>
+    <%= @postagem.laboratorio.nome %>
+  <% else %>
+  nao tem né
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_postagem_path(@postagem) %> |

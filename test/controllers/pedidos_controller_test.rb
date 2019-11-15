@@ -1,8 +1,18 @@
 require 'test_helper'
 
 class PedidosControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @pedido = pedidos(:one)
+
+    @aluno_user = users(:user_aluno1)
+    @aluno = alunos(:aluno1)
+
+    sign_in @aluno_user
+  end
+
+  teardown do
+    sign_out @aluno_user
   end
 
   test "should get index" do
@@ -17,7 +27,7 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create pedido" do
     assert_difference('Pedido.count') do
-      post pedidos_url, params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao } }
+      post pedidos_url, params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao, user_id: @aluno_user.id } }
     end
 
     assert_redirected_to pedido_url(Pedido.last)
@@ -34,7 +44,7 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pedido" do
-    patch pedido_url(@pedido), params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao } }
+    patch pedido_url(@pedido), params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao, user_id: @aluno_user.id } }
     assert_redirected_to pedido_url(@pedido)
   end
 
