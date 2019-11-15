@@ -17,23 +17,17 @@
 
 <p>
   <strong>Nome solicitante:</strong>
-  <%= @solicitador.user.nome %>
-</p>
-
-<p>
-  <strong>Equipamento:</strong>
-  <%= Equipamento.find(@pedido.equipamento_id).nome %>
-</p>
-
-<p>
-  <strong>Taxa total:</strong>
-  <%= (((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil) * Equipamento.find(@pedido.equipamento_id).taxa%>
+  <%= @solicitador.nome %>
 </p>
 
 <% if (@pedido.equipamento_id != nil) %>
   <p>
     <strong>Equipamento:</strong>
     <%= Equipamento.find(@pedido.equipamento_id).nome %>
+  </p>
+  <p>
+    <strong>Taxa total de uso do equimaneto:</strong>
+    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Equipamento.find(@pedido.equipamento_id).taxa%>
   </p>
 <% end %>
 
@@ -42,7 +36,12 @@
     <strong>Equipamento:</strong>
     <%= Servico.find(@pedido.servico_id).nome %>
   </p>
+  <p>
+    <strong>Taxa total do serviço:</strong>
+    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Servico.find(@pedido.servico_id).taxa%>
+  </p>
 <% end %>
-
-<%= link_to 'Edit', edit_pedido_path(@pedido) %> |
+<% if (@user == @solicitador)%>
+  <%= link_to 'Edit', edit_pedido_path(@pedido) %> | 
+<% end %>
 <%= link_to 'Back', pedidos_path %>

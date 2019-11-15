@@ -25,5 +25,6 @@
     <%= link_to 'Editar equipamento', edit_laboratorio_equipamento_path(@laboratorio) %>
 <% end%>
 
-<%= link_to 'Pedir equipamento', create_pedido_equipamento_path("equipamento", @laboratorio, @equipamento) %>
-
+<% if (user_signed_in?) %>
+  <%= link_to 'Pedir equipamento', create_pedido_alternativo_path("equipamento", @laboratorio, @equipamento) %>
+<% end %>
