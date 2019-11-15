@@ -20,5 +20,15 @@
   <%= @solicitador.user.nome %>
 </p>
 
+<p>
+  <strong>Equipamento:</strong>
+  <%= Equipamento.find(@pedido.equipamento_id).nome %>
+</p>
+
+<p>
+  <strong>Taxa total:</strong>
+  <%= (((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil) * Equipamento.find(@pedido.equipamento_id).taxa%>
+</p>
+
 <%= link_to 'Edit', edit_pedido_path(@pedido) %> |
 <%= link_to 'Back', pedidos_path %>
