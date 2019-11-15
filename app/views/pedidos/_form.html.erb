@@ -26,15 +26,29 @@
     <%= form.text_area :descricao %>
   </div>
 
-  <div class="field">
-    <%= form.label "Equipamento" %>
-    <%= form.collection_select(:equipamento_id, Equipamento.all, :id, :nome, prompt: true) %>
-  </div>
+  <% if (@tipo=="equipamento") %>
+    <div class="field">
+      <%= form.label "Equipamento" %>
+      <%= form.collection_select(:equipamento_id, Equipamento.where(id: @equi_id), :id, :nome) %>
+    </div>
+  <% elsif (@tipo!="servico") %>
+    <div class="field">
+      <%= form.label "Equipamento" %>
+      <%= form.collection_select(:equipamento_id, Equipamento.all, :id, :nome, prompt: true) %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label "Serviço" %>
-    <%= form.collection_select(:servico_id, Servico.all, :id, :nome, prompt: true) %>
-  </div>
+  <% if (@tipo=="servico") %>
+    <div class="field">
+      <%= form.label "Serviço" %>
+      <%= form.collection_select(:servico_id, Servico.where(id: @servi_id), :id, :nome) %>
+    </div>
+  <% elsif (@tipo!="equipamento") %>
+    <div class="field">
+      <%= form.label "Serviço" %>
+      <%= form.collection_select(:servico_id, Servico.all, :id, :nome, prompt: true) %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

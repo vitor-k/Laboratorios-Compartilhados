@@ -20,5 +20,19 @@
   <%= @solicitador.nome %>
 </p>
 
+<% if (@pedido.equipamento_id != nil) %>
+  <p>
+    <strong>Equipamento:</strong>
+    <%= Equipamento.find(@pedido.equipamento_id).nome %>
+  </p>
+<% end %>
+
+<% if (@pedido.servico_id != nil) %>
+  <p>
+    <strong>Equipamento:</strong>
+    <%= Servico.find(@pedido.servico_id).nome %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_pedido_path(@pedido) %> |
 <%= link_to 'Back', pedidos_path %>
