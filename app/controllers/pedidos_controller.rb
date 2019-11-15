@@ -28,7 +28,7 @@ class PedidosController < ApplicationController
   # POST /pedidos
   # POST /pedidos.json
   def create
-    @pedido = @user.pedidos.build(pedido_params)
+    @pedido = @user.user.pedidos.build(pedido_params)
     respond_to do |format|
       if @pedido.save
         format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
@@ -95,14 +95,15 @@ class PedidosController < ApplicationController
     end
 
     def getSolicitador
-      if (@pedido.aluno_id != nil)
-          @solicitador = Aluno.find(@pedido.aluno_id)    
-      elsif (@pedido.docente_id != nil)
-          @solicitador = Docente.find(@pedido.docente_id)   
-      elsif (@pedido.representante_externo_id != nil)
-          @solicitador = RepresentanteExterno.find(@pedido.representante_externo_id)
-      elsif (@pedido.admin_id != nil)
-          @solicitador = Admin.find(@pedido.admin_id)
+      user_solicitador = User.find(@pedido.user_id)
+      if (user_solicitador.aluno?)
+          @solicitador = Aluno.find(user_solicitador.meta_id)
+      elsif (user_solicitador.docente?)
+          @solicitador = Docente.find(user_solicitador.meta_id)
+      elsif (user_solicitador.representante_externo?)
+          @solicitador = RepresentanteExterno.find(user_solicitador.meta_id)
+      elsif (user_solicitador.admin?)
+          @solicitador = Admin.find(user_solicitador.meta_id)
       end
     end
 end

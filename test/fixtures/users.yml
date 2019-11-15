@@ -7,3 +7,24 @@
 # column: value
 #
 # column: value
+
+# user_docente1:
+#   nome: 'Provasi'
+#   email: 'provasi@usp.br'
+#   encrypted_password: <%= User.new.send(:password_digest, 'sanderson') %>
+#   meta_type: 'Docente'
+#   meta_id: docentes(docente1).id
+
+# user_admin1:
+#   nome: 'Gabriel'
+#   email: 'gabriel@usp.br'
+#   encrypted_password: <= User.new.send(:password_digest, 'saidoleft4deadLucas') %>
+#   meta_type: 'Admin'
+#   meta_id: admins(admin1).id
+
+user_aluno1:
+  nome: 'Rogerinho'
+  email: 'roger@usp.br'
+  encrypted_password: <= User.new.send(:password_digest, 'achouerradootario') %>
+  meta_type: 'Aluno'
+  meta: aluno1

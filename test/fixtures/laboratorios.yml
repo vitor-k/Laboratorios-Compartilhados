@@ -1,11 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  nome: MyText
-  localizacao: MyText
-  descricao: MyText
-
-two:
-  nome: MyText
-  localizacao: MyText
-  descricao: MyText
+# lmo:
+#   nome: 'LMO'
+#   localizacao: 'Escola Politécnica (EPUSP)'
+#   descricao: 'Offshore Mechanics Laboratory'
+#   responsavel: docente1
