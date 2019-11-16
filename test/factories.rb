@@ -76,7 +76,16 @@ FactoryBot.define do
     laboratorio
   end
 
-  
+  factory :pedido_responsabilidade do
+    association :id_docente, factory: :docente
+    association :id_laboratorio, factory: :laboratorio
+    after(:build) do |pedido_responsabilidade|
+      docente_user = create(:user, :docente)
+      # pedido_responsabilidade.id_docente = Docente.find(docente_user.meta_id).id
+      pedido_responsabilidade.id_docente = docente_user.id
+      pedido_responsabilidade.id_laboratorio = create(:laboratorio).id
+    end
+  end
 
 
 end

@@ -1,9 +1,2 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id_laboratorio: 1
-  id_docente: 1
-
-two:
-  id_laboratorio: 1
-  id_docente: 1

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PedidoResponsabilidadesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @pedido_responsabilidade = pedido_responsabilidades(:one)
+    @pedido_responsabilidade = create(:pedido_responsabilidade)
   end
 
   test "should get index" do
