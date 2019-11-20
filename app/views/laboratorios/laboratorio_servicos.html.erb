@@ -19,9 +19,9 @@
         <td><%= servico.descricao %></td>
         <td><%= servico.taxa %></td>
         <% if (admin_signed_in? || @user == @responsavel) %>
-            <td><%= link_to 'Show', [@laboratorio, servico] %></td>
-            <td><%= link_to 'Edit', edit_laboratorio_servico_path(@laboratorio, servico) %></td>
-            <td><%= link_to 'Destroy', [@laboratorio, servico], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Mostrar', [@laboratorio, servico] %></td>
+            <td><%= link_to 'Editar', edit_laboratorio_servico_path(@laboratorio, servico) %></td>
+            <td><%= link_to 'Deletar', [@laboratorio, servico], method: :delete, data: { confirm: 'Confirmar?' } %></td>
       <% end %>
       </tr>
     <% end %>

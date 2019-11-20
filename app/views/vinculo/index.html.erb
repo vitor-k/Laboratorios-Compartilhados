@@ -21,7 +21,7 @@
         <td><%= docente.nusp %></td>
         <td><%= docente.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) && docente != @responsavel %>
-            <td><%= link_to 'Destroy', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.user.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Deletar', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.user.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Confirmar?' } %></td>
         <% end %>
       </tr>
     <% end %>
@@ -51,7 +51,7 @@
         <td><%= aluno.nusp %></td>
         <td><%= aluno.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) %>
-             <td><%= link_to 'Destroy', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: aluno.user.nome, nUSP: aluno.nusp), method: :put ,data: { confirm: 'Are you sure?' } %></td>
+             <td><%= link_to 'Deletar', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: aluno.user.nome, nUSP: aluno.nusp), method: :put ,data: { confirm: 'Confirmar?' } %></td>
       <% end %>
       </tr>
     <% end %>

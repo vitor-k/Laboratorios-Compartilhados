@@ -12,17 +12,17 @@
   <% end %>
 
 <div class="field">
-    <%= form.label :titulo %>
+    <%= form.label :"Título" %>
     <%= form.text_area :titulo %>
   </div>
 
   <div class="field">
-    <%= form.label :texto %>
+    <%= form.label :"Texto" %>
     <%= form.text_area :texto %>
   </div>
 
   <div class="field">
-    <%= form.label :laboratorio_id %>
+    <%= form.label :"Laboratóro" %>
     <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
   </div>
 

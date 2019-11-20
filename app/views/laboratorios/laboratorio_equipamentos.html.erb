@@ -20,9 +20,9 @@
         <td><%= equipamento.funcao %></td>
         <td><%= equipamento.taxa %></td>
         <% if (admin_signed_in? || @user == @responsavel) %>
-            <td><%= link_to 'Show', [@laboratorio, equipamento] %></td>
-            <td><%= link_to 'Edit', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
-            <td><%= link_to 'Destroy', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Mostrar', [@laboratorio, equipamento] %></td>
+            <td><%= link_to 'Editar', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
+            <td><%= link_to 'Deletar', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Confirmar?' } %></td>
       <% end %>
       </tr>
     <% end %>

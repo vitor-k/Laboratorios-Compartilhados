@@ -1,4 +1,4 @@
-<h1>New Postagem</h1>
+<h1>Novo Postagem</h1>
 
 <% if (@user != nil) %>
     <%= render 'form', postagem: @postagem %>
@@ -7,4 +7,4 @@
         <h2> Deve estar logado para postar </h2>
     </div>
 <% end %>
-<%= link_to 'Back', postagems_path %>
+<%= link_to 'Voltar', postagems_path %>
