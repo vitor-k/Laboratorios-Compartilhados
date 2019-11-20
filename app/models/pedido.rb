@@ -19,7 +19,11 @@ class Pedido < ApplicationRecord
     end
 
     def em_horario_aceito
-        errors.add(:dataInicio, "deve ser em uma data não aceita") unless Pedido.where(descricao==" hbjnm")
+        #puts "AAAAAAA"
+        #puts Pedido.where("(? BETWEEN dataInicio AND dataFim OR ? BETWEEN dataInicio AND dataFim) AND aceito = ?", self.dataInicio, self.dataFim, true).count()
+        #puts "BBBBBBB"
+        errors.add(:dataInicio, "deve ser em uma data não pega") if Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND aceito = ? AND (equipamento_id = ? OR servico_id = ?) AND id != ?", self.dataFim, self.dataInicio, true, self.equipamento_id, self.servico_id, self.id).any?
+        #errors.add(:dataInicio, "deve ser em uma data não pega") if Pedido.where("(? BETWEEN dataInicio AND dataFim OR ? BETWEEN dataInicio AND dataFim) AND aceito = ? AND equipamento_id=? AND servico_id=?", self.dataInicio, self.dataFim, true, equipamento_id, servico_id).any?
     end
 
     def checa_serv_equip

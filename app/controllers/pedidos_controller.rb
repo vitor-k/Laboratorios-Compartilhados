@@ -38,7 +38,7 @@ class PedidosController < ApplicationController
   # POST /pedidos
   # POST /pedidos.json
   def create
-    @pedido = @current_user.pedidos.build(pedido_params)
+    @pedido = @current_user.pedidos.new(pedido_params)
     respond_to do |format|
       if @pedido.save
         format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
@@ -48,7 +48,11 @@ class PedidosController < ApplicationController
         format.json { render json: @pedido.errors, status: :unprocessable_entity }
       end
     end
-    @pedido.update_attribute(:aceito, false)
+    @pedido.update_attribute(:aceito, true)
+    if (@pedido.invalid?)
+      puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n destruido \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      @pedido.destroy
+    end
   end
 
   # PATCH/PUT /pedidos/1
