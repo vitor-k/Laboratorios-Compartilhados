@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pesquisa_globals/index'
   devise_for :users, skip: [:registrations]
   resources :representante_externos
   resources :admins
