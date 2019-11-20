@@ -43,6 +43,11 @@
     <%= form.text_field :departamento %>
   </div>
 
+  <div class="field">
+    <%= form.label :laboratorio %>
+    <%= form.collection_select(:laboratorio_id, Laboratorio.all, :id, :nome , :include_blank => true) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

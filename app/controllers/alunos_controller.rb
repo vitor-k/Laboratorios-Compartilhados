@@ -81,7 +81,7 @@ class AlunosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aluno_params
-      params.require(:aluno).permit(:nusp, :departamento, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
+      params.require(:aluno).permit(:nusp, :departamento, :laboratorio_id, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
     end
 
     def authenticate_aluno

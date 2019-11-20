@@ -23,7 +23,13 @@
 
   <div class="field">
     <%= form.label :"Laboratóro" %>
-    <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
+    <% if aluno_signed_in? && current_aluno.laboratorio != nil %>
+      <%= form.collection_select :laboratorio_id, Laboratorio.where(id: current_aluno.laboratorio_id), :id, :nome %>
+    <% elsif docente_signed_in? %>
+      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
+    <% elsif admin_signed_in? %>
+      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
+    <% end %>
   </div>
 
   <div class="actions">

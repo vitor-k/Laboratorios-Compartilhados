@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/laboratorios/:idLab/pedidos', to: "pedidos#show_lab", as: 'show_laboratorio_pedidos'
   put '/laboratorios/:idLab/pedidos/aceitar/(:idPedido)', to: "pedidos#aceitar_pedido", as: 'aceitar_pedido'
   resources :postagems
+  resources :postagems, :path => :postagens, as: :postagens
 
   resources :laboratorios do
     member do
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     resources :equipamentos
   end
 
+
   # get '/laboratorios/:id/vinculos', to: 'laboratorios#index_vinculos', as: 'index_vinculos'
   # get '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#vinculo', as: 'new_vinculo'
   # post '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#create_vinculo', as: 'create_vinculo'
@@ -30,6 +32,7 @@ Rails.application.routes.draw do
   
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
+  get 'account/postagens', to: 'pages#account_postagens'
 
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
