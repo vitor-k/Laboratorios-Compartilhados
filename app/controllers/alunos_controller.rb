@@ -1,11 +1,14 @@
 class AlunosController < ApplicationController
-  before_action :authenticate_user!, :authenticate_aluno, except: [:new, :create, :update, :show]
+  before_action :authenticate_user!, :authenticate_aluno, except: [:new, :create, :update, :show, :index]
   before_action :new_registration, only: [:create]
   before_action :set_aluno, only: [:show, :edit, :update, :destroy]
 
   # GET /alunos
   # GET /alunos.json
   def index
+    if(!admin_signed_in?)
+      redirect_back(fallback_location: root_path, notice: 'Acesso negado.')
+    end
     @alunos = Aluno.all
   end
 

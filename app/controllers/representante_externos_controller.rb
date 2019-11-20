@@ -1,11 +1,14 @@
 class RepresentanteExternosController < ApplicationController
-  before_action :authenticate_user!, :authenticate_representante, except: [:new, :create, :update, :show]
+  before_action :authenticate_user!, :authenticate_representante, except: [:new, :create, :update, :show, :index]
   before_action :new_registration, only: [:new, :create]
   before_action :set_representante_externo, only: [:show, :edit, :update, :destroy]
 
   # GET /representante_externos
   # GET /representante_externos.json
   def index
+    if(!admin_signed_in?)
+      redirect_back(fallback_location: root_path, notice: 'Acesso negado.')
+    end
     @representante_externos = RepresentanteExterno.all
   end
 
