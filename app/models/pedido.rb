@@ -8,6 +8,7 @@ class Pedido < ApplicationRecord
     validate :dates_in_order
     validate :date_before_time
     validate :em_horario_aceito
+    validate :checa_serv_equip
 
     def dates_in_order
         errors.add(:dataInicio, "deve ser antes do fim da data") unless dataInicio < dataFim
@@ -19,5 +20,13 @@ class Pedido < ApplicationRecord
 
     def em_horario_aceito
         errors.add(:dataInicio, "deve ser em uma data não aceita") unless Pedido.where(descricao==" hbjnm")
+    end
+
+    def checa_serv_equip
+        if (equipamento_id==nil && servico_id==nil)
+            errors.add(:equipamento, ": Deve ser escolhido pelo menos um equipamento ou serviço")
+        elsif (equipamento_id!=nil && servico_id!=nil)
+            errors.add(:equipamento, ": Deve ser escolhido um equipamento ou um serviço")
+        end
     end
 end
