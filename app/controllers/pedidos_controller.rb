@@ -48,6 +48,7 @@ class PedidosController < ApplicationController
         format.json { render json: @pedido.errors, status: :unprocessable_entity }
       end
     end
+    @pedido.update_attribute(:aceito, false)
   end
 
   # PATCH/PUT /pedidos/1

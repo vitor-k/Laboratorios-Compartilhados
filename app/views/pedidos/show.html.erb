@@ -42,7 +42,7 @@
   </p>
 <% end %>
 
-<% if (current_user == @solicitador)%>
+<% if (current_user == @solicitador && !@pedido.aceito)%>
   <%= link_to 'Edit', edit_pedido_path(@pedido) %> | 
 <% end %>
 <%= link_to 'Back', pedidos_path %>
