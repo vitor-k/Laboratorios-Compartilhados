@@ -8,18 +8,18 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
   </head>
 
   <body class='<%= controller.controller_name %>'>
     <div id="banner">
-      <a href="http://localhost:3000"> <%= image_tag 'Logo.png'%> </a>
+      <%= link_to image_tag('Logo.png'), root_path%>
       <div id="row">
         <ul>
           <% if user_signed_in? %>
             <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-            <li><a href="http://localhost:3000/account"> <%= current_user.nome %> - <%= current_user.meta_type %> </a></li>
+            <li><%= link_to current_user.nome + " - " + current_user.meta_type, account_path %></li>
           <% else %>
-            <!--<li><a href="http://localhost:3000/account"> Conectar </a></li>-->
             <li><%= link_to 'Conectar', new_user_session_path %></li>
           <% end %>
         </ul>
@@ -28,12 +28,12 @@
     <div id = "columns">
       <div id = "side">
         <ul>
-          <li><a href = "http://localhost:3000">Página Principal</a></li>
-          <li><a href = "http://localhost:3000/about_us">Sobre nós</a></li>
-          <li><a href = "http://localhost:3000/laboratorios">Laboratorios</a></li>
-          <li><a href = "http://localhost:3000/postagems">Postagens</a></li>
-          <li><a href = "http://localhost:3000/pedidos">Pedidos</a></li>
-          <li><a href = "http://localhost:3000/pedido_responsabilidades">Responsabilidades</a></li>
+          <li><%= link_to "Página Principal", root_path %></li>
+          <li><%= link_to "Sobre nós", about_us_path %></li>
+          <li><%= link_to "Laboratorios", laboratorios_path %></li>
+          <li><%= link_to "Postagens", postagems_path %></li>
+          <li><%= link_to "Pedidos", pedidos_path %></li>
+          <li><%= link_to "Responsabilidades", pedido_responsabilidades_path %></li>
         </ul>
       </div>
       <div id="main">
