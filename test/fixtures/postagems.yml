@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  texto: MyText
-  user: user_aluno1
+# one:
+#   texto: MyText
+#   user: user_aluno1
 
-two:
-  texto: MyText
-  user: user_aluno1
+# two:
+#   texto: MyText
+#   user: user_aluno1

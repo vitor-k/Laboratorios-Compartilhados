@@ -22,9 +22,9 @@
 #   meta_type: 'Admin'
 #   meta_id: admins(admin1).id
 
-user_aluno1:
-  nome: 'Rogerinho'
-  email: 'roger@usp.br'
-  encrypted_password: <= User.new.send(:password_digest, 'achouerradootario') %>
-  meta_type: 'Aluno'
-  meta: aluno1
+# user_aluno1:
+#   nome: 'Rogerinho'
+#   email: 'roger@usp.br'
+#   encrypted_password: <= User.new.send(:password_digest, 'achouerradootario') %>
+#   meta_type: 'Aluno'
+#   meta: aluno1

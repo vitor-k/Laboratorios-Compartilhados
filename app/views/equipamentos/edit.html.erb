@@ -1,4 +1,4 @@
-<h1>Editing Equipamento</h1>
+<h1>Editando Equipamento</h1>
 
 <% if (admin_signed_in? || @user == @responsavel) %>
     <%= render 'form', equipamento: @equipamento %>
@@ -8,5 +8,5 @@
     </div>
 <% end %>
 
-<%= link_to 'Show', [@laboratorio, @equipamento] %> |
+<%= link_to 'Mostrar', [@laboratorio, @equipamento] %> |
 <%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %>

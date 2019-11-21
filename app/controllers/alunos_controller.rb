@@ -1,11 +1,14 @@
 class AlunosController < ApplicationController
-  before_action :authenticate_user!, :authenticate_aluno, except: [:new, :create, :update, :show]
+  before_action :authenticate_user!, :authenticate_aluno, except: [:new, :create, :update, :show, :index]
   before_action :new_registration, only: [:create]
   before_action :set_aluno, only: [:show, :edit, :update, :destroy]
 
   # GET /alunos
   # GET /alunos.json
   def index
+    if(!admin_signed_in?)
+      redirect_back(fallback_location: root_path, notice: 'Acesso negado.')
+    end
     @alunos = Aluno.all
   end
 
@@ -78,7 +81,7 @@ class AlunosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aluno_params
-      params.require(:aluno).permit(:nusp, :departamento, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
+      params.require(:aluno).permit(:nusp, :departamento, :laboratorio_id, user_attributes: [:id, :email, :password, :password_confirmation, :nome])
     end
 
     def authenticate_aluno

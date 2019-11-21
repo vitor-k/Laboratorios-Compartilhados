@@ -1,11 +1,14 @@
 class AdminsController < ApplicationController
-  before_action :authenticate_user!, :authenticate_admin, except: [:new, :create, :update, :show]
+  before_action :authenticate_user!, :authenticate_admin, except: [:new, :create, :update, :show, :index]
   before_action :new_registration, only: [:create]
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
 
   # GET /admins
   # GET /admins.json
   def index
+    if(!admin_signed_in?)
+      redirect_back(fallback_location: root_path, notice: 'Acesso negado.')
+    end
     @admins = Admin.all
   end
 

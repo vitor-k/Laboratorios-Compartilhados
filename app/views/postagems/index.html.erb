@@ -16,9 +16,11 @@
       <tr>
         <td><%= postagem.titulo %></td>
         <td><%= postagem.laboratorio.nome %></td>
-        <td><%= link_to 'Show', postagem %></td>
-        <td><%= link_to 'Edit', edit_postagem_path(postagem) %></td>
-        <td><%= link_to 'Destroy', postagem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Mostrar', postagem %></td>
+        <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>
+          <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+        <% end %>
+        <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Postagem', new_postagem_path %>
+<%= link_to 'Nova Postagem', new_postagem_path %>

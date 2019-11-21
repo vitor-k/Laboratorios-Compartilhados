@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pedidos</h1>
+<h1>Lista de Pedidos</h1>
 
 <table>
   <thead>
@@ -24,10 +24,11 @@
         <td><%= pedido.dataInicio %></td>
         <td><%= pedido.dataFim %></td>
         <td><%= pedido.aceito %></td>
-        <td><%= link_to 'Show', pedido %></td>
+        <td><%= pedido.descricao %></td>
+        <td><%= link_to 'Mostrar', pedido %></td>
         <% if (admin_signed_in?) %>
-          <td><%= link_to 'Edit', edit_pedido_path(pedido) %></td>
-          <td><%= link_to 'Destroy', pedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Editar', edit_pedido_path(pedido) %></td>
+          <td><%= link_to 'Deletar', pedido, method: :delete, data: { confirm: 'Confirmar?' } %></td>
         <% end %>
       </tr>
     <% end %>
@@ -36,4 +37,4 @@
 
 <br>
 
-<%= link_to 'New Pedido', new_pedido_path %>
+<%= link_to 'Novo Pedido', new_pedido_path %>

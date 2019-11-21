@@ -3,10 +3,9 @@ require 'test_helper'
 class PedidosControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @pedido = pedidos(:one)
+    @pedido = create(:pedido)
 
-    @aluno_user = users(:user_aluno1)
-    @aluno = alunos(:aluno1)
+    @aluno_user = create(:user, :aluno)
 
     sign_in @aluno_user
   end
