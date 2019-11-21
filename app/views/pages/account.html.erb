@@ -11,10 +11,10 @@
 
     <%# VIEW DO ALUNO%>
     <% if (current_user.aluno?)%>
-        <p> Número USP: <%= Aluno.find(current_user.meta_id).nusp %> </p>
-        <p> Departamento: <%= Aluno.find(current_user.meta_id).departamento %> </p>
+        <p> <b> Número USP: </b> <%= Aluno.find(current_user.meta_id).nusp %> </p>
+        <p> <b> Departamento: </b> <%= Aluno.find(current_user.meta_id).departamento %> </p>
         <p> 
-            Laboratorio vinculado: 
+            <b> Laboratorio vinculado: </b>
             <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
                 <%= Aluno.find(current_user.meta_id).laboratorio.nome %>
             <% else %>
@@ -22,9 +22,9 @@
             <% end %>
         </p>
         <p>
-            Recursos solicitados:
+            <b> Recursos solicitados: </b>
             <% Pedido.where(:user_id => current_user.meta_id).each do |pedido|%>
-                <p> <b> <%= pedido.descricao%> </b> </p>
+                <p> <ul> <li> <%= pedido.descricao%> <%= link_to 'Show', pedido %> </li> </ul> </p>
             <% end %>
         </p>
     <% end %>
