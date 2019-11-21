@@ -21,6 +21,12 @@
                 Não está vinculado a nenhum laboratório
             <% end %>
         </p>
+        <p>
+            Recursos solicitados:
+            <% Pedido.where(:user_id => current_user.meta_id).each do |pedido|%>
+                <p> <b> <%= pedido.descricao%> </b> </p>
+            <% end %>
+        </p>
     <% end %>
 
     <%# VIEW DO DOCENTE%>
