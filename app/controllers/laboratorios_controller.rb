@@ -1,7 +1,7 @@
 class LaboratoriosController < ApplicationController
-  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :busca, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
-  before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
-  before_action :getResponsavel, only: [:show, :edit, :update, :destroy, :index_vinculos, :vinculo, :create_vinculo, :remove_vinculo]
+  before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :busca]
+  before_action :get_user, only: [:create, :show, :edit, :update, :destroy]
+  before_action :get_responsavel, only: [:show, :edit, :update, :destroy]
  
   # GET /laboratorios
   # GET /laboratorios.json
@@ -29,6 +29,12 @@ class LaboratoriosController < ApplicationController
   # POST /laboratorios.json
   def create
     @laboratorio = Laboratorio.new(laboratorio_params)
+    get_responsavel
+    puts "O responsavel é: #{@laboratorio.responsavel_id}"
+    if (@responsavel != "sem_responsavel")
+      @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
+      puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
+    end
     respond_to do |format|
       if @laboratorio.save
         format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully created.' }
@@ -44,15 +50,15 @@ class LaboratoriosController < ApplicationController
   # PATCH/PUT /laboratorios/1.json
   def update
     if (@user == @responsavel || admin_signed_in?)
-    respond_to do |format|
-      if @laboratorio.update(laboratorio_params)
-        format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
-        format.json { render :show, status: :ok, location: @laboratorio }
-      else
-        format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
-        format.json { head :no_content }
+      respond_to do |format|
+        if @laboratorio.update(laboratorio_params)
+          format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
+          format.json { render :show, status: :ok, location: @laboratorio }
+        else
+          format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
+          format.json { head :no_content }
+        end
       end
-    end
     end
   end
 
@@ -94,72 +100,6 @@ class LaboratoriosController < ApplicationController
     end
   end
 
-  # Vincular pessoa com laboratorio
-
-  def index_vinculos
-  end
-
-  def vinculo    
-  end
-
-  def create_vinculo
-    nomecompleto = params[:nomeCompleto]
-    nusp = params[:nUSP]
-    puts(params)
-
-    if (Docente.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
-      membro = Docente.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
-    elsif (Aluno.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
-      membro = Aluno.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
-    else
-      membro = nil
-    end 
-
-    if (membro == nil)
-      respond_to do |format|
-        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
-        format.json { head :no_content }
-      end
-    elsif (membro.laboratorio == nil)
-      membro.update(laboratorio_id: @laboratorio.id)
-      respond_to do |format|
-        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Criado com sucesso' }
-        format.json { head :no_content }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
-        format.json { head :no_content }
-      end
-    end
-  end
-
-  def remove_vinculo
-    nomecompleto = params[:nomeCompleto]
-    nusp = params[:nUSP]
-
-    if (Docente.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
-      membro = Docente.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
-    elsif (Aluno.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
-      membro = Aluno.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
-    else
-      membro = nil
-    end 
-
-    if (membro == nil)
-      respond_to do |format|
-        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Não foi possível remover vínculo' }
-        format.json { head :no_content }
-      end
-    else
-      membro.update(laboratorio_id: nil)
-      respond_to do |format|
-        format.html { redirect_to index_vinculos_path(@laboratorio), notice: 'Vinculo removido com sucesso' }
-        format.json { head :no_content }
-      end
-    end
-  end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -193,7 +133,11 @@ class LaboratoriosController < ApplicationController
     end
 
     #get responsável
-    def getResponsavel
-      @responsavel = Docente.find(@laboratorio.responsavel_id)
+    def get_responsavel
+      if (@laboratorio.responsavel_id != nil)
+        @responsavel = Docente.find(@laboratorio.responsavel_id)
+      else
+        @responsavel = "sem_responsavel"
+      end
     end
 end

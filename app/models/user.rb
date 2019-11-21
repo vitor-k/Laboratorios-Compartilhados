@@ -10,6 +10,11 @@ class User < ApplicationRecord
 
   belongs_to :meta, polymorphic: true
 
+  has_many :postagems, dependent: :destroy
+  has_many :pedidos, dependent: :destroy
+  
+  validates :email, uniqueness: true
+
   def admin?
     self.meta_type == 'Admin'
   end

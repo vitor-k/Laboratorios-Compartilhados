@@ -1,8 +1,18 @@
 require 'test_helper'
 
 class PostagemsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @postagem = postagems(:one)
+
+    @aluno_user = users(:user_aluno1)
+    @aluno = alunos(:aluno1)
+
+    sign_in @aluno_user
+  end
+
+  teardown do
+    sign_out @aluno_user
   end
 
   test "should get index" do

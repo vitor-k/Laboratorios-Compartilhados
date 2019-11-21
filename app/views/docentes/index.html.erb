@@ -16,6 +16,7 @@
   <tbody>
     <% @docentes.each do |docente| %>
       <tr>
+        <td><%= docente.nusp %></td>
         <td><%= docente.user.nome %></td>
         <td><%= docente.user.email %></td>
         <td><%= docente.departamento %></td>

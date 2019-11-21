@@ -4,8 +4,10 @@ one:
   dataInicio: 2019-11-07 10:52:24
   dataFim: 2019-11-07 10:52:24
   descricao: MyText
+  user: user_aluno1
 
 two:
   dataInicio: 2019-11-07 10:52:24
   dataFim: 2019-11-07 10:52:24
   descricao: MyText
+  user: user_aluno1

@@ -2,47 +2,52 @@ require 'test_helper'
 
 class EquipamentosControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @equipamento = equipamentos(:one)
+    @laboratorio = create(:laboratorio)
+
+    @equipamento = create(:equipamento, laboratorio_id: @laboratorio.id)
+    # @equipamento.laboratorio_id = @laboratorio.id
+    # @laboratorio = laboratorios(:lmo)
+    # @equipamento = equipamentos(:one)
   end
 
   test "should get index" do
-    get equipamentos_url
+    get laboratorio_equipamentos_url(@laboratorio)
     assert_response :success
   end
 
   test "should get new" do
-    get new_equipamento_url
+    get new_laboratorio_equipamento_url(@laboratorio)
     assert_response :success
   end
 
   test "should create equipamento" do
     assert_difference('Equipamento.count') do
-      post equipamentos_url, params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
+      post laboratorio_equipamentos_url(@laboratorio), params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
     end
 
-    assert_redirected_to equipamento_url(Equipamento.last)
+    assert_redirected_to laboratorio_equipamento_url(@laboratorio, Equipamento.last)
   end
 
   test "should show equipamento" do
-    get equipamento_url(@equipamento)
+    get laboratorio_equipamento_url(@laboratorio, @equipamento)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_equipamento_url(@equipamento)
+    get edit_laboratorio_equipamento_url(@laboratorio, @equipamento)
     assert_response :success
   end
 
   test "should update equipamento" do
-    patch equipamento_url(@equipamento), params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
-    assert_redirected_to equipamento_url(@equipamento)
+    patch laboratorio_equipamento_url(@laboratorio, @equipamento), params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
+    assert_redirected_to laboratorio_equipamentos_url(@laboratorio)
   end
 
   test "should destroy equipamento" do
     assert_difference('Equipamento.count', -1) do
-      delete equipamento_url(@equipamento)
+      delete laboratorio_equipamento_url(@laboratorio, @equipamento)
     end
 
-    assert_redirected_to equipamentos_url
+    assert_redirected_to laboratorio_equipamentos_url
   end
 end

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pedido Responsabilidades do usuário</h1>
+
+<% if @pedido_responsabilidades_this != nil %>
+    <table>
+    <thead>
+        <tr>
+        <th>Nome do laboratório</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pedido_responsabilidades_this.each do |pedido_responsabilidade| %>
+        <tr>
+            <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
+            <td><%= link_to 'Edit', edit_pedido_responsabilidade_path(pedido_responsabilidade) %></td>
+            <td><%= link_to 'Destroy', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    Não há solicitações de Responsabilidades
+<% end %>
+
+<br><br/>
+
+<%= link_to 'Back', account_path %>

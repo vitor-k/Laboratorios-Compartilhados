@@ -30,7 +30,7 @@ class PostagemsController < ApplicationController
   # POST /postagems.json
   def create
     # @postagem = Postagem.new(postagem_params)
-    @postagem = @user.postagems.build(postagem_params)
+    @postagem = @user.user.postagems.build(postagem_params)
     respond_to do |format|
       if @postagem.save(postagem_params)
         format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
@@ -107,14 +107,15 @@ class PostagemsController < ApplicationController
 
     # who created the post
     def getPoster
-      if (@postagem.aluno_id != nil)
-          @poster = Aluno.find(@postagem.aluno_id)    
-      elsif (@postagem.docente_id != nil)
-          @poster = Docente.find(@postagem.docente_id)   
-      elsif (@postagem.representante_externo_id != nil)
-          @poster = Representante_externo.find(@postagem.representante_externo_id)
-      elsif (@postagem.admin_id != nil)
-          @poster = Admin.find(@postagem.admin_id)
+      poster_user = User.find(@postagem.user_id)
+      if (poster_user.aluno?)
+          @poster = Aluno.find(poster_user.meta_id)    
+      elsif (poster_user.docente?)
+          @poster = Docente.find(poster_user.meta_id)   
+      elsif (poster_user.representante_externo?)
+          @poster = RepresentanteExterno.find(poster_user.meta_id)
+      elsif (poster_user.admin?)
+          @poster = Admin.find(poster_user.meta_id)
       end
   end
 end

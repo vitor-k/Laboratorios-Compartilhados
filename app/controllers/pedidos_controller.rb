@@ -16,6 +16,16 @@ class PedidosController < ApplicationController
 
   # GET /pedidos/new
   def new
+    
+    @tipo = params[:tipo]
+    if (@tipo == "equipamento")
+      @lab_id = params[:id]
+      @equi_id = params[:idEquipamento]
+    elsif (@tipo == "servico")
+      @lab_id = params[:id]
+      @servi_id = params[:idEquipamento]
+    end
+
     if (@user != nil)
       @pedido = Pedido.new
     end
@@ -28,7 +38,7 @@ class PedidosController < ApplicationController
   # POST /pedidos
   # POST /pedidos.json
   def create
-    @pedido = @user.pedidos.build(pedido_params)
+    @pedido = @current_user.pedidos.build(pedido_params)
     respond_to do |format|
       if @pedido.save
         format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
@@ -95,14 +105,6 @@ class PedidosController < ApplicationController
     end
 
     def getSolicitador
-      if (@pedido.aluno_id != nil)
-          @solicitador = Aluno.find(@pedido.aluno_id)    
-      elsif (@pedido.docente_id != nil)
-          @solicitador = Docente.find(@pedido.docente_id)   
-      elsif (@pedido.representante_externo_id != nil)
-          @solicitador = Representante_externo.find(@pedido.representante_externo_id)
-      elsif (@pedido.admin_id != nil)
-          @solicitador = Admin.find(@pedido.admin_id)
-      end
+      @solicitador = User.find(@pedido.user_id)
     end
 end

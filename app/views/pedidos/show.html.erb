@@ -30,5 +30,28 @@
   <%= (((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil) * Equipamento.find(@pedido.equipamento_id).taxa%>
 </p>
 
-<%= link_to 'Edit', edit_pedido_path(@pedido) %> |
+<% if (@pedido.equipamento_id != nil) %>
+  <p>
+    <strong>Equipamento:</strong>
+    <%= Equipamento.find(@pedido.equipamento_id).nome %>
+  </p>
+  <p>
+    <strong>Taxa total de uso do equimaneto:</strong>
+    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Equipamento.find(@pedido.equipamento_id).taxa%>
+  </p>
+<% end %>
+
+<% if (@pedido.servico_id != nil) %>
+  <p>
+    <strong>Equipamento:</strong>
+    <%= Servico.find(@pedido.servico_id).nome %>
+  </p>
+  <p>
+    <strong>Taxa total do serviço:</strong>
+    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Servico.find(@pedido.servico_id).taxa%>
+  </p>
+<% end %>
+<% if (@user == @solicitador)%>
+  <%= link_to 'Edit', edit_pedido_path(@pedido) %> | 
+<% end %>
 <%= link_to 'Back', pedidos_path %>

@@ -1,0 +1,26 @@
+<% if (admin_signed_in? || @user == @responsavel || true) %> 
+ 
+    <%= form_with(url: laboratorio_vinculo_index_path) do |form|%>
+        <div class="field">
+            <%= form.label :"Nome Completo: " %>
+            <%= form.text_field :nomeCompleto %>
+        </div>
+
+        <div class="field">
+            <%= form.label :"Número USP: " %>
+            <%= form.text_field :nUSP %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "Criar" %>
+        </div>
+    <% end %>
+
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão para criar um vinculo </h2>
+    </div>
+<% end %>
+
+<p><%= link_to "Página dos vínculos", laboratorio_vinculo_index_path %></p>
+<p><%= link_to "Página do laboratório", laboratorio_path(@laboratorio) %></p>

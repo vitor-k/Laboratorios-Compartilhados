@@ -2,6 +2,8 @@
 
 one:
   texto: MyText
+  user: user_aluno1
 
 two:
   texto: MyText
+  user: user_aluno1

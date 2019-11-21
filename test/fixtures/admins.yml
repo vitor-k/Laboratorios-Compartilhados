@@ -1,7 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  nusp: 1
+# admin1:
+#   nusp: 1
 
-two:
-  nusp: 1

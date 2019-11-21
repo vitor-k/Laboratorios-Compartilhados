@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_181455) do
+ActiveRecord::Schema.define(version: 2019_11_14_014845) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -36,6 +36,11 @@ ActiveRecord::Schema.define(version: 2019_11_11_181455) do
     t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
   end
 
+  create_table "docentes_laboratorios", id: false, force: :cascade do |t|
+    t.integer "laboratorio_id", null: false
+    t.integer "docente_id", null: false
+  end
+
   create_table "equipamentos", force: :cascade do |t|
     t.text "nome"
     t.text "funcao"
@@ -56,39 +61,38 @@ ActiveRecord::Schema.define(version: 2019_11_11_181455) do
     t.index ["responsavel_id"], name: "index_laboratorios_on_responsavel_id"
   end
 
+  create_table "pedido_responsabilidades", force: :cascade do |t|
+    t.integer "id_laboratorio"
+    t.integer "id_docente"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pedidos", force: :cascade do |t|
     t.datetime "dataInicio"
     t.datetime "dataFim"
     t.text "descricao"
     t.integer "equipamento_id"
     t.integer "servico_id"
-    t.integer "aluno_id"
-    t.integer "docente_id"
-    t.integer "representante_externo_id_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["aluno_id"], name: "index_pedidos_on_aluno_id"
-    t.index ["docente_id"], name: "index_pedidos_on_docente_id"
+    t.integer "user_id"
     t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
-    t.index ["representante_externo_id_id"], name: "index_pedidos_on_representante_externo_id_id"
     t.index ["servico_id"], name: "index_pedidos_on_servico_id"
+    t.index ["user_id"], name: "index_pedidos_on_user_id"
   end
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
-    t.integer "aluno_id"
     t.integer "admin_id"
-    t.integer "representante_externo_id"
-    t.integer "docente_id"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.string "titulo"
     t.index ["admin_id"], name: "index_postagems_on_admin_id"
-    t.index ["aluno_id"], name: "index_postagems_on_aluno_id"
-    t.index ["docente_id"], name: "index_postagems_on_docente_id"
     t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
-    t.index ["representante_externo_id"], name: "index_postagems_on_representante_externo_id"
+    t.index ["user_id"], name: "index_postagems_on_user_id"
   end
 
   create_table "representante_externos", force: :cascade do |t|

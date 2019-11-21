@@ -7,6 +7,10 @@ class PagesController < ApplicationController
   end
 
   def account
-  end
+    if (docente_signed_in?)
+      @docente = Docente.find(current_user.meta_id)
+      @laboratorio_docente = @docente.laboratorios
+      end
+    end
 
 end
