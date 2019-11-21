@@ -23,9 +23,15 @@
         </p>
         <p>
             <b> Recursos solicitados: </b>
-            <% Pedido.where(:user_id => current_user.meta_id).each do |pedido|%>
-                <p> <ul> <li> <%= pedido.descricao%> <%= link_to 'Show', pedido %> </li> </ul> </p>
+            
+            <% if Pedido.where(:user_id => current_user.id).exists? %>
+                <% Pedido.where(:user_id => current_user.id).each do |pedido|%>
+                    <p> <ul> <li> <%= pedido.descricao%> <%= link_to 'Show', pedido %> </li> </ul> </p>
+                <% end %>
+            <% else %>
+                <p> <ul>  Não possui nenhuma solicitação de recurso  </ul> </p>
             <% end %>
+
         </p>
     <% end %>
 
