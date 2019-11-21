@@ -55,3 +55,16 @@ admin2 = Admin.create!({nusp: 10343122, user_attributes: {nome: 'admin1',
   email: 'admin@admin1', password: '111111', 
   password_confirmation: '111111'  
 }})
+
+equip1 = Equipamento.create({nome: "Equi1", funcao: "equiparum", taxa: 100, laboratorio: gmsie})
+lmo.equipamentos << equip1
+
+equip2 = Equipamento.create({nome: "Equi2", funcao: "equipardois", taxa: 200, laboratorio: gmsie})
+lmo.equipamentos << equip2
+
+
+serv1 = Servico.create({nome: "Serv2", descricao: "servicum", taxa: 1000, laboratorio: gmsie})
+lmo.servicos << serv1
+
+serv2 = Servico.create({nome: "Serv2", descricao: "servicdois", taxa: 2000, laboratorio: gmsie})
+lmo.servicos << serv2

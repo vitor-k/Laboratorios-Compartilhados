@@ -1,0 +1,127 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Lista de pedidos do laboratorio: <%= @lab.nome %></h2>
+
+<h3> Pedidos de equipamentos aguardando </h3>
+<% if @pedido_equipamentos.any? %>
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pedido_equipamentos.each do |pedido_equipamento| %>
+        <tr>
+            <td><%= pedido_equipamento.equipamento.nome %></td>
+            <td><%= pedido_equipamento.dataInicio %></td>
+            <td><%= pedido_equipamento.dataFim %></td>
+            <% if (@user == Laboratorio.find(pedido_equipamento.laboratorio_id).responsavel || admin_signed_in?) %>
+                <td><%= link_to 'Mostrar', pedido_equipamento %></td>
+                <td><%= link_to 'Aceitar', aceitar_pedido_path(Laboratorio.find(pedido_equipamento.laboratorio_id), pedido_equipamento), method: :put %></td>
+                <td><%= link_to 'Rejeitar', pedido_equipamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    <p> Não há pedidos de equipamentos em aguardo. </p>
+<% end %>
+
+<h3> Pedidos de serviços aguardando </h3>
+<% if @pedido_servicos.any? %>
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pedido_servicos.each do |pedido_servico| %>
+        <tr>
+            <td><%= pedido_servico.servico.nome %></td>
+            <td><%= pedido_servico.dataInicio %></td>
+            <td><%= pedido_servico.dataFim %></td>
+            <% if (@user == Laboratorio.find(pedido_servico.laboratorio_id).responsavel || admin_signed_in?) %>
+                <td><%= link_to 'Mostrar', pedido_servico %></td>
+                <td><%= link_to 'Aceitar', aceitar_pedido_path(Laboratorio.find(pedido_servico.laboratorio_id), pedido_servico), method: :put %></td>
+                <td><%= link_to 'Rejeitar', pedido_servico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    <p> Não há pedidos de serviços em aguardo. </p>
+<% end %>
+
+<h3> Pedidos de equipamentos aceitos </h3>
+<% if @pedido_equipamentos_aceito.any? %>
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pedido_equipamentos_aceito.each do |pedido_equipamento| %>
+        <tr>
+            <td><%= pedido_equipamento.equipamento.nome %></td>
+            <td><%= pedido_equipamento.dataInicio %></td>
+            <td><%= pedido_equipamento.dataFim %></td>
+            <% if (@user == Laboratorio.find(pedido_equipamento.laboratorio_id).responsavel || admin_signed_in?) %>
+                <td><%= link_to 'Mostrar', pedido_equipamento %></td>
+                <td><%= link_to 'Cancelar', pedido_equipamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    <p> Não há pedidos de equipamentos aceitos. </p>
+<% end %>
+
+<h3> Pedidos de serviços aceitos </h3>
+<% if @pedido_servicos_aceito.any? %>
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pedido_servicos_aceito.each do |pedido_servico| %>
+        <tr>
+            <td><%= pedido_servico.servico.nome %></td>
+            <td><%= pedido_servico.dataInicio %></td>
+            <td><%= pedido_servico.dataFim %></td>
+            <% if (@user == Laboratorio.find(pedido_servico.laboratorio_id).responsavel || admin_signed_in?) %>
+                <td><%= link_to 'Mostrar', pedido_servico %></td>
+                <td><%= link_to 'Cancelar', pedido_servico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    <p> Não há pedidos de serviços aceitos. </p>
+<% end %>
+
+<p><%= link_to 'Página do laboratório', @lab %></p>
