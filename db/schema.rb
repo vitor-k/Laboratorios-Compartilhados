@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_15_221352) do
+ActiveRecord::Schema.define(version: 2019_11_20_235748) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_11_15_221352) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.boolean "aceito"
+    t.integer "laboratorio_id"
     t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
     t.index ["servico_id"], name: "index_pedidos_on_servico_id"
     t.index ["user_id"], name: "index_pedidos_on_user_id"

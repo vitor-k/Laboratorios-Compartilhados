@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :pedidos
   get '/pedido/:tipo/:id/:idEquipamento', to: "pedidos#new", as: 'new_pedido_alternativo'
   post '/pedido/:tipo/:id/:idEquipamento', to: "pedidos#blabla", as: 'create_pedido_alternativo'
+  get '/laboratorios/:idLab/pedidos', to: "pedidos#show_lab", as: 'show_laboratorio_pedidos'
+  put '/laboratorios/:idLab/pedidos/aceitar/(:idPedido)', to: "pedidos#aceitar_pedido", as: 'aceitar_pedido'
   resources :postagems
 
   resources :laboratorios do
