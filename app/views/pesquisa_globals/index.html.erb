@@ -35,7 +35,7 @@
   </tbody>
 </table>
 
-<% else %>
+<% elsif @laboratorio == '1' %>
 <h3>Sem laboratórios com o termo</h3>
 <% end %>
 
@@ -66,7 +66,7 @@
     <% end %>
   </tbody>
 </table>
-<% else %>
+<% elsif @equipamento == '1' %>
 <h3>Sem equipamentos com o termo</h3>
 <% end %>
 
@@ -96,7 +96,7 @@
     <% end %>
   </tbody>
 </table>
-<% else %>
+<% elsif @servico == '1' %>
 <h3>Sem serviços com o termo</h3>
 <% end %>
 
@@ -123,7 +123,7 @@
     <% end %>
   </tbody>
 </table>
-<% else %>
+<% elsif @postagem == '1' %>
 <h3>Sem postagens com o termo</h3>
 <% end %>
 

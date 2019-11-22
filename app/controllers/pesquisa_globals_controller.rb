@@ -1,20 +1,26 @@
 class PesquisaGlobalsController < ApplicationController
   def index
-    puts 'hello :)'
-    puts params[:termo]
-    #redirect_back
     @termo = params[:termo]
+    if @termo.blank?
+      redirect_to root_path, notice: 'É preciso digitar algo para pesquisar'
+    end
+
     var = "%#{@termo}%"
-    laboratorio = params[:laboratorio]
-    puts "laboratorio = #{laboratorio}"
-    equipamento = params[:equipamento]
-    servico = params[:servico]
-    postagem = params[:postagem]
+    @laboratorio = params[:laboratorio]
+    @equipamento = params[:equipamento]
+    @servico = params[:servico]
+    @postagem = params[:postagem]
     
-    # @laboratorios = laboratorio == '1' ? Laboratorio.where('nome LIKE ?', var) : []
-    @laboratorios = Laboratorio.where('nome LIKE ?', var) if laboratorio == '1'
-    @equipamentos = Equipamento.where('nome LIKE ?', var) if equipamento == '1'
-    @servicos = Servico.where('nome LIKE ?', var) if servico == '1'
-    @postagems = Postagem.where('titulo LIKE ? OR texto LIKE ?', var, var) if servico == '1'
+    @laboratorios = Laboratorio.where('nome LIKE ?', var) if @laboratorio == '1'
+    @equipamentos = Equipamento.where('nome LIKE ?', var) if @equipamento == '1'
+    @servicos = Servico.where('nome LIKE ?', var) if @servico == '1'
+    @postagems = Postagem.where('titulo LIKE ? OR texto LIKE ?', var, var) if @postagem == '1'
+
+    if (@laboratorio + @equipamento + @servico + @postagem == '0000') then
+      redirect_to root_path, notice: 'É preciso selecionar algo para pesquisar'
+    elsif ((@laboratorios.nil? || @laboratorios.empty?) && (@equipamentos.nil? || @equipamentos.empty?) && 
+      (@servicos.nil? || @servicos.empty?) && (@postagems.nil? || @postagems.empty?)) then
+      redirect_to root_path, notice: 'Não foi possível encontrar o termo nas tabelas escolhidas'
+    end
   end
 end
