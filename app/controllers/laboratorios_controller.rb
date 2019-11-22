@@ -1,7 +1,7 @@
 class LaboratoriosController < ApplicationController
   before_action :set_laboratorio, only: [:show, :edit, :update, :destroy, :busca]
-  before_action :get_user, only: [:create, :show, :edit, :update, :destroy]
-  before_action :get_responsavel, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:create, :show, :edit, :update, :destroy, :permissao]
+  before_action :get_responsavel, only: [:show, :edit, :update, :destroy, :permissao]
  
   # GET /laboratorios
   # GET /laboratorios.json
@@ -18,11 +18,22 @@ class LaboratoriosController < ApplicationController
   def new
     if (admin_signed_in?)
       @laboratorio = Laboratorio.new
+    else
+      respond_to do |format|
+        format.html { redirect_to laboratorios_path, notice: 'Sem permissão para editar.' }
+        format.json { render :show, status: :ok, location: @laboratorio }
+      end
     end
   end
 
   # GET /laboratorios/1/edit
   def edit
+    if (permissao == false)
+      respond_to do |format|
+        format.html { redirect_to laboratorios_path, notice: 'Sem permissão para editar.' }
+        format.json { render :show, status: :ok, location: @laboratorio }
+      end
+    end
   end
 
   # POST /laboratorios
@@ -49,7 +60,7 @@ class LaboratoriosController < ApplicationController
   # PATCH/PUT /laboratorios/1
   # PATCH/PUT /laboratorios/1.json
   def update
-    if (@user == @responsavel || admin_signed_in?)
+    if (permissao)
       respond_to do |format|
         if @laboratorio.update(laboratorio_params)
           format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
@@ -58,6 +69,11 @@ class LaboratoriosController < ApplicationController
           format.html { redirect_to laboratorios_url, notice: 'Sem permissão para editar laboratório.' }
           format.json { head :no_content }
         end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to laboratorios_path, notice: 'Laboratorio was successfully updated.' }
+        format.json { render :show, status: :ok, location: @laboratorio }
       end
     end
   end
@@ -139,5 +155,9 @@ class LaboratoriosController < ApplicationController
       else
         @responsavel = "sem_responsavel"
       end
+    end
+
+    def permissao
+      @user == @responsavel || admin_signed_in?
     end
 end

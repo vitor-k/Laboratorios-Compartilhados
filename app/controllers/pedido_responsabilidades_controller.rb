@@ -39,21 +39,31 @@ class PedidoResponsabilidadesController < ApplicationController
   # POST /pedido_responsabilidades
   # POST /pedido_responsabilidades.json
   def create
-    @pedido_responsabilidade = PedidoResponsabilidade.new(pedido_responsabilidade_params)
-    if (@permissao_novo && Laboratorio.find(@pedido_responsabilidade.id_laboratorio).responsavel == nil)
-      @pedido_responsabilidade.id_docente = current_user.id
-      respond_to do |format|
-        if @pedido_responsabilidade.save
-          format.html { redirect_to account_path, notice: 'Pedido responsabilidade was successfully created.' }
-          format.json { render :show, status: :created, location: @pedido_responsabilidade }
-        else
-          format.html { render :new }
-          format.json { render json: @pedido_responsabilidade.errors, status: :unprocessable_entity }
+    @lab = pedido_responsabilidade_params[:id_laboratorio]
+    @doc = current_user.id
+    puts "Id laboratorio: #{@lab}"
+    if (!@lab.empty?) #se tem laboratorio escolhido
+      @pedido_responsabilidade = PedidoResponsabilidade.new(pedido_responsabilidade_params)
+      if (@permissao_novo && pode_criar) #se tem permissão, o laboratorio n tem responsavel e não está em aberto
+        @pedido_responsabilidade.id_docente = @doc
+        respond_to do |format|
+          if @pedido_responsabilidade.save
+            format.html { redirect_to account_path, notice: 'Pedido responsabilidade was successfully created.' } 
+            format.json { render :show, status: :created, location: @pedido_responsabilidade }
+          else
+            format.html { render :new }
+            format.json { render json: @pedido_responsabilidade.errors, status: :unprocessable_entity }
+          end
+        end
+      else #se não tem permissão ou laboratorio ja tem responsavel
+        respond_to do |format|
+          format.html { redirect_to new_pedido_responsabilidade_path, notice: 'Não foi possível solicitar responsabilidade.' }
+          format.json { head :no_content }
         end
       end
-    else
+    else #não tem laboratorio escolhido
       respond_to do |format|
-        format.html { redirect_to account_path, notice: 'Não foi possível solicitar responsabilidade.' }
+        format.html { redirect_to new_pedido_responsabilidade_path, notice: 'Deve selecionar um laboratório.' }
         format.json { head :no_content }
       end
     end
@@ -61,21 +71,40 @@ class PedidoResponsabilidadesController < ApplicationController
 
   # PATCH/PUT /pedido_responsabilidades/1
   # PATCH/PUT /pedido_responsabilidades/1.json
-  def update
-    if (@permissao_existente && Laboratorio.find(@pedido_responsabilidade.id_laboratorio).responsavel == nil)
-      respond_to do |format|
-        if @pedido_responsabilidade.update(pedido_responsabilidade_params)
-          format.html { redirect_to account_path, notice: 'Pedido responsabilidade was successfully updated.' }
-          format.json { render :show, status: :ok, location: @pedido_responsabilidade }
-        else
-          format.html { render :edit }
-          format.json { render json: @pedido_responsabilidade.errors, status: :unprocessable_entity }
+  def update    
+    if (@permissao_existente && pode_alterar) #se tem permissao existente e é possível alterar para o que deseja
+      if (admin_signed_in?)
+        respond_to do |format|
+          if @pedido_responsabilidade.update(pedido_responsabilidade_params)
+            format.html { redirect_to pedido_responsabilidades_path, notice: 'Pedido responsabilidade was successfully updated.' }
+            format.json { render :show, status: :ok, location: @pedido_responsabilidade }
+          else
+            format.html { render :edit }
+            format.json { render json: @pedido_responsabilidade.errors, status: :unprocessable_entity }
+          end
+        end
+      else
+        respond_to do |format|
+          if @pedido_responsabilidade.update(pedido_responsabilidade_params)
+            format.html { redirect_to index_docente_path(current_user.id), notice: 'Pedido responsabilidade was successfully updated.' }
+            format.json { render :show, status: :ok, location: @pedido_responsabilidade }
+          else
+            format.html { render :edit }
+            format.json { render json: @pedido_responsabilidade.errors, status: :unprocessable_entity }
+          end
         end
       end
     else
-      respond_to do |format|
-        format.html { redirect_to account_path, notice: 'Não foi possivel editar solicitação de responsabilidade.' }
-        format.json { head :no_content }
+      if (admin_signed_in?)
+        respond_to do |format|
+          format.html { redirect_to pedido_responsabilidades_path, notice: 'Não foi possivel editar solicitação de responsabilidade.' }
+          format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to index_docente_path(current_user.id), notice: 'Não foi possivel editar solicitação de responsabilidade.' }
+          format.json { head :no_content }
+        end
       end
     end
   end
@@ -93,7 +122,7 @@ class PedidoResponsabilidadesController < ApplicationController
       else
         @pedido_responsabilidade.destroy
         respond_to do |format|
-          format.html { redirect_to account_path, notice: 'Solicitação de responsabilidade deletada.' }
+          format.html { redirect_to index_docente_path(current_user.id), notice: 'Solicitação de responsabilidade deletada.' }
           format.json { head :no_content }
         end
       end
@@ -102,16 +131,11 @@ class PedidoResponsabilidadesController < ApplicationController
 
   # PUT
   def aceitar
-    if (admin_signed_in? || true)
-      puts @pedido_responsabilidade            
-
-      puts "O laboratório é #{ Laboratorio.find(@pedido_responsabilidade.id_laboratorio).nome}"
-      puts "O novo responsável é #{User.find(@pedido_responsabilidade.id_docente).nome} e id #{User.find(@pedido_responsabilidade.id_docente).meta_id}"
+    if (admin_signed_in?)
+      puts @pedido_responsabilidade
 
       Laboratorio.find(@pedido_responsabilidade.id_laboratorio).update(responsavel_id: User.find(@pedido_responsabilidade.id_docente).meta_id) #Adiciona o docente como responsavel
       Laboratorio.find(@pedido_responsabilidade.id_laboratorio).docentes << Docente.find(User.find(@pedido_responsabilidade.id_docente).meta_id) #Adiciona o responsavel como membro
-
-      puts "Depois ficou #{Laboratorio.find(@pedido_responsabilidade.id_laboratorio).responsavel_id}"
 
       @pedido_responsabilidades_afetados = PedidoResponsabilidade.where(id_laboratorio: @pedido_responsabilidade.id_laboratorio)
       @pedido_responsabilidades_afetados.find_each do |cada|
@@ -119,6 +143,11 @@ class PedidoResponsabilidadesController < ApplicationController
       end
       respond_to do |format|
         format.html { redirect_to pedido_responsabilidades_path, notice: 'Solicitação aceita.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Não tem permissão.' }
         format.json { head :no_content }
       end
     end
@@ -132,7 +161,7 @@ class PedidoResponsabilidadesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pedido_responsabilidade_params
-      params.require(:pedido_responsabilidade).permit(:id_laboratorio, :id_docente)
+      params.require(:pedido_responsabilidade).permit(:id_laboratorio, :id_docente, :justificativa)
     end
 
     def get_user
@@ -166,4 +195,47 @@ class PedidoResponsabilidadesController < ApplicationController
       @permissao_novo = (docente_signed_in? || admin_signed_in?)
     end
 
+    def pode_criar
+      @lab = pedido_responsabilidade_params[:id_laboratorio]
+      @doc = current_user.id
+      tem_responsavel = Laboratorio.find(@pedido_responsabilidade.id_laboratorio).responsavel == nil
+      aberto = pedido_aberto_criar
+      tem_responsavel && aberto == false
+    end
+
+    def pedido_aberto_criar
+      if !@lab.empty?
+          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) #se existe um pedido sem ser esse
+              true
+          else
+            false
+          end
+      else
+          false
+      end
+    end
+
+    def pode_alterar
+      @lab = pedido_responsabilidade_params[:id_laboratorio]
+      @doc = current_user.id
+      tem_responsavel = Laboratorio.find(@lab).responsavel == nil # O outro laboratório não tem responsavel
+      aberto = pedido_aberto_alterar
+      tem_responsavel && aberto == false
+    end
+
+    def pedido_aberto_alterar
+      if !@lab.empty?
+          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) #se existe um pedido sem ser esse
+            if PedidoResponsabilidade.find_by(id_laboratorio: @lab, id_docente: @doc).id == @pedido_responsabilidade.id
+              false
+            else
+              true
+            end
+          else
+            false
+          end
+      else
+          false
+      end
+    end
 end

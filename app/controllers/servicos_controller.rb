@@ -29,7 +29,7 @@ class ServicosController < ApplicationController
   # POST /servicos
   # POST /servicos.json
   def create
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
       #@servico = Servico.new(servico_params)
       @servico = @laboratorio.servicos.build(servico_params)
       respond_to do |format|
@@ -52,7 +52,7 @@ class ServicosController < ApplicationController
   # PATCH/PUT /servicos/1
   # PATCH/PUT /servicos/1.json
   def update
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
       respond_to do |format|
         if @servico.update(servico_params)
           format.html { redirect_to laboratorio_servicos_url(@laboratorio), notice: 'Servico was successfully updated.' }
@@ -73,7 +73,7 @@ class ServicosController < ApplicationController
   # DELETE /servicos/1
   # DELETE /servicos/1.json
   def destroy
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
       @servico.destroy
       respond_to do |format|
         format.html { redirect_to laboratorio_servicos_url(@laboratorio), notice: 'Servico was successfully destroyed.' }
@@ -128,5 +128,9 @@ class ServicosController < ApplicationController
       else
         @responsavel = "sem_responsavel"
       end
+    end
+
+    def permissao
+      admin_signed_in? || @user == @responsavel
     end
 end

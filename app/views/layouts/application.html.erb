@@ -31,9 +31,11 @@
           <li><%= link_to "Página Principal", root_path %></li>
           <li><%= link_to "Sobre nós", about_us_path %></li>
           <li><%= link_to "Laboratorios", laboratorios_path %></li>
-          <li><%= link_to "Postagens", postagens_path %></li>
-          <li><%= link_to "Pedidos", pedidos_path %></li>
-          <li><%= link_to "Responsabilidades", pedido_responsabilidades_path %></li>
+          <% if admin_signed_in? %>
+            <li><%= link_to "Postagens", postagens_path %></li>
+            <li><%= link_to "Pedidos", pedidos_path %></li>
+            <li><%= link_to "Responsabilidades", pedido_responsabilidades_path %></li>
+          <% end %>
         </ul>
       </div>
       <div id="main">

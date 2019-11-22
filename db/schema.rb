@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_235748) do
+ActiveRecord::Schema.define(version: 2019_11_22_191148) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_11_20_235748) do
     t.integer "id_docente"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "justificativa"
   end
 
   create_table "pedidos", force: :cascade do |t|

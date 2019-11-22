@@ -16,6 +16,11 @@
     <%= form.collection_select(:id_laboratorio, Laboratorio.all, :id, :nome, prompt: true) %>
   </div>
 
+  <div class="field">
+    <%= form.label "Justificativa:" %>
+    <%= form.text_field :justificativa %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
