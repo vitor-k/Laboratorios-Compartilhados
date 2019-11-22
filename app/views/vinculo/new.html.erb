@@ -1,4 +1,8 @@
-<% if (admin_signed_in? || @user == @responsavel || true) %> 
+<p id="notice"><%= notice %></p>
+
+<h2>Criar novo vínculo no laboratório: <%= @laboratorio.nome %></h2>
+
+<% if (admin_signed_in? || @user == @responsavel) %> 
  
     <%= form_with(url: laboratorio_vinculo_index_path) do |form|%>
         <div class="field">

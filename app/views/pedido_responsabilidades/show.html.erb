@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Nome do docente:</strong>
+  <%= User.find(@pedido_responsabilidade.id_docente).nome %>
+</p>
+
+<p>
   <strong>Nome do laboratorio:</strong>
   <%= Laboratorio.find(@pedido_responsabilidade.id_laboratorio).nome %>
 </p>
 
-<%= link_to 'Edit', edit_pedido_responsabilidade_path(@pedido_responsabilidade) %> |
-<%= link_to 'Back', pedido_responsabilidades_path %>
+<p>
+  <strong>Justificativa:</strong>
+  <%= @pedido_responsabilidade.justificava %>
+</p>
+
+<%= link_to 'Editar', edit_pedido_responsabilidade_path(@pedido_responsabilidade) %> |
+<%= link_to 'Voltar', pedido_responsabilidades_path %>

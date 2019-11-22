@@ -1,28 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pedido Responsabilidades</h1>
+<% if admin_signed_in? %>
+  <h1>Pedidos de  Responsabilidade</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome do laboratório</th>
-      <th>Nome do docente</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @pedido_responsabilidades.each do |pedido_responsabilidade| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
-        <td><%= User.find(pedido_responsabilidade.id_docente).nome %></td>
-        <td><%= link_to 'Aceitar', aceitar_path(pedido_responsabilidade), method: :put %></td>
-        <td><%= link_to 'Rejeitar', pedido_responsabilidade, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+        <th>Nome do laboratório</th>
+        <th>Nome do docente</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @pedido_responsabilidades.each do |pedido_responsabilidade| %>
+        <tr>
+          <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
+          <td><%= User.find(pedido_responsabilidade.id_docente).nome %></td>
+          <td><%= link_to 'Aceitar', aceitar_path(pedido_responsabilidade), method: :put %></td>
+          <td><%= link_to 'Rejeitar', pedido_responsabilidade, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+    <div id="error_explanation">
+        <h2> Você não tem permissão </h2>
+    </div>
+<% end %>
 
 <br>
-
-<%#= link_to 'New Pedido Responsabilidade', new_pedido_responsabilidade_path %>
