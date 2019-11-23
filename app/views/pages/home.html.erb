@@ -2,6 +2,21 @@
 
 <h1> Página Principal</h1>
 
-<% if user_signed_in? %>
-  <%= current_user.attributes %>
+<%= form_with(method: :get, url: :pesquisa_global, local: true) do |f| %>
+  <%= f.text_field :termo, placeholder: 'Pesquisar serviço, equipamento ou postagem' %>
+
+  <%= f.label :laboratorio %>
+  <%= f.check_box :laboratorio %>
+
+  <%= f.label :equipamento %>
+  <%= f.check_box :equipamento %>
+
+  <%= f.label :servico %>
+  <%= f.check_box :servico %>
+
+  <%= f.label :postagem %>
+  <%= f.check_box :postagem %>
+  <br>
+  
+  <%= f.submit 'Pesquisar', name: nil %>
 <% end %>
