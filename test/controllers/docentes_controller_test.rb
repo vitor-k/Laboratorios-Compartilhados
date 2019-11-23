@@ -5,6 +5,8 @@ class DocentesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @docente_user = create(:user, :docente)
     @docente = Docente.find(@docente_user.meta_id)
+    
+    @admin_user = create(:user, :admin)
 
     sign_in @docente.user
   end
@@ -13,14 +15,18 @@ class DocentesControllerTest < ActionDispatch::IntegrationTest
     sign_out @docente.user
   end
 
-  test "should get index" do
+  test "should get index if admin" do
+    sign_out @docente_user
+    sign_in @admin_user
     get docentes_url
     assert_response :success
+    sign_out @admin_user
+    sign_in @docente_user
   end
 
   test "should get new if admin" do
     sign_out @docente_user
-    @admin_user = create(:user, :admin)
+    sign_in @admin_user
     get new_docente_url
     assert_response :success
     sign_out @admin_user

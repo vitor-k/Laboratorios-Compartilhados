@@ -7,6 +7,9 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
 
     @aluno_user = create(:user, :aluno)
 
+    @equipamento = create(:equipamento)
+    @servico = create(:servico)
+
     sign_in @aluno_user
   end
 
@@ -24,9 +27,33 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create pedido" do
+  test "should create pedido servico" do
     assert_difference('Pedido.count') do
-      post pedidos_url, params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao, user_id: @aluno_user.id } }
+      post pedidos_url, params: { 
+        pedido: {
+          dataInicio:  FFaker::Time.datetime( {:year_latest => -5, :year_range => 1}), 
+          dataFim: FFaker::Time.datetime( {:year_latest => -7, :year_range => 1}),
+          descricao: @pedido.descricao, 
+          servico_id: @servico.id,
+        }, 
+        tipo: "servico"
+      }
+    end
+
+    assert_redirected_to pedido_url(Pedido.last)
+  end
+
+  test "should create pedido equipamento" do
+    assert_difference('Pedido.count') do
+      post pedidos_url, params: { 
+        pedido: {
+          dataInicio:  FFaker::Time.datetime( {:year_latest => -9, :year_range => 1}), 
+          dataFim: FFaker::Time.datetime( {:year_latest => -11, :year_range => 1}),
+          descricao: @pedido.descricao, 
+          equipamento_id: @equipamento.id,
+        } ,
+        tipo: "equipamento"
+      }
     end
 
     assert_redirected_to pedido_url(Pedido.last)

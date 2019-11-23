@@ -3,10 +3,10 @@ require 'test_helper'
 class PostagemsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @postagem = create(:postagem)
-
     @aluno_user = create(:user, :aluno)
     @aluno = Aluno.find(@aluno_user.meta_id)
+
+    @postagem = create(:postagem, user: @aluno_user)
 
     sign_in @aluno_user
   end
