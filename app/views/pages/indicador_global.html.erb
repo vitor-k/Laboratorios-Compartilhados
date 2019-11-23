@@ -1,0 +1,72 @@
+<div>
+  <div>
+    <h1>Pedidos dos Laboratorios</h1>
+
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Em espera</th>
+        <th>Aceitos</th>
+        <th>Rejeitados</th>
+        <th colspan="1"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% Laboratorio.all.each do |laboratorio| %>
+        <tr>
+            <td><%= laboratorio.nome %></td>
+            <td><%= Pedido.where("laboratorio_id = ? AND aceito = ?", laboratorio.id, false).count() %></td>
+            <% @totEspera += Pedido.where("laboratorio_id = ? AND aceito = ?", laboratorio.id, false).count() %>
+            <td><%= laboratorio.numero_aceitos %></td>
+            <% @totAceito += laboratorio.numero_aceitos %>
+            <td><%= laboratorio.numero_rejeitados %></td>
+            <% @totRejeitado += laboratorio.numero_rejeitados %>
+            <td><%= link_to 'Entrar na página', laboratorio %></td>
+        </tr>
+        <% end %>
+        <tr>
+            <td><strong>Geral</td></strong>
+            <td><%= @totEspera %></td>
+            <td><%= @totAceito %></td>
+            <td><%= @totRejeitado %></td>
+            <td><%= @totEspera + @totAceito + @totRejeitado %></td>
+        </tr>
+    </tbody>
+    </table>
+  </div>
+  <div>
+    <h1>Número de Recursos dos Laboratorios</h1>
+
+    <table>
+    <thead>
+        <tr>
+        <th>Nome</th>
+        <th>Equipamentos</th>
+        <th>Serviços</th>
+        <th colspan="1"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% Laboratorio.all.each do |laboratorio| %>
+        <tr>
+            <td><%= laboratorio.nome %></td>
+            <td><%= Equipamento.where("laboratorio_id = ?", laboratorio.id).count() %></td>
+            <% @totEqui += Equipamento.where("laboratorio_id = ?", laboratorio.id).count() %>
+            <td><%= Servico.where("laboratorio_id = ?", laboratorio.id).count()  %></td>
+            <% @totServ += Servico.where("laboratorio_id = ?", laboratorio.id).count() %>
+            <td><%= link_to 'Entrar na página', laboratorio %></td>
+        </tr>
+        <% end %>
+        <tr>
+            <td><strong>Geral</td></strong>
+            <td><%= @totEqui %></td>
+            <td><%= @totServ %></td>
+            <td><%= @totEqui + @totServ %></td>
+        </tr>
+    </tbody>
+    </table>
+  </div>
+</div>

@@ -18,4 +18,12 @@ class PagesController < ApplicationController
       redirect_back(fallback_location: root_path)
     end
   end
+
+  def indicador_global
+    @totEspera = 0
+    @totAceito = 0
+    @totRejeitado = 0
+    @totEqui = 0
+    @totServ = 0
+  end
 end
