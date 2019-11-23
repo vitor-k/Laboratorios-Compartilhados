@@ -21,14 +21,23 @@
     <%= form.text_area :texto %>
   </div>
 
+
   <div class="field">
-    <%= form.label :"Laboratóro" %>
-    <% if aluno_signed_in? && current_aluno.laboratorio != nil %>
-      <%= form.collection_select :laboratorio_id, Laboratorio.where(id: current_aluno.laboratorio_id), :id, :nome %>
+  <%= form.label :"Laboratório" %>
+    <% if admin_signed_in? %>
+      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome, include_blank: "Principal" %>
+    <% elsif aluno_signed_in? %>
+      <% if current_aluno.laboratorio != nil %>
+        <%= form.collection_select :laboratorio_id, current_aluno.laboratorio, :id, :nome %>
+      <% else %>
+        Não tem laboratorio vinculado
+      <% end %>
     <% elsif docente_signed_in? %>
-      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
-    <% elsif admin_signed_in? %>
-      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome  %>
+      <% if !current.docente.laboratorios.empty?%>
+        <%= form.collection_select :laboratorio_id, current_docente.laboratorios, :id, :nome %>
+      <% else %>
+        Não tem laboratorio vinculado
+      <% end %>
     <% end %>
   </div>
 
