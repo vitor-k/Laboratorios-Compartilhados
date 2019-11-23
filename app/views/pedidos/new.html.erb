@@ -12,6 +12,6 @@
 
 <% if (@tipo == "equipamento") %>
     <%= link_to 'Voltar', laboratorio_equipamentos_path(Laboratorio.find(@lab)) %>
-<% else %>
+<% elsif (@tipo == "servico") %>
     <%= link_to 'Voltar', laboratorio_servicos_path(Laboratorio.find(@lab)) %>
 <% end %>

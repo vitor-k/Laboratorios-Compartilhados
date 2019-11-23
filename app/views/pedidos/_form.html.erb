@@ -26,17 +26,17 @@
     <%= form.text_area :descricao %>
   </div>
 
-  <% if (@tipo=="equipamento" && @edit == false) %>
-    <div class="field">
-      <%= form.label "Equipamento" %>
-      <%= form.collection_select(:equipamento_id, Equipamento.where(id: @item), :id, :nome) %>
-    </div>    
-  <% elsif (@tipo=="servico" && @edit == false) %>
-    <div class="field">
-      <%= form.label "Serviço" %>
-      <%= form.collection_select(:servico_id, Servico.where(id: @item), :id, :nome) %>
-    </div>
+  <p>
+  <% if (cookies[:tipo] == "equipamento") %>
+      Equipamento: <%= Equipamento.find(cookies[:idItem]).nome %>
+      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
+      <%= form.hidden_field :equipamento_id, value: cookies[:idItem] %>
+  <% elsif (cookies[:tipo] == "servico") %>
+      Serviço: <%= Servico.find(cookies[:idItem]).nome %>
+      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
+      <%= form.hidden_field :servico_id, value: cookies[:idItem] %>
   <% end %>
+  </p>
 
   <div class="actions">
     <%= form.submit %>

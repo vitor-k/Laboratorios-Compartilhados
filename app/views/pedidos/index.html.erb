@@ -9,6 +9,7 @@
       <th>Data de Inicio</th>
       <th>Data de Término</th>
       <th>Aceito</th>
+      <th>Descrição</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,7 +17,7 @@
   <tbody>
     <% @pedidos.each do |pedido| %>
       <tr>
-        <% if pedido.equipamento_id != nil%>
+        <% if pedido.equipamento_id != nil %>
           <td><%= pedido.equipamento.nome %></td>
         <% else %>
           <td><%= pedido.servico.nome %></td>
@@ -37,4 +38,4 @@
 
 <br>
 
-<%= link_to 'Novo Pedido', new_pedido_path %>
+<%#= link_to 'Novo Pedido', new_pedido_path %>
