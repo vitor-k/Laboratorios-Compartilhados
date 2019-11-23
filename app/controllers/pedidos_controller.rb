@@ -66,7 +66,7 @@ class PedidosController < ApplicationController
   # PATCH/PUT /pedidos/1
   # PATCH/PUT /pedidos/1.json
   def update
-    if (@user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
+    if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
       respond_to do |format|
         if @pedido.update(pedido_params)
           if (@pedido.equipamento_id != nil)
@@ -97,9 +97,9 @@ class PedidosController < ApplicationController
   # DELETE /pedidos/1.json
   def destroy
     @lab = Laboratorio.find(@pedido.laboratorio_id)
-    if (@user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
+    if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
       @pedido.destroy
-      if (@user == @solicitador)
+      if (current_user == @solicitador)
         respond_to do |format|
           format.html { redirect_to index_user_path(@user), notice: 'Pedido foi deletado.' }
           format.json { head :no_content }
