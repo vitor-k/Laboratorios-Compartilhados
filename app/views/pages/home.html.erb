@@ -2,7 +2,7 @@
 
 <h1> Página Principal</h1>
 
-<%= form_with(url: pesquisa_globals_index_url, method: :get, local: true) do |f| %>
+<%= form_with(url: pesquisa_global_url, method: :get, local: true) do |f| %>
   <%= f.text_field :termo %><br>
   <%= f.label 'Laboratórios' %>
   <%= f.check_box :laboratorio %><br>
