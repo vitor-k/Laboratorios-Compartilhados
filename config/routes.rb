@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
   
   get 'about_us', to: 'pages#about_us'
+  get 'indicador_global', to: 'pages#indicador_global'
   get 'account', to: 'pages#account'
   get 'account/postagens', to: 'pages#account_postagens'
   get 'account/recursos_solicitados', to: 'pages#account_recursos_solicitados'

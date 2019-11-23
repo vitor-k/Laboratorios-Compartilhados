@@ -119,6 +119,7 @@ class PedidosController < ApplicationController
           format.json { head :no_content }
         end
       end
+      @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + 1)
     else
       respond_to do |format|
         format.html { redirect_to root_path, notice: 'Não tem permissão.' }
@@ -155,8 +156,11 @@ class PedidosController < ApplicationController
     if (admin_signed_in? || @user == @lab.responsavel)
       @pedido.update_attribute(:aceito, true)
       if (Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.dataFim, @pedido.dataInicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).exists?)
-        Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.dataFim, @pedido.dataInicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).delete_all
+         pedidos_deletados = Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.dataFim, @pedido.dataInicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id)
+         @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + pedidos_deletados.count())
+         pedidos_deletados.delete_all
       end
+      @lab.update_attribute(:numero_aceitos , @lab.numero_aceitos + 1)
       respond_to do |format|
         format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido aceito com sucesso.'}
         format.json { head :no_content }

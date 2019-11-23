@@ -47,6 +47,8 @@ class LaboratoriosController < ApplicationController
         @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
         puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
       end
+      @laboratorio.update_attribute(:numero_aceitos, 0)
+      @laboratorio.update_attribute(:numero_rejeitados, 0)
       respond_to do |format|
         if @laboratorio.save
           format.html { redirect_to @laboratorio, notice: 'Laboratorio foi criado.' }

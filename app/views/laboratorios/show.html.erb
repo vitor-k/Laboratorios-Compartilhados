@@ -30,6 +30,22 @@
     <%= @responsavel.nome %>
   <% end %>
 </p>
+<% if (@user = @responsavel || admin_signed_in?)%>
+  <p>
+    <strong>Pedidos em espera:</strong>
+    <%= Pedido.where("laboratorio_id = ? AND aceito = ?", @laboratorio.id, false).count() %>
+  </p>
+
+  <p>
+    <strong>Pedidos aceitos:</strong>
+    <%= @laboratorio.numero_aceitos %>
+  </p>
+
+  <p>
+    <strong>Pedidos rejeitados:</strong>
+    <%= @laboratorio.numero_rejeitados %>
+  </p>
+<% end %>
 
 
 <% if (@user == @responsavel || admin_signed_in?) %>  
