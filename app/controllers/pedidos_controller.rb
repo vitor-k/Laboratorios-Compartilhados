@@ -1,7 +1,9 @@
 class PedidosController < ApplicationController
   before_action :set_pedido, only: [:show, :edit, :update, :destroy]
-  before_action :getSolicitador, only: [:show, :edit, :update, :destroy]
+  before_action :get_solicitador, only: [:show, :edit, :update, :destroy]
   before_action :get_user, only: [:edit, :create, :update, :destroy, :new, :show, :show_lab]
+  before_action :get_tipo, only: [:edit, :update, :show, :destroy]
+  before_action :out_edit, except: [:edit]
 
   # GET /pedidos
   # GET /pedidos.json
@@ -16,23 +18,22 @@ class PedidosController < ApplicationController
 
   # GET /pedidos/new
   def new
-    
-    @tipo = params[:tipo]
-    if (@tipo == "equipamento")
-      @lab_id = params[:id]
-      @equi_id = params[:idEquipamento]
-    elsif (@tipo == "servico")
-      @lab_id = params[:id]
-      @servi_id = params[:idEquipamento]
-    end
-
     if (@user != nil)
+      @tipo = params[:tipo]
+      @lab = params[:idLab]
+      @item = params[:idItem]
       @pedido = Pedido.new
+    else
+      respond_to do |format|
+        format.html { redirect_to new_pedido_alternativo_path(@tipo, @lab, @item), notice: 'Não tem permissão para fazer pedido.' }
+        format.json { head :no_content }
+      end
     end
   end
 
   # GET /pedidos/1/edit
   def edit
+    @edit = true
   end
 
   # POST /pedidos
@@ -150,7 +151,20 @@ class PedidosController < ApplicationController
         end
     end
 
-    def getSolicitador
+    def get_solicitador
       @solicitador = User.find(@pedido.user_id)
+    end
+    
+    def get_tipo      
+      # tem um @pedido
+      if (@pedido.equipamento_id == nil)
+        @tipo = "servico"
+      else
+        @tipo = "equipamento"
+      end
+    end
+    
+    def out_edit
+      @edit = false
     end
 end

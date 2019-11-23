@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <h1>Novo Pedido</h1>
 
 <% if (@user != nil) %>
@@ -8,4 +10,8 @@
     </div>
 <% end %>
 
-<%= link_to 'Voltar', pedidos_path %>
+<% if (@tipo == "equipamento") %>
+    <%= link_to 'Voltar', laboratorio_equipamentos_path(Laboratorio.find(@lab)) %>
+<% else %>
+    <%= link_to 'Voltar', laboratorio_servicos_path(Laboratorio.find(@lab)) %>
+<% end %>

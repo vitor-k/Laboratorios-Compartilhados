@@ -63,7 +63,7 @@ equip2 = Equipamento.create({nome: "Equi2", funcao: "equipardois", taxa: 200, la
 lmo.equipamentos << equip2
 
 
-serv1 = Servico.create({nome: "Serv2", descricao: "servicum", taxa: 1000, laboratorio: gmsie})
+serv1 = Servico.create({nome: "Serv1", descricao: "servicum", taxa: 1000, laboratorio: gmsie})
 lmo.servicos << serv1
 
 serv2 = Servico.create({nome: "Serv2", descricao: "servicdois", taxa: 2000, laboratorio: gmsie})
