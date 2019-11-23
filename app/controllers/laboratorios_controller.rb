@@ -39,22 +39,30 @@ class LaboratoriosController < ApplicationController
   # POST /laboratorios
   # POST /laboratorios.json
   def create
-    @laboratorio = Laboratorio.new(laboratorio_params)
-    get_responsavel
-    puts "O responsavel é: #{@laboratorio.responsavel_id}"
-    if (@responsavel != "sem_responsavel")
-      @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
-      puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
-    end
-    respond_to do |format|
-      if @laboratorio.save
-        format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully created.' }
-        format.json { render :show, status: :created, location: @laboratorio }
-      else
-        format.html { render :new }
-        format.json { render json: @laboratorio.errors, status: :unprocessable_entity }
+    if (admin_signed_in?)
+      @laboratorio = Laboratorio.new(laboratorio_params)
+      get_responsavel
+      puts "O responsavel é: #{@laboratorio.responsavel_id}"
+      if (@responsavel != "sem_responsavel")
+        @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
+        puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
+      end
+      respond_to do |format|
+        if @laboratorio.save
+          format.html { redirect_to @laboratorio, notice: 'Laboratorio foi criado.' }
+          format.json { render :show, status: :created, location: @laboratorio }
+        else
+          format.html { render :new }
+          format.json { render json: @laboratorio.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to laboratorios_path, notice: 'Não tem permissão para criar laboratório.' }
+        format.json { render :show, status: :ok, location: @laboratorio }
       end
     end
+
   end
 
   # PATCH/PUT /laboratorios/1

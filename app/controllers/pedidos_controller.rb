@@ -53,8 +53,11 @@ class PedidosController < ApplicationController
           format.html { render :new }
           format.json { render json: @pedido.errors, status: :unprocessable_entity }
         end
-      end
+      end      
       @pedido.update_attribute(:aceito, false)
+      if (@pedido.invalid?)
+        @pedido.destroy()
+      end
     else
       respond_to do |format|
         format.html { redirect_to new_pedido_path, notice: 'Não tem permissão para fazer pedido.' }
