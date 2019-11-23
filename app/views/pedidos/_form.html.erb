@@ -11,6 +11,66 @@
     </div>
   <% end %>
 
+  <strong>
+  <% if (cookies[:tipo] == "equipamento") %>
+      <p> Equipamento: <%= Equipamento.find(cookies[:idItem]).nome %></p>
+      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
+      <%= form.hidden_field :equipamento_id, value: cookies[:idItem] %>
+      <strong>Lista de datas ocupadas:</strong>
+      <% if (!Equipamento.find(cookies[:idItem]).pedidos.where(aceito: true).empty?) %>
+        <br/>
+        <table>
+        <thead>
+            <th>Data de Início</th>
+            <th>Data de Término</th>
+            <th colspan="3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% Equipamento.find(cookies[:idItem]).pedidos.where(aceito: true).order(:dataInicio, :asc).each do |ocupado| %>
+            <tr>
+                <td><%= ocupado.dataInicio %></td>
+                <td><%= ocupado.dataFim %></td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <% else %>
+        Não há datas ocupadas.
+      <% end %>
+      <br/>
+  <% elsif (cookies[:tipo] == "servico") %>
+      <p> Serviço: <%= Servico.find(cookies[:idItem]).nome %></p>
+      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
+      <%= form.hidden_field :servico_id, value: cookies[:idItem] %>
+      <strong>Lista de datas ocupadas:</strong>
+      <% if (!Servico.find(cookies[:idItem]).pedidos.where(aceito: true).empty?) %>
+        <br/>
+        <table>
+        <thead>
+            <th>Data de Início</th>
+            <th>Data de Término</th>
+            <th colspan="3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% Servico.find(cookies[:idItem]).pedidos.where(aceito: true).order(:dataInicio, :asc).each do |ocupado| %>
+            <tr>
+                <td><%= ocupado.dataInicio %></td>
+                <td><%= ocupado.dataFim %></td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <% else %>
+        Não há datas ocupadas.
+      <% end %>
+      <br/>
+  <% end %>
+  </strong>
+
+  <br/>
+
   <div class="field">
     <%= form.label :"Data de Início" %>
     <%= form.datetime_select :dataInicio, start_year: Date.today.year  %>
@@ -25,18 +85,6 @@
     <%= form.label :"Descrição" %>
     <%= form.text_area :descricao %>
   </div>
-
-  <p>
-  <% if (cookies[:tipo] == "equipamento") %>
-      Equipamento: <%= Equipamento.find(cookies[:idItem]).nome %>
-      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
-      <%= form.hidden_field :equipamento_id, value: cookies[:idItem] %>
-  <% elsif (cookies[:tipo] == "servico") %>
-      Serviço: <%= Servico.find(cookies[:idItem]).nome %>
-      <%= form.hidden_field :laboratorio_id, value: cookies[:idLab] %>
-      <%= form.hidden_field :servico_id, value: cookies[:idItem] %>
-  <% end %>
-  </p>
 
   <div class="actions">
     <%= form.submit %>
