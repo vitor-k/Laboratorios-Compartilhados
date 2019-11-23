@@ -7,7 +7,7 @@ class PesquisaGlobalsControllerTest < ActionDispatch::IntegrationTest
   
 
   test "should get index" do
-    get pesquisa_globals_index_url, params:{"utf8"=>"✓", "termo"=>"#{@laboratorio.nome}", 
+    get pesquisa_global_url, params:{"utf8"=>"✓", "termo"=>"#{@laboratorio.nome}", 
       "laboratorio"=>"1", "equipamento"=>"0", "servico"=>"0", "postagem"=>"0"}
     assert_response :success
   end
