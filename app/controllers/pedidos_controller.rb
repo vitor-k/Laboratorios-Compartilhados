@@ -149,7 +149,7 @@ class PedidosController < ApplicationController
   end
 
   # post /laboratorios/1/pedidos/1
-  def aceitar_pedido
+  def aceitar_pedido    
     @lab = Laboratorio.find(params[:idLab])
     @pedido = Pedido.find(params[:idPedido])
     if (admin_signed_in? || @user == @lab.responsavel)
