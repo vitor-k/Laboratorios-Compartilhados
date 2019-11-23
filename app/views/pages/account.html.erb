@@ -21,18 +21,7 @@
                 Não está vinculado a nenhum laboratório
             <% end %>
         </p>
-        <p>
-            <b> Recursos solicitados: </b>
-            
-            <% if Pedido.where(:user_id => current_user.id).exists? %>
-                <% Pedido.where(:user_id => current_user.id).each do |pedido|%>
-                    <p> <ul> <li> <%= pedido.descricao%> <%= link_to 'Show', pedido %> </li> </ul> </p>
-                <% end %>
-            <% else %>
-                <p> <ul>  Não possui nenhuma solicitação de recurso  </ul> </p>
-            <% end %>
-
-        </p>
+        
     <% end %>
 
     <%# VIEW DO DOCENTE%>
@@ -95,6 +84,7 @@
         <p><%= link_to "Checar solicitações de responsabilidade", index_docente_path(current_user.id) %></p>
     <% end %>
     
+    <p><%= link_to('Recursos solicitados', account_recursos_solicitados_path) %></p>
     <p><%= link_to('Edit registration', edit_user_path) %></p>
     <p><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></p>
 <% else %>

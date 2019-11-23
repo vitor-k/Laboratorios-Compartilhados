@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
+  get 'account/recursos_solicitados', to: 'pages#account_recursos_solicitados'
 
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -13,4 +13,10 @@ class PagesController < ApplicationController
       end
     end
 
+  def account_recursos_solicitados
+    if (!user_signed_in?)
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
 end
