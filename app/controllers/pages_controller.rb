@@ -10,8 +10,8 @@ class PagesController < ApplicationController
     if (docente_signed_in?)
       @docente = Docente.find(current_user.meta_id)
       @laboratorio_docente = @docente.laboratorios
-      end
     end
+  end
 
   def account_postagens
     if (!user_signed_in?)
