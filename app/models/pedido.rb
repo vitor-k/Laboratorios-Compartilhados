@@ -11,7 +11,7 @@ class Pedido < ApplicationRecord
     # validate :checa_serv_equip
 
     def dates_in_order
-        self.errors.add(:dataInicio, "deve ser antes do fim da data") unless dataInicio < dataFim
+        self.errors.add(:dataInicio, "deve ser antes do fim da data") unless self.dataInicio < self.dataFim
     end
 
     def date_before_time

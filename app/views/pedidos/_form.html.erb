@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :"Data de Início" %>
-    <%= form.datetime_select :dataInicio %>
+    <%= form.datetime_select :dataInicio, start_year: Date.today.year  %>
   </div>
 
   <div class="field">
     <%= form.label :"Data de Término" %>
-    <%= form.datetime_select :dataFim %>
+    <%= form.datetime_select :dataFim, start_year: Date.today.year %>
   </div>
 
   <div class="field">
