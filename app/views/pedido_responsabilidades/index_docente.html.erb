@@ -15,8 +15,8 @@
         <% @pedido_responsabilidades_this.each do |pedido_responsabilidade| %>
         <tr>
             <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
-            <td><%= link_to 'Edit', edit_pedido_responsabilidade_path(pedido_responsabilidade) %></td>
-            <td><%= link_to 'Destroy', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Editar', edit_pedido_responsabilidade_path(pedido_responsabilidade) %></td>
+            <td><%= link_to 'Deletar', pedido_responsabilidade, method: :delete, data: { confirm: 'Confirmar?' } %></td>
         </tr>
         <% end %>
     </tbody>
@@ -27,4 +27,4 @@
 
 <br><br/>
 
-<%= link_to 'Back', account_path %>
+<%= link_to 'Voltar', account_path %>

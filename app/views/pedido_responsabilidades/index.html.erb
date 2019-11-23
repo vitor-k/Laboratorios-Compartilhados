@@ -16,8 +16,8 @@
       <tr>
         <td><%= Laboratorio.find(pedido_responsabilidade.id_laboratorio).nome %></td>
         <td><%= User.find(pedido_responsabilidade.id_docente).nome %></td>
-        <td><%= link_to 'Aceitar (set_responsavel)', aceitar_path(pedido_responsabilidade), method: :put %></td>
-        <td><%= link_to 'Rejeitar (Destroy)', pedido_responsabilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Aceitar', aceitar_path(pedido_responsabilidade), method: :put %></td>
+        <td><%= link_to 'Rejeitar', pedido_responsabilidade, method: :delete, data: { confirm: 'Confirmar?' } %></td>
       </tr>
     <% end %>
   </tbody>

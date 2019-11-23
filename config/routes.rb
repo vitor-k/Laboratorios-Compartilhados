@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pesquisa', to: 'pesquisa_globals#index', as: 'pesquisa_global'
   devise_for :users, skip: [:registrations]
   resources :representante_externos
   resources :admins
@@ -10,7 +11,10 @@ Rails.application.routes.draw do
   resources :pedidos
   get '/pedido/:tipo/:id/:idEquipamento', to: "pedidos#new", as: 'new_pedido_alternativo'
   post '/pedido/:tipo/:id/:idEquipamento', to: "pedidos#blabla", as: 'create_pedido_alternativo'
+  get '/laboratorios/:idLab/pedidos', to: "pedidos#show_lab", as: 'show_laboratorio_pedidos'
+  put '/laboratorios/:idLab/pedidos/aceitar/(:idPedido)', to: "pedidos#aceitar_pedido", as: 'aceitar_pedido'
   resources :postagems
+  resources :postagems, :path => :postagens, as: :postagens
 
   resources :laboratorios do
     member do
@@ -21,6 +25,7 @@ Rails.application.routes.draw do
     resources :equipamentos
   end
 
+
   # get '/laboratorios/:id/vinculos', to: 'laboratorios#index_vinculos', as: 'index_vinculos'
   # get '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#vinculo', as: 'new_vinculo'
   # post '/laboratorios/:id/vinculos/vinculo', to: 'laboratorios#create_vinculo', as: 'create_vinculo'
@@ -28,6 +33,7 @@ Rails.application.routes.draw do
   
   get 'about_us', to: 'pages#about_us'
   get 'account', to: 'pages#account'
+  get 'account/postagens', to: 'pages#account_postagens'
   get 'account/recursos_solicitados', to: 'pages#account_recursos_solicitados'
 
   root 'pages#home'

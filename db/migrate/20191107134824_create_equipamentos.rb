@@ -1,7 +1,7 @@
 class CreateEquipamentos < ActiveRecord::Migration[5.2]
   def change
     create_table :equipamentos do |t|
-      t.text :nome
+      t.string :nome
       t.text :funcao
       t.decimal :taxa
 

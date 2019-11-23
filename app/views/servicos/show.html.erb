@@ -11,13 +11,13 @@
 </p>
 
 <p>
-  <strong>Taxa:</strong>
+  <strong>Taxa diária:</strong>
   <%= @servico.taxa %>
 </p>
 
 <p>
-  <strong>Laboratorio "[id]":</strong>
-  <%= @servico.laboratorio.nome %> [<%=@servico.laboratorio.id %>]
+  <strong>Laboratorio:</strong>
+  <%= @servico.laboratorio.nome %>
 </p>
 
 <%= link_to 'Página de serviços', laboratorio_servicos_path(@laboratorio) %>

@@ -6,6 +6,8 @@ class RepresentanteExternosControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user, :representante_externo)
     @representante_externo = RepresentanteExterno.find(@user.meta_id)
 
+    @admin_user = create(:user, :admin)
+
     #puts param
     sign_in @user
   end
@@ -14,9 +16,13 @@ class RepresentanteExternosControllerTest < ActionDispatch::IntegrationTest
     sign_out @user
   end
 
-  test "should get index" do
+  test "should get index if admin" do
+    sign_out @user
+    sign_in @admin_user
     get representante_externos_url
     assert_response :success
+    sign_out @admin_user
+    sign_in @user
   end
 
   test "should get new if logged out" do
@@ -28,11 +34,10 @@ class RepresentanteExternosControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new if logged in as admin" do
     sign_out @user
-    admin = create(:user, :admin)
-    sign_in admin
+    sign_in @admin_user
     get new_representante_externo_url
     assert_response :success
-    sign_out admin
+    sign_out @admin_user
     sign_in @user
   end
 

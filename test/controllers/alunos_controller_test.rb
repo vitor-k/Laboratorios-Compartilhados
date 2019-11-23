@@ -7,6 +7,8 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
     @aluno = Aluno.find(@aluno_user.meta_id)
 
     sign_in @aluno.user
+
+    @admin_user = create(:user, :admin)
   end
 
   teardown do
@@ -14,8 +16,14 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    sign_out @aluno_user
+    sign_in @admin_user
+
     get alunos_url
     assert_response :success
+
+    sign_out @admin_user
+    sign_in @aluno_user
   end
 
   test "should get new" do
@@ -25,7 +33,7 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create aluno when not admin" do
     assert_no_difference('Aluno.count') do
-      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp,
+      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp+1,
         user_attributes: { nome: @aluno.user.nome, email: "new_#{@aluno.user.email}", 
           password: @aluno.user.encrypted_password,
           password_confirmation: @aluno.user.encrypted_password
@@ -37,10 +45,9 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create aluno when admin" do
     sign_out(@aluno.user)
-    admin = create(:user, :admin)
-    sign_in(admin)
+    sign_in(@admin_user)
     assert_difference('Aluno.count') do
-      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp,
+      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp+1,
         user_attributes: { nome: @aluno.user.nome, email: "new_#{@aluno.user.email}", 
           password: @aluno.user.encrypted_password,
           password_confirmation: @aluno.user.encrypted_password
@@ -48,14 +55,14 @@ class AlunosControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to aluno_url(Aluno.last)
-    sign_out(admin)
+    sign_out(@admin_user)
     sign_in(@aluno.user)
   end
 
   test "should create aluno when logged out" do
     sign_out(@aluno.user)
     assert_difference('Aluno.count') do
-      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp,
+      post alunos_url, params: { aluno: { departamento: @aluno.departamento, nusp: @aluno.nusp+1,
         user_attributes: { nome: @aluno.user.nome, email: "new_#{@aluno.user.email}", 
           password: @aluno.user.encrypted_password,
           password_confirmation: @aluno.user.encrypted_password

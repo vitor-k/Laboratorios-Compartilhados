@@ -6,18 +6,18 @@
 </p>
 
 <p>
-  <strong>Funcao:</strong>
+  <strong>Função:</strong>
   <%= @equipamento.funcao %>
 </p>
 
 <p>
-  <strong>Taxa:</strong>
+  <strong>Taxa diária:</strong>
   <%= @equipamento.taxa %>
 </p>
 
 <p>
-  <strong>Laboratorio "[id]":</strong>
-  <%= @equipamento.laboratorio.nome %> [<%=@equipamento.laboratorio.id %>]
+  <strong>Laboratorio:</strong>
+  <%= @equipamento.laboratorio.nome %>
 </p>
 
 <%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %>

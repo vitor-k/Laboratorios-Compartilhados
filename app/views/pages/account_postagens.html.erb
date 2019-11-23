@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Conta </h1>
+
+<p>Signed in as <%= current_user.email %> of type <%= current_user.meta_type %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Título </th>
+      <th>Laboratório</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Postagem.where(user_id: current_user.id).each do |postagem| %>
+        <tr>
+        <td><%= postagem.titulo %></td>
+        <td><%= postagem.laboratorio.nome %></td>
+        <td><%= link_to 'Mostrar', postagem %></td>
+        <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+        <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

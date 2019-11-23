@@ -1,12 +1,19 @@
 require 'test_helper'
 
 class ServicosControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
-    # @laboratorio = laboratorios(:lmo)
     @laboratorio = create(:laboratorio)
-    # @servico = servicos(:one)
+    
     @servico = create(:servico, laboratorio_id: @laboratorio.id)
-    # @servico.laboratorio_id = @laboratorio.id
+    
+    @admin_user = create(:user, :admin)
+    sign_in @admin_user
+
+  end
+
+  teardown do
+    sign_out @admin_user
   end
 
   test "should get index" do
@@ -24,7 +31,7 @@ class ServicosControllerTest < ActionDispatch::IntegrationTest
       post laboratorio_servicos_url(@laboratorio), params: { servico: { descricao: @servico.descricao, nome: @servico.nome, taxa: @servico.taxa } }
     end
 
-    assert_redirected_to laboratorio_servico_url(@laboratorio, Servico.last)
+    assert_redirected_to laboratorio_servicos_url(@laboratorio)
   end
 
   test "should show servico" do
@@ -39,7 +46,7 @@ class ServicosControllerTest < ActionDispatch::IntegrationTest
 
   test "should update servico" do
     patch laboratorio_servico_url(@laboratorio, @servico), params: { servico: { descricao: @servico.descricao, nome: @servico.nome, taxa: @servico.taxa } }
-    assert_redirected_to laboratorio_servico_url(@laboratorio, @servico)
+    assert_redirected_to laboratorio_servicos_url(@laboratorio)
   end
 
   test "should destroy servico" do

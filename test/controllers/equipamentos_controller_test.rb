@@ -1,13 +1,19 @@
 require 'test_helper'
 
 class EquipamentosControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @laboratorio = create(:laboratorio)
 
     @equipamento = create(:equipamento, laboratorio_id: @laboratorio.id)
-    # @equipamento.laboratorio_id = @laboratorio.id
-    # @laboratorio = laboratorios(:lmo)
-    # @equipamento = equipamentos(:one)
+    
+    @admin_user = create(:user, :admin)
+    sign_in @admin_user
+
+  end
+
+  teardown do
+    sign_out @admin_user
   end
 
   test "should get index" do
@@ -25,7 +31,7 @@ class EquipamentosControllerTest < ActionDispatch::IntegrationTest
       post laboratorio_equipamentos_url(@laboratorio), params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
     end
 
-    assert_redirected_to laboratorio_equipamento_url(@laboratorio, Equipamento.last)
+    assert_redirected_to laboratorio_equipamentos_url(@laboratorio)
   end
 
   test "should show equipamento" do

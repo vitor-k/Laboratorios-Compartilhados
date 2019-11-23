@@ -19,9 +19,9 @@
         <td><%= equipamento.funcao %></td>
         <td><%= equipamento.taxa %></td>
         <% if (@user == @responsavel) %>
-            <td><%= link_to 'Show', [@laboratorio, equipamento] %></td>
-            <td><%= link_to 'Edit', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
-            <td><%= link_to 'Destroy', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Mostrar', [@laboratorio, equipamento] %></td>
+            <td><%= link_to 'Editar', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
+            <td><%= link_to 'Deletar', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Confirmar?' } %></td>
       <% end %>
       </tr>
     <% end %>
@@ -49,9 +49,9 @@
         <td><%= servico.descricao %></td>
         <td><%= servico.taxa %></td>
         <% if (@user == @responsavel) %>
-            <td><%= link_to 'Show', [@laboratorio, servico] %></td>
-            <td><%= link_to 'Edit', edit_laboratorio_servico_path(@laboratorio, servico) %></td>
-            <td><%= link_to 'Destroy', [@laboratorio, servico], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Mostrar', [@laboratorio, servico] %></td>
+            <td><%= link_to 'Editar', edit_laboratorio_servico_path(@laboratorio, servico) %></td>
+            <td><%= link_to 'Deletar', [@laboratorio, servico], method: :delete, data: { confirm: 'Confirmar?' } %></td>
       <% end %>
       </tr>
     <% end %>
@@ -75,9 +75,9 @@
     <% @postagems.each do |postagem| %>
       <tr>
         <td><%= postagem.texto %></td>
-        <td><%= link_to 'Show', postagem %></td>
-        <td><%= link_to 'Edit', edit_postagem_path(postagem) %></td>
-        <td><%= link_to 'Destroy', postagem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Mostrar', postagem %></td>
+        <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+        <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
       </tr>
     <% end %>
   </tbody>

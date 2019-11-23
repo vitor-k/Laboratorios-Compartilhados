@@ -54,12 +54,24 @@ FactoryBot.define do
     nome { FFaker::CompanyIT.name }
     localizacao { FFaker::AddressBR.street }
     descricao { FFaker::Book.description }
-    association :responsavel, factory: :docente
 
-    after(:build) do |laboratorio|
-      docente_user = create(:user, :docente)
-      laboratorio.responsavel = Docente.find(docente_user.meta_id)
+    transient do
+      tem_responsavel { true }
     end
+
+    after(:build) do |laboratorio, options|
+      if(options.tem_responsavel)
+        docente_user = create(:user, :docente)
+        laboratorio.responsavel = Docente.find(docente_user.meta_id)
+      end
+    end
+  end
+
+  factory :postagem do
+    texto{ FFaker::Book.description }
+    titulo{ FFaker::Product.product_name }
+    association :laboratorio, factory: :laboratorio
+    association :user, factory: [:user, :aluno]
   end
 
   factory :equipamento do
@@ -76,9 +88,24 @@ FactoryBot.define do
     laboratorio
   end
 
+  factory :pedido do
+    dataInicio { FFaker::Time.datetime( {:year_latest => -1, :year_range => 1}) }
+    dataFim { FFaker::Time.datetime( {:year_latest => -3, :year_range => 1}) }
+    descricao { FFaker::Product.product_name }
+    aceito { rand(100) > 50 }
+    association :user, factory: [:user, :aluno]
+    escolha = (FFaker::Random.rand(100) > 50)
+    if(escolha)
+      association :equipamento, factory: :equipamento
+    else
+      association :servico, factory: :servico
+    end
+    after(:build) do |pedido|
+      pedido.laboratorio_id = create(:laboratorio).id
+    end
+  end
+
   factory :pedido_responsabilidade do
-    association :id_docente, factory: :docente
-    association :id_laboratorio, factory: :laboratorio
     after(:build) do |pedido_responsabilidade|
       docente_user = create(:user, :docente)
       # pedido_responsabilidade.id_docente = Docente.find(docente_user.meta_id).id

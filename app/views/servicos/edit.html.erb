@@ -1,4 +1,4 @@
-<h1>Editing Serviço</h1>
+<h1>Editando Serviço</h1>
 
 <% if (admin_signed_in? || @user == @responsavel) %>
     <%= render 'form', servico: @servico %>
@@ -9,5 +9,5 @@
 <% end %>
 
 
-<%= link_to 'Show', [@laboratorio, @servico] %> |
-<%= link_to 'Página de servicos', laboratorio_servicos_path(@laboratorio) %>
+<%= link_to 'Mostrar', [@laboratorio, @servico] %> |
+<%= link_to 'Página de Serviços', laboratorio_servicos_path(@laboratorio) %>

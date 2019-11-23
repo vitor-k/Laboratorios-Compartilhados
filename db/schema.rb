@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_14_014845) do
+ActiveRecord::Schema.define(version: 2019_11_20_235748) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -21,18 +21,18 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
   create_table "alunos", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "laboratorio_id"
     t.index ["laboratorio_id"], name: "index_alunos_on_laboratorio_id"
   end
 
   create_table "docentes", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "laboratorio_id"
     t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
   end
 
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
   end
 
   create_table "equipamentos", force: :cascade do |t|
-    t.text "nome"
+    t.string "nome"
     t.text "funcao"
     t.decimal "taxa"
     t.integer "laboratorio_id"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
   end
 
   create_table "laboratorios", force: :cascade do |t|
-    t.text "nome"
+    t.string "nome"
     t.text "localizacao"
     t.text "descricao"
     t.datetime "created_at", null: false
@@ -74,9 +74,11 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
     t.text "descricao"
     t.integer "equipamento_id"
     t.integer "servico_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.boolean "aceito"
+    t.integer "laboratorio_id"
     t.index ["equipamento_id"], name: "index_pedidos_on_equipamento_id"
     t.index ["servico_id"], name: "index_pedidos_on_servico_id"
     t.index ["user_id"], name: "index_pedidos_on_user_id"
@@ -84,13 +86,11 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
 
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
-    t.text "titulo"
-    t.integer "admin_id"
+    t.string "titulo"
+    t.integer "user_id"
     t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["admin_id"], name: "index_postagems_on_admin_id"
     t.index ["laboratorio_id"], name: "index_postagems_on_laboratorio_id"
     t.index ["user_id"], name: "index_postagems_on_user_id"
   end
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
   end
 
   create_table "servicos", force: :cascade do |t|
-    t.text "nome"
+    t.string "nome"
     t.text "descricao"
     t.decimal "taxa"
     t.integer "laboratorio_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "nome", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -120,7 +121,6 @@ ActiveRecord::Schema.define(version: 2019_11_14_014845) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "nome", default: "", null: false
     t.string "meta_type"
     t.integer "meta_id"
     t.index ["email"], name: "index_users_on_email", unique: true
