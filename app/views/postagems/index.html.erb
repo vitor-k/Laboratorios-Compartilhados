@@ -15,12 +15,14 @@
     <% @postagems.each do |postagem| %>
       <tr>
         <td><%= postagem.titulo %></td>
-        <td><%= postagem.laboratorio.nome %></td>
+        <%if postagem.laboratorio != nil%>
+          <td><%= postagem.laboratorio.nome %></td>
+        <% end %>
         <td><%= link_to 'Mostrar', postagem %></td>
         <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>
           <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+          <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
         <% end %>
-        <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
       </tr>
     <% end %>
   </tbody>

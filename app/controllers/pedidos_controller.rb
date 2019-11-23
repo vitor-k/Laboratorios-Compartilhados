@@ -46,6 +46,7 @@ class PedidosController < ApplicationController
     end
     respond_to do |format|
       if @pedido.save
+        @pedido.update_attribute(:aceito, false)
         format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
         format.json { render :show, status: :created, location: @pedido }
       else
@@ -53,7 +54,6 @@ class PedidosController < ApplicationController
         format.json { render json: @pedido.errors, status: :unprocessable_entity }
       end
     end
-    @pedido.update_attribute(:aceito, false)
   end
 
   # PATCH/PUT /pedidos/1
