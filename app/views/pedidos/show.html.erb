@@ -60,8 +60,10 @@
   <%= link_to 'Edit', edit_pedido_path(@pedido) %> | 
 <% end %>
 
-<% if @tipo == "equipamento"%>
-  <%= link_to 'Voltar', laboratorio_equipamentos_path(@pedido.laboratorio_id) %>
-<% elsif @tipo == "servico" %>
-  <%= link_to 'Voltar', laboratorio_servicos_path(@pedido.laboratorio_id) %>
+<% if admin_signed_in? %>
+  <%= link_to 'Voltar', pedidos_path %>
+<% elsif @user == Laboratorio.find(@pedido.laboratorio_id).responsavel %>
+  <%= link_to 'Voltar', show_laboratorio_pedidos_path(Laboratorio.find(@pedido.laboratorio_id)) %>
+<% elsif current_user == @solicitador %>
+  <%= link_to 'Voltar', index_user_path(@user) %>
 <% end %>

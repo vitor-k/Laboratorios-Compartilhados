@@ -3,7 +3,6 @@ class PedidosController < ApplicationController
   before_action :get_solicitador, only: [:show, :edit, :update, :destroy]
   before_action :get_user, only: [:edit, :create, :update, :destroy, :new, :show, :show_lab]
   before_action :get_tipo, only: [:edit, :update, :show, :destroy]
-  before_action :out_edit, except: [:edit]
 
   # GET /pedidos
   # GET /pedidos.json
@@ -17,61 +16,79 @@ class PedidosController < ApplicationController
   end
 
   # GET /pedidos/new
-  def new
+  def new    
+    @tipo = params[:tipo]    
+    @lab = params[:idLab]
+    @item = params[:idItem]
+
     if (@user != nil)
-      @tipo = params[:tipo]
-      @lab = params[:idLab]
-      @item = params[:idItem]
       @pedido = Pedido.new
     else
       respond_to do |format|
-        format.html { redirect_to new_pedido_alternativo_path(@tipo, @lab, @item), notice: 'Não tem permissão para fazer pedido.' }
-        format.json { head :no_content }
+        if (@tipo == "equipamento")
+          format.html { redirect_to laboratorio_equipamentos_path(@lab), notice: 'Não tem permissão para fazer pedido.' }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to laboratorio_servicos_path(@lab), notice: 'Não tem permissão para fazer pedido.' }
+          format.json { head :no_content }
+        end
       end
     end
   end
 
   # GET /pedidos/1/edit
   def edit
-    @edit = true
   end
 
   # POST /pedidos
   # POST /pedidos.json
-  def create
-    @pedido = @current_user.pedidos.new(pedido_params)
-    if (@pedido.equipamento_id != nil)
-      @pedido.update_attribute(:laboratorio_id, @pedido.equipamento.laboratorio_id)
+  def create        
+    if (@current_user != nil)
+      @pedido = @current_user.pedidos.new(pedido_params)
+      respond_to do |format|
+        if @pedido.save
+          format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
+          format.json { render :show, status: :created, location: @pedido }
+        else
+          format.html { render :new }
+          format.json { render json: @pedido.errors, status: :unprocessable_entity }
+        end
+      end
+      @pedido.update_attribute(:aceito, false)
     else
-      @pedido.update_attribute(:laboratorio_id, @pedido.servico.laboratorio_id)
-    end
-    respond_to do |format|
-      if @pedido.save
-        format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
-        format.json { render :show, status: :created, location: @pedido }
-      else
-        format.html { render :new }
-        format.json { render json: @pedido.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { redirect_to new_pedido_path, notice: 'Não tem permissão para fazer pedido.' }
+        format.json { head :no_content }
       end
     end
-    @pedido.update_attribute(:aceito, false)
   end
 
   # PATCH/PUT /pedidos/1
   # PATCH/PUT /pedidos/1.json
   def update
-    respond_to do |format|
-      if @pedido.update(pedido_params)
-        if (@pedido.equipamento_id != nil)
-          @pedido.update_attribute(:laboratorio_id, @pedido.equipamento.laboratorio_id)
+    if (@user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
+      respond_to do |format|
+        if @pedido.update(pedido_params)
+          if (@pedido.equipamento_id != nil)
+            @pedido.update_attribute(:laboratorio_id, @pedido.equipamento.laboratorio_id)
+          else
+            @pedido.update_attribute(:laboratorio_id, @pedido.servico.laboratorio_id)
+          end
+          
+          if (@user == @solicitador)
+            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
+            format.json { render :show, status: :ok, location: @pedido }
+          elsif (admin_signed_in?)
+            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
+            format.json { render :show, status: :ok, location: @pedido }
+          else
+            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
+            format.json { render :show, status: :ok, location: @pedido }
+          end
         else
-          @pedido.update_attribute(:laboratorio_id, @pedido.servico.laboratorio_id)
+          format.html { render :edit }
+          format.json { render json: @pedido.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pedido }
-      else
-        format.html { render :edit }
-        format.json { render json: @pedido.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,10 +96,30 @@ class PedidosController < ApplicationController
   # DELETE /pedidos/1
   # DELETE /pedidos/1.json
   def destroy
-    @pedido.destroy
-    respond_to do |format|
-      format.html { redirect_to pedidos_url, notice: 'Pedido was successfully destroyed.' }
-      format.json { head :no_content }
+    @lab = Laboratorio.find(@pedido.laboratorio_id)
+    if (@user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
+      @pedido.destroy
+      if (@user == @solicitador)
+        respond_to do |format|
+          format.html { redirect_to index_user_path(@user), notice: 'Pedido foi deletado.' }
+          format.json { head :no_content }
+        end
+      elsif (admin_signed_in? )
+        respond_to do |format|
+          format.html { redirect_to pedidos_url, notice: 'Pedido foi deletado.' }
+          format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido foi deletado.' }
+          format.json { head :no_content }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Não tem permissão.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -119,6 +156,14 @@ class PedidosController < ApplicationController
       format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido aceito com sucesso.'}
       format.json { head :no_content }
     end
+  end
+
+  # get /account/1/pedidos
+  def index_user
+    @equipamentos_espera = current_user.pedidos.where(servico_id: nil, aceito: false)
+    @servicos_espera = current_user.pedidos.where(equipamento_id: nil, aceito: false)
+    @equipamentos_aceito = current_user.pedidos.where(servico_id: nil, aceito: true)
+    @servicos_aceito  = current_user.pedidos.where(equipamento_id: nil, aceito: true)
   end
 
   private
@@ -163,8 +208,5 @@ class PedidosController < ApplicationController
         @tipo = "equipamento"
       end
     end
-    
-    def out_edit
-      @edit = false
-    end
+
 end

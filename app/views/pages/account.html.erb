@@ -82,9 +82,10 @@
         <p><%= link_to "Solicitar responsabilidade", new_pedido_responsabilidade_path %></p>
         <p><%= link_to "Checar solicitações de responsabilidade", index_docente_path(current_user.id) %></p>
     <% end %>
-    
-    <p><%= link_to('Edit registration', edit_user_path) %></p>
+
+    <p><%= link_to('Lista de Pedidos', index_user_path(current_user)) %></p>
     <p><%= link_to('Postagens', account_postagens_path) %></p>
+    <p><%= link_to('Editar Cadastro', edit_user_path) %></p>
     <p><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></p>
 <% else %>
     <p><%= link_to 'Sign in', new_user_session_path %></p>

@@ -26,6 +26,9 @@
     <%= link_to 'Editar serviços', edit_laboratorio_servico_path(@laboratorio) %>
 <% end%>
 <% if (user_signed_in?) %>
-  <%= link_to 'Pedir serviço', new_pedido_alternativo_path("servico", @laboratorio, @servico) %>
+  <%= link_to 'Pedir serviço', new_pedido_path %>
+  <% cookies[:tipo] = "servico"%>
+  <% cookies[:idLab] = @laboratorio.id %>
+  <% cookies[:idItem] = @servico.id %>
 <% end %>
 
