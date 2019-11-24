@@ -1,0 +1,156 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Lista de Pedidos do Usuário: <%= current_user.nome%> </h1> <br/>
+
+<h2>Solicitações de Equipamentos Pendentes do Usuário</h2>
+
+<% if (!@equipamentos_espera.empty?) %>
+    <table>
+    <thead>
+        <tr>
+        <th>Equipamento</th>
+        <th>Laboratório</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th>Aceito</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @equipamentos_espera.each do |equipamento_espera| %>
+        <tr>
+            <td><%= Equipamento.find(equipamento_espera.equipamento_id).nome %></td>
+            <td><%= Laboratorio.find(equipamento_espera.laboratorio_id).nome %></td>
+            <td><%= equipamento_espera.dataInicio %></td>
+            <td><%= equipamento_espera.dataFim %></td>
+            <td><%= equipamento_espera.aceito %></td>
+            <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
+                <td><%= link_to 'Mostrar', equipamento_espera %></td>
+                <td><%= link_to 'Editar', edit_pedido_path(equipamento_espera) %></td>
+                <td><%= link_to 'Cancelar', equipamento_espera, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    Não há solicitações de equipamentos pendentes.
+<% end %>
+
+<br/>
+
+<h2>Solicitações de Serviços Pendentes do Usuário</h2>
+
+<% if (!@servicos_espera.empty?) %>
+    <table>
+    <thead>
+        <tr>
+        <th>Serviço</th>
+        <th>Laboratório</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th>Aceito</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @servicos_espera.each do |servico_espera| %>
+        <tr>
+            <td><%= Servico.find(servico_espera.servico_id).nome %></td>
+            <td><%= Laboratorio.find(servico_espera.laboratorio_id).nome %></td>
+            <td><%= servico_espera.dataInicio %></td>
+            <td><%= servico_espera.dataFim %></td>
+            <td><%= servico_espera.aceito %></td>
+            <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
+                <td><%= link_to 'Mostrar', servico_espera %></td>
+                <td><%= link_to 'Editar', edit_pedido_path(servico_espera) %></td>
+                <td><%= link_to 'Cancelar', servico_espera, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    Não há solicitações de serviço pendentes.
+<% end %>
+
+<br/>
+
+<h2>Solicitações de Equipamentos Aceitas do Usuário</h2>
+
+<% if (!@equipamentos_aceito.empty?) %>
+    <table>
+    <thead>
+        <tr>
+        <th>Equipamento</th>
+        <th>Laboratório</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th>Aceito</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @equipamentos_aceito.each do |equipamento_aceito| %>
+        <tr>
+            <td><%= Equipamento.find(equipamento_aceito.equipamento_id).nome %></td>
+            <td><%= Laboratorio.find(equipamento_aceito.laboratorio_id).nome %></td>
+            <td><%= equipamento_aceito.dataInicio %></td>
+            <td><%= equipamento_aceito.dataFim %></td>
+            <td><%= equipamento_aceito.aceito %></td>
+            <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
+                <td><%= link_to 'Mostrar', equipamento_aceito %></td>
+                <td><%= link_to 'Cancelar', equipamento_aceito, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    Não há solicitações de equipamentos pendentes.
+<% end %>
+
+<br/>
+
+<h2>Solicitações de Serviços Aceitas do Usuário</h2>
+
+<% if (!@servicos_aceito.empty?) %>
+    <table>
+    <thead>
+        <tr>
+        <th>Serviço</th>
+        <th>Laboratório</th>
+        <th>Data de Início</th>
+        <th>Data de Término</th>
+        <th>Aceito</th>
+        <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @servicos_aceito.each do |servico_aceito| %>
+        <tr>
+            <td><%= Servico.find(servico_aceito.servico_id).nome %></td>
+            <td><%= Laboratorio.find(servico_aceito.laboratorio_id).nome %></td>
+            <td><%= servico_aceito.dataInicio %></td>
+            <td><%= servico_aceito.dataFim %></td>
+            <td><%= servico_aceito.aceito %></td>
+            <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
+                <td><%= link_to 'Mostrar', servico_aceito %></td>
+                <td><%= link_to 'Cancelar', servico_aceito, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% else %>
+    Não há solicitações de serviço pendentes.
+<% end %>
+
+<br/>
+<br/>
+
+<%= link_to 'Voltar', account_path %>

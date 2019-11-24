@@ -26,5 +26,8 @@
 <% end%>
 
 <% if (user_signed_in?) %>
-  <%= link_to 'Pedir equipamento', create_pedido_alternativo_path("equipamento", @laboratorio, @equipamento) %>
+  <%= link_to 'Pedir equipamento', new_pedido_path %>
+  <% cookies[:tipo] = "equipamento"%>
+  <% cookies[:idLab] = @laboratorio.id %>
+  <% cookies[:idItem] = @equipamento.id %>
 <% end %>

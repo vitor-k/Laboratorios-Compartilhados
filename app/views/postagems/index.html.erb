@@ -15,8 +15,10 @@
     <% @postagems.each do |postagem| %>
       <tr>
         <td><%= postagem.titulo %></td>
-        <%if postagem.laboratorio != nil%>
+        <% if postagem.laboratorio != nil %>
           <td><%= postagem.laboratorio.nome %></td>
+        <% else %>
+          <td> Principal </td>
         <% end %>
         <td><%= link_to 'Mostrar', postagem %></td>
         <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>

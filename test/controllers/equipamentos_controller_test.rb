@@ -28,7 +28,7 @@ class EquipamentosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create equipamento" do
     assert_difference('Equipamento.count') do
-      post laboratorio_equipamentos_url(@laboratorio), params: { equipamento: { funcao: @equipamento.funcao, nome: @equipamento.nome, taxa: @equipamento.taxa } }
+      post laboratorio_equipamentos_url(@laboratorio), params: { equipamento: { funcao: @equipamento.funcao, nome:"new_#{@equipamento.nome}", taxa: @equipamento.taxa } }
     end
 
     assert_redirected_to laboratorio_equipamentos_url(@laboratorio)

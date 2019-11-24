@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<h2> Mostra pedido </h2>
+
 <p>
   <strong>Data de Início:</strong>
   <%= @pedido.dataInicio %>
@@ -20,22 +22,34 @@
   <%= @solicitador.nome %>
 </p>
 
-<% if (@pedido.equipamento_id != nil) %>
+<% if @tipo == "equipamento" %>
   <p>
     <strong>Equipamento:</strong>
     <%= Equipamento.find(@pedido.equipamento_id).nome %>
   </p>
+
   <p>
-    <strong>Taxa total de uso do equimaneto:</strong>
+    <strong>Laboratório do equipamento:</strong>
+    <%= Laboratorio.find(Equipamento.find(@pedido.equipamento_id).laboratorio_id).nome %>
+  </p>
+
+  <p>
+    <strong>Taxa total de uso do equipamento:</strong>
     <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Equipamento.find(@pedido.equipamento_id).taxa%>
   </p>
 <% end %>
 
-<% if (@pedido.servico_id != nil) %>
+<% if @tipo == "servico" %>
   <p>
-    <strong>Equipamento:</strong>
+    <strong>Serviço:</strong>
     <%= Servico.find(@pedido.servico_id).nome %>
   </p>
+
+  <p>
+    <strong>Laboratório do servico:</strong>
+    <%= Laboratorio.find(Servico.find(@pedido.servico_id).laboratorio_id).nome %>
+  </p>
+
   <p>
     <strong>Taxa total do serviço:</strong>
     <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Servico.find(@pedido.servico_id).taxa%>
@@ -45,4 +59,11 @@
 <% if (@current_user == @solicitador && !@pedido.aceito)%>
   <%= link_to 'Edit', edit_pedido_path(@pedido) %> | 
 <% end %>
-<%= link_to 'Back', pedidos_path %>
+
+<% if admin_signed_in? %>
+  <%= link_to 'Voltar', pedidos_path %>
+<% elsif @user == Laboratorio.find(@pedido.laboratorio_id).responsavel %>
+  <%= link_to 'Voltar', show_laboratorio_pedidos_path(Laboratorio.find(@pedido.laboratorio_id)) %>
+<% elsif current_user == @solicitador %>
+  <%= link_to 'Voltar', index_user_path(@user) %>
+<% end %>

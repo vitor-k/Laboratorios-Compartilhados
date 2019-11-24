@@ -29,7 +29,7 @@ class EquipamentosController < ApplicationController
   # POST /equipamentos
   # POST /equipamentos.json
   def create
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
     # @equipamento = Equipamento.new(equipamento_params)
       @equipamento = @laboratorio.equipamentos.build(equipamento_params)
       respond_to do |format|
@@ -52,7 +52,7 @@ class EquipamentosController < ApplicationController
   # PATCH/PUT /equipamentos/1
   # PATCH/PUT /equipamentos/1.json
   def update
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
       respond_to do |format|
         if @equipamento.update(equipamento_params)
           format.html { redirect_to laboratorio_equipamentos_url(@laboratorio), notice: 'Equipamento was successfully updated.' }
@@ -73,7 +73,7 @@ class EquipamentosController < ApplicationController
   # DELETE /equipamentos/1
   # DELETE /equipamentos/1.json
   def destroy
-    if (admin_signed_in? || @user == @responsavel)
+    if (permissao)
       @equipamento.destroy
       respond_to do |format|
         format.html { redirect_to laboratorio_equipamentos_url(@laboratorio), notice: 'Equipamento was successfully destroyed.' }
@@ -128,5 +128,9 @@ class EquipamentosController < ApplicationController
       else
         @responsavel = "sem_responsavel"
       end
+    end
+
+    def permissao
+      admin_signed_in? || @user == @responsavel
     end
 end

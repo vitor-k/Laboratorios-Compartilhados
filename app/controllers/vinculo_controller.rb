@@ -23,26 +23,26 @@ class VinculoController < ApplicationController
 
     puts membro
 
-    if (membro == nil)
+    if (membro == nil) #nao tem usuario, redireciona para new vinculo
       respond_to do |format|
-        format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
+        format.html { redirect_to new_laboratorio_vinculo_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
         format.json { head :no_content }
       end
-    elsif (membro.user.aluno? && membro.laboratorio == nil)
+    elsif (membro.user.aluno? && membro.laboratorio == nil) #usuario encontrado e não faz parte do laboratorio, redireciona para vinculos
       membro.update(laboratorio_id: @laboratorio.id)
       respond_to do |format|
         format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Criado com sucesso' }
         format.json { head :no_content }
       end
-    elsif (membro.user.docente? && !@laboratorio.docentes.exists?(membro.id))
+    elsif (membro.user.docente? && !@laboratorio.docentes.exists?(membro.id)) #usuario encontrado e não faz parte do laboratorio, redireciona para vinculos
       @laboratorio.docentes << membro
       respond_to do |format|
         format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Criado com sucesso' }
         format.json { head :no_content }
       end
-    else
+    else #usuario encontrado, mas não atende especificaões, redireciona para new vinculo
       respond_to do |format|
-        format.html { redirect_to laboratorio_vinculo_index_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
+        format.html { redirect_to new_laboratorio_vinculo_path(@laboratorio), notice: 'Não foi possível criar vínculo' }
         format.json { head :no_content }
       end
     end
