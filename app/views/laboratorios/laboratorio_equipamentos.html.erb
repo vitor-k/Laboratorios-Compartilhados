@@ -3,12 +3,12 @@
 <h2> Página de Equipamentos do Laboratório: <%= @laboratorio.nome %></h2>
 
 <% if !@laboratorio.equipamentos.empty? %>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead">
     <tr>
-      <th>Nome</th>
-      <th>Função</th>
-      <th>Taxa</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Função</th>
+      <th scope="col">Taxa</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +23,7 @@
             <td><%= link_to 'Mostrar', [@laboratorio, equipamento] %></td>
             <td><%= link_to 'Editar', edit_laboratorio_equipamento_path(@laboratorio, equipamento) %></td>
             <td><%= link_to 'Deletar', [@laboratorio, equipamento], method: :delete, data: { confirm: 'Confirmar?' } %></td>
-      <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

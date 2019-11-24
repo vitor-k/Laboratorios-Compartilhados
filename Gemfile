@@ -30,6 +30,10 @@ gem 'rails-html-sanitizer', '~> 1.2.0'
 
 gem 'bcrypt', '3.1.12'
 
+# Bootstrap
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

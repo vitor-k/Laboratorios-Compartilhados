@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<h1>Novo Postagem</h1>
+<h1>Nova Postagem</h1>
 
 <% if (@user != nil) %>
     <%= render 'form', postagem: @postagem %>
@@ -8,4 +8,5 @@
         <h2> Deve estar logado para postar </h2>
     </div>
 <% end %>
+<br>
 <%= link_to 'Voltar', postagems_path %>

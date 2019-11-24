@@ -1,32 +1,58 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Página Principal</h1>
+<% unless user_signed_in? %>
+<div class="jumbotron">
+  <h1 class="display-4">Bem-vindo aos Laboratórios Compartilhados da USP!</h1>
+  <p class="lead">Aqui é possível alugar equipamentos e requisitar serviços de diversos laboratórios da Universidade!</p>
+  <hr class="my-4">
+  <p>Caso seja alguém sem vínculo com a Universidade, faça o cadastro abaixo. Caso já esteja cadastrado ou tenha vínculo, conecte-se.</p>
+  <%= link_to 'Registre-se', new_representante_externo_path, class: 'btn btn-primary btn-lg' %>
+  <%= link_to 'Conecte-se', new_user_session_path, class: 'btn btn-secondary btn-lg' %>
+</div>
+<% else %>
+<h2>Bem-vindo, <%= current_user.nome %>!</h2>
+<% end %>
 
 <%= form_with(url: pesquisa_global_url, method: :get, local: true) do |f| %>
-  <%= f.text_field :termo %><br>
-  <%= f.label 'Laboratórios' %>
-  <%= f.check_box :laboratorio %><br>
-  <%= f.label 'Equipamentos' %>
-  <%= f.check_box :equipamento %><br>
-  <%= f.label 'Serviços' %>
-  <%= f.check_box :servico %><br>
-  <%= f.label 'Postagens' %>
-  <%= f.check_box :postagem %><br>
+  <h4>Pesquise no site</h4>
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.text_field :termo, class: 'form-control', placeholder: 'Termo para pesquisa' %>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check form-check-inline">
+      <%= f.check_box :laboratorio, class: 'form-check-input' %><br>
+      <%= f.label 'Laboratórios', class: 'form-check-label' %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.check_box :equipamento, class: 'form-check-input' %><br>
+      <%= f.label 'Equipamentos', class: 'form-check-label' %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.check_box :servico, class: 'form-check-input' %><br>
+      <%= f.label 'Serviços', class: 'form-check-label' %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.check_box :postagem, class: 'form-check-input' %><br>
+      <%= f.label 'Postagens', class: 'form-check-label' %>
+    </div>
+  </div>
+  <div class="form-row">
+    <%= f.submit 'Pesquisar', name: nil, class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<br>
+<br>
 
-
-  <%= f.submit 'Pesquisar', name: nil %>
+<% if has_postagem_from_admin? %>
+<h4> Postagens dos Administradores </h4>
 <% end %>
 
-<p> <h2> Postagens dos Administradores </h2> </p>
-
-<% Postagem.all.each do |postagem|%>
-  <tr>
-    <% if User.find(postagem.user_id).meta_type == "Admin" then %> 
-      <p>
-      <td> <%= postagem.titulo %> </td>
-      <td><%= link_to 'Mostrar', postagem %></td>
-      </p>
+<div class="list-group">
+  <% Postagem.all.each do |postagem|%>
+    <% if postagem.laboratorio_id.nil? && User.find(postagem.user_id).meta_type == "Admin" then %> 
+      <%= link_to "#{postagem.titulo}", postagem, class: 'list-group-item list-group-item-action' %>
     <% end %>
-  </tr>
-<% end %>
-
+  <% end %>
+</div>

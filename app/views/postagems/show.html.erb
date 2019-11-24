@@ -1,23 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Título:</strong>
-  <%= @postagem.titulo %>
-  <br>
-  <strong>Descrição:</strong>
-  <%= @postagem.texto %>
-  <br>
-  <strong>Autor:</strong>
-  <%= @poster.user.nome %>
-  <br>
-  <strong>Laboratório:</strong>
-  <% if @postagem.laboratorio != nil %>
-    <%= @postagem.laboratorio.nome %>
-  <% else %>
-  nao tem né
+<h6>Postagem 
+  <% if !@postagem.laboratorio.nil? %>
+    do laboratório <%= @postagem.laboratorio.nome %>
   <% end %>
-</p>
+</h6>
+<h1><%= @postagem.titulo %></h1>
+<h4>Por <%= @poster.user.nome %></h4>
 
-<%= link_to 'Editar', edit_postagem_path(@postagem) %> |
-<%= link_to 'Voltar', postagems_path %>
+<p><%= @postagem.texto %></p>
+
+
+<% if admin_signed_in? || current_user == @poster.user %>
+  <%= link_to 'Editar', edit_postagem_path(@postagem) %>
+<% end %>
+
+<%= link_to 'Voltar', :back %>
   

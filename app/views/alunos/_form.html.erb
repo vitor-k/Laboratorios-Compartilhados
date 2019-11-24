@@ -12,43 +12,43 @@
   <% end %>
 
   <%= form.fields_for :user do |u| %>
-    <div class="field">
+    <div class="form-group">
       <%= u.label :nome %>
-      <%= u.text_field :nome %>
+      <%= u.text_field :nome, class: 'form-control' %>
     </div>
 
-    <div class="field">
+    <div class="form-group">
       <%= u.label :email %>
-      <%= u.text_field :email %>
+      <%= u.text_field :email, class: 'form-control' %>
     </div>
 
-    <div class="field">
-      <%= u.label :password %>
-      <%= u.password_field :password %>
+    <div class="form-group">
+      <%= u.label :password, "Senha" %>
+      <%= u.password_field :password, class: 'form-control' %>
     </div>
 
-    <div class="field">
-      <%= u.label :password_confirmation %>
-      <%= u.password_field :password_confirmation %>
+    <div class="form-group">
+      <%= u.label :password_confirmation, "Confirmação da senha" %>
+      <%= u.password_field :password_confirmation, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :nusp %>
-    <%= form.number_field :nusp %>
+  <div class="form-group">
+    <%= form.label :nusp, "Número USP" %>
+    <%= form.number_field :nusp, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :departamento %>
-    <%= form.text_field :departamento %>
+    <%= form.text_field :departamento, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :laboratorio %>
-    <%= form.collection_select(:laboratorio_id, Laboratorio.all, :id, :nome , :include_blank => true) %>
+  <div class="form-group">
+    <%= form.label :laboratorio, "Laboratório" %>
+    <%= form.collection_select(:laboratorio_id, Laboratorio.all, :id, :nome, {:include_blank => true}, {class: 'form-control'}) %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Criar novo aluno',  class: 'btn btn-primary' %>
   </div>
 <% end %>

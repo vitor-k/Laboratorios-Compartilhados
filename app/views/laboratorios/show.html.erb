@@ -1,26 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Página do Laboratório </h1>
-
-<%= form_with(model: @laboratorio, method: :get, url: :busca_laboratorio, local: true) do |f| %>
-  <%= f.text_field :termo, placeholder: 'Pesquisar serviço, equipamento ou postagem' %>
-  <%= f.submit 'Pesquisar', name: nil %>
-<% end %>
-
-<p>
-  <strong>Laboratório:</strong>
-  <%= @laboratorio.nome %>
-</p>
-
-<p>
-  <strong>Localização:</strong>
-  <%= @laboratorio.localizacao %>
-</p>
-
-<p>
-  <strong>Descrição:</strong>
-  <%= @laboratorio.descricao %>
-</p>
+<h5> Página do Laboratório </h5>
+<h2><%= @laboratorio.nome %> - <%= @laboratorio.localizacao %></h2>
+<%= @laboratorio.descricao %>
 
 <p>
   <strong>Responsável:</strong>
@@ -30,55 +12,90 @@
     <%= @responsavel.nome %>
   <% end %>
 </p>
-<% if (@user = @responsavel || admin_signed_in?)%>
-  <p>
-    <strong>Pedidos em espera:</strong>
-    <%= Pedido.where("laboratorio_id = ? AND aceito = ?", @laboratorio.id, false).count() %>
-  </p>
-
-  <p>
-    <strong>Pedidos aceitos:</strong>
-    <%= @laboratorio.numero_aceitos %>
-  </p>
-
-  <p>
-    <strong>Pedidos rejeitados:</strong>
-    <%= @laboratorio.numero_rejeitados %>
-  </p>
-<% end %>
-
 
 <% if (@user == @responsavel || admin_signed_in?) %>  
-    <%= link_to "Modificar dados", edit_laboratorio_path(@laboratorio) %>
+    <%= link_to "Modificar dados", edit_laboratorio_path(@laboratorio), class: 'btn btn-warning' %>
+    <br>
+<% end %>
+<br>
+
+<%= form_with(model: @laboratorio, method: :get, url: :busca_laboratorio, local: true) do |f| %>
+  <div class="form-row">
+    <div class="col-7">
+    <%= f.text_field :termo, placeholder: 'Pesquisar serviço, equipamento ou postagem no laboratório', class: 'form-control' %>
+    </div>
+    <div class="col">
+    <%= f.submit 'Pesquisar', name: nil, class: 'btn btn-primary' %>
+    </div>
+  </div>
 <% end %>
 
-<p><%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio) %></p>
-<p><%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio) %></p>
-<p><%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio) %></p>
-<p><%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio) %></p>
-<p><%= link_to "Lista de laboratórios", laboratorios_path %></p>
+<br>
+
+<div class="list-group">
+  <%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <% if @user == @responsavel || admin_signed_in? %>
+  <% end %>
+</div>
+
+<br>
+
+<% if (@user == @responsavel || admin_signed_in?)%>
+  <h2>Pedidos</h2>
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos em espera
+      <span class="badge badge-primary badge-pill">
+        <%= Pedido.where("laboratorio_id = ? AND aceito = ?", @laboratorio.id, false).count() %>
+      </span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos aceitos
+      <span class="badge badge-success badge-pill">
+        <%= @laboratorio.numero_aceitos %>
+      </span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos rejeitados
+      <span class="badge badge-danger badge-pill">
+        <%= @laboratorio.numero_rejeitados %>
+      </span>
+    </li>
+    <%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  </ul>
+
+<% end %>
 
 
-<p> <h2> Postagens  </h2> </p>
-<table>
-  <thead>
+
+<br>
+
+<% if lab_has_postagem? %>
+<h2> Postagens </h2> 
+<% end %>
+
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Título </th>
-      <th>Autor </th>
-      <th>Link para a postagem</th>
+      <th scope="col">Título</th>
+      <th scope="col">Autor</th>
+      <th scope="col">Link para a postagem</th>
       <th colspan="3"></th>
     </tr>
   </thead>
   <tbody>
     <% Postagem.all.each do |postagem|%>
       <tr>  
-      <% if  postagem.laboratorio_id == @laboratorio.id then %>
+      <% if postagem.laboratorio_id == @laboratorio.id then %>
         <td> <%= postagem.titulo %> </td>
         <td> <%= postagem.user.nome %> </td>
         <td><%= link_to 'Mostrar', postagem %></td>
       <% end %>
       </tr>
-<% end %>
+    <% end %>
   </tbody>
-
 </table>
+
+<p><%= link_to "Lista de laboratórios", laboratorios_path %></p>
