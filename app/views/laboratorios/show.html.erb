@@ -57,3 +57,28 @@
 <p><%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio) %></p>
 <p><%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio) %></p>
 <p><%= link_to "Lista de laboratórios", laboratorios_path %></p>
+
+
+<p> <h2> Postagens  </h2> </p>
+<table>
+  <thead>
+    <tr>
+      <th>Título </th>
+      <th>Autor </th>
+      <th>Link para a postagem</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Postagem.all.each do |postagem|%>
+      <tr>  
+      <% if  postagem.laboratorio_id == @laboratorio.id then %>
+        <td> <%= postagem.titulo %> </td>
+        <td> <%= postagem.user.nome %> </td>
+        <td><%= link_to 'Mostrar', postagem %></td>
+      <% end %>
+      </tr>
+<% end %>
+  </tbody>
+
+</table>
