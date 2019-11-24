@@ -51,7 +51,7 @@ class PostagemsController < ApplicationController
             format.json { render json: @postagem.errors, status: :unprocessable_entity }
           end
         end
-      elsif (docente_signed_in? && current_docente.laboratorio_id != nil)
+      elsif (docente_signed_in? && !current_docente.laboratorios.empty?)
         respond_to do |format|
           if @postagem.save(postagem_params)
             format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
@@ -62,8 +62,10 @@ class PostagemsController < ApplicationController
           end
         end
       else
-        format.html { redirect_to new_postagem_url, notice: 'Não foi possível criar postagem.' }
+        respond_to do |format|
+          format.html { redirect_to new_postagem_url, notice: 'Não foi possível criar postagem.' }
           format.json { render :show, status: :created, location: @postagem }
+        end
       end
     end
   end

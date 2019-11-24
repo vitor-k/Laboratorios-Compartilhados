@@ -28,12 +28,13 @@
       <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome, include_blank: "Principal" %>
     <% elsif aluno_signed_in? %>
       <% if current_aluno.laboratorio != nil %>
-        <%= form.collection_select :laboratorio_id, current_aluno.laboratorio, :id, :nome %>
+        <%= form.hidden_field :laboratorio_id, value: current_aluno.laboratorio.id %>
+        <p><%= current_aluno.laboratorio.nome %></p>
       <% else %>
         Não tem laboratorio vinculado
       <% end %>
     <% elsif docente_signed_in? %>
-      <% if !current.docente.laboratorios.empty?%>
+      <% if !current_docente.laboratorios.empty?%>
         <%= form.collection_select :laboratorio_id, current_docente.laboratorios, :id, :nome %>
       <% else %>
         Não tem laboratorio vinculado
