@@ -3,12 +3,12 @@
 <h2> Página de Equipamentos do Laboratório: <%= @laboratorio.nome %></h2>
 
 <% if !@laboratorio.equipamentos.empty? %>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Nome</th>
-      <th>Função</th>
-      <th>Taxa</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Função</th>
+      <th scope="col">Taxa</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -37,4 +37,4 @@
   <p><%= link_to 'Criar equipamento', new_laboratorio_equipamento_path(@laboratorio) %></p>
 <% end %>
 
-<p><%= link_to 'Página do laboratório', @laboratorio %></p>
+<p><%= link_to 'Voltar ao laboratório', @laboratorio %></p>

@@ -1,15 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Lista de vínculos</h2>
+<h2>Lista de pessoas vinculadas ao laboratório <%= @laboratorio.nome %></h2>
 <br><br/>
-<p> Docentes </p>
+<h3>Docentes</h3>
 <% if @laboratorio.docentes.any? %>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Nome</th>
-      <th>Número USP</th>
-      <th>Departamento</th>
+      <th scope="col">Nome</th>
+      <% if @user == @responsavel || admin_signed_in? %>
+      <th scope="col">Número USP</th>
+      <% end %>
+      <th scope="col">Email</th>
+      <th scope="col">Departamento</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,7 +21,10 @@
     <% @laboratorio.docentes.each do |docente| %>
       <tr>
         <td><%= docente.user.nome %></td>
-        <td><%= docente.nusp %></td>
+        <% if @user == @responsavel || admin_signed_in? %>
+          <td><%= docente.nusp %></td>
+        <% end %>
+        <td><%= docente.user.email %></td>
         <td><%= docente.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) && docente != @responsavel %>
             <td><%= link_to 'Deletar', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: docente.user.nome, nUSP: docente.nusp), method: :put ,data: { confirm: 'Confirmar?' } %></td>
@@ -34,12 +40,15 @@
 
 <p> Alunos </p>
 <% if Aluno.where(laboratorio_id: @laboratorio.id).exists? %>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th>Nome</th>
-      <th>Número USP</th>
-      <th>Departamento</th>
+      <th scope="col">Nome</th>
+      <% if @user == @responsavel || admin_signed_in? %>
+        <th scope="col">Número USP</th>
+      <% end %>
+      <th scope="col">Email</th>
+      <th scope="col">Departamento</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -48,7 +57,10 @@
     <% Aluno.where(laboratorio_id: @laboratorio.id).each do |aluno| %>
       <tr>
         <td><%= aluno.user.nome %></td>
-        <td><%= aluno.nusp %></td>
+        <% if @user == @responsavel || admin_signed_in? %>
+          <td><%= aluno.nusp %></td>
+        <% end %>
+        <td><%= aluno.user.email %></td>
         <td><%= aluno.departamento %></td>
         <% if (@user == @responsavel || admin_signed_in?) %>
              <td><%= link_to 'Deletar', laboratorio_vinculo_path(id: @laboratorio.id, nomeCompleto: aluno.user.nome, nUSP: aluno.nusp), method: :put ,data: { confirm: 'Confirmar?' } %></td>
@@ -66,4 +78,4 @@
   <p><%= link_to "Criar vínculo", new_laboratorio_vinculo_path(@laboratorio) %>
 <% end %>
 
-<p><%= link_to 'Página do laboratório', @laboratorio %></p>
+<p><%= link_to 'Voltar ao laboratório', @laboratorio %></p>

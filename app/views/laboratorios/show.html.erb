@@ -50,10 +50,12 @@
 <br>
 
 <div class="list-group">
-<%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
-<%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
-<%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
-<%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <% if @user == @responsavel || admin_signed_in? %>
+    <%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  <% end %>
 </div>
 <br>
 <% if lab_has_postagem? %>
