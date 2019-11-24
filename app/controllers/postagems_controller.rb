@@ -29,15 +29,43 @@ class PostagemsController < ApplicationController
   # POST /postagems
   # POST /postagems.json
   def create
-    # @postagem = Postagem.new(postagem_params)
     @postagem = @user.user.postagems.build(postagem_params)
-    respond_to do |format|
-      if @postagem.save(postagem_params)
-        format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
-        format.json { render :show, status: :created, location: @postagem }
+    if (admin_signed_in? || aluno_signed_in? || docente_signed_in? )
+      if (admin_signed_in?) #admin logado pode criar vazio
+        respond_to do |format|
+          if @postagem.save(postagem_params)
+            format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
+            format.json { render :show, status: :created, location: @postagem }
+          else
+            format.html { render :new }
+            format.json { render json: @postagem.errors, status: :unprocessable_entity }
+          end
+        end
+      elsif (aluno_signed_in? && current_aluno.laboratorio_id != nil)
+        respond_to do |format|
+          if @postagem.save(postagem_params)
+            format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
+            format.json { render :show, status: :created, location: @postagem }
+          else
+            format.html { render :new }
+            format.json { render json: @postagem.errors, status: :unprocessable_entity }
+          end
+        end
+      elsif (docente_signed_in? && !current_docente.laboratorios.empty?)
+        respond_to do |format|
+          if @postagem.save(postagem_params)
+            format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
+            format.json { render :show, status: :created, location: @postagem }
+          else
+            format.html { render :new }
+            format.json { render json: @postagem.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        format.html { render :new }
-        format.json { render json: @postagem.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { redirect_to new_postagem_url, notice: 'Não foi possível criar postagem.' }
+          format.json { render :show, status: :created, location: @postagem }
+        end
       end
     end
   end
