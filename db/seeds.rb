@@ -32,6 +32,7 @@ lmo = Laboratorio.create({nome: 'LMO', localizacao: 'Escola Politécnica (EPUSP)
   descricao: 'Offshore Mechanics Laboratory', responsavel: docente1
 })
 lmo.docentes << docente1
+lmo.docentes << docente3
 
 gmsie = Laboratorio.create({nome: 'GMSIE', localizacao: 'Escola Politécnica (EPUSP)',
   descricao: 'Grupo de Mecanica dos Solidos e Impacto em Estruturas', responsavel: docente3 
@@ -68,3 +69,27 @@ lmo.servicos << serv1
 
 serv2 = Servico.create({nome: "Serv2", descricao: "servicdois", taxa: 2000, laboratorio: gmsie})
 lmo.servicos << serv2
+
+aluno2.laboratorio = lmo
+lmo.alunos << aluno2
+
+post1 = Postagem.create({titulo: "Assunto relevante", texto: "Olha que assunto relevante", user: aluno2.user, laboratorio: aluno2.laboratorio})
+lmo.postagems << post1
+aluno2.user.postagems << post1
+post2 = Postagem.create({titulo: "Vagas abertas", texto: "Existem vagas abertas para pesquisadores.", user: docente1.user, laboratorio: lmo})
+lmo.postagems << post2
+docente1.user.postagems << post2
+post3 = Postagem.create({titulo: "Estudo em andamento", texto: "O estudo feito no laboratório está em andamento", user: docente3.user, laboratorio: gmsie})
+gmsie.postagems << post3
+docente3.user.postagems << post3
+post4 = Postagem.create({titulo: "Resultados", texto: "Seguem os resultados dos estudos realizados", user: docente3.user, laboratorio: lmo})
+lmo.postagems << post4
+docente3.user.postagems << post4
+post5 = Postagem.create({titulo: "Anúncio de manutenção", texto: "No dia 25/11/2019 o sistema estará indisponível para uma manutenção programada.", user: admin2.user, laboratorio: nil})
+admin2.user.postagems << post5
+post6 = Postagem.create({titulo: "Teste da manutenção", texto: "Texto no laboratório LMO", user: admin2.user, laboratorio: lmo})
+lmo.postagems << post6
+admin2.user.postagems << post6
+post7 = Postagem.create({titulo: "Teste da manunteção", texto: "Texto no laboratório GMSIE", user: admin2.user, laboratorio: gmsie})
+gmsie.postagems << post7
+admin2.user.postagems << post7
