@@ -1,16 +1,16 @@
 class PesquisaGlobalsController < ApplicationController
   def index
-    @termo = params[:termo]
-    if @termo.blank?
-      redirect_to root_path, notice: 'É preciso digitar algo para pesquisar'
-    end
-
+    @termo = params[:termo]    
     var = "%#{@termo}%"
     @laboratorio = params[:laboratorio]
     @equipamento = params[:equipamento]
     @servico = params[:servico]
     @postagem = params[:postagem]
     
+    if (@termo.blank? && @laboratorio + @equipamento + @servico + @postagem != '0000')
+      redirect_to root_path, notice: 'É preciso digitar algo para pesquisar'
+    end
+
     @laboratorios = Laboratorio.where('nome LIKE ?', var) if @laboratorio == '1'
     @equipamentos = Equipamento.where('nome LIKE ?', var) if @equipamento == '1'
     @servicos = Servico.where('nome LIKE ?', var) if @servico == '1'
