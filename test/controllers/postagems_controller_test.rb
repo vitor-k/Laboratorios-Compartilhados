@@ -3,10 +3,10 @@ require 'test_helper'
 class PostagemsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
-    @aluno_user = create(:user, :aluno)
+    @aluno_user = create(:user, :aluno_vinculado)
     @aluno = Aluno.find(@aluno_user.meta_id)
 
-    @postagem = create(:postagem, user: @aluno_user)
+    @postagem = create(:postagem, user: @aluno_user, laboratorio_id: @aluno.laboratorio_id)
 
     sign_in @aluno_user
   end
@@ -27,7 +27,7 @@ class PostagemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create postagem" do
     assert_difference('Postagem.count') do
-      post postagems_url, params: { postagem: { texto: @postagem.texto } }
+      post postagems_url, params: { postagem: { texto: @postagem.texto, titulo: @postagem.titulo, laboratorio_id: @postagem.laboratorio.id } }
     end
 
     assert_redirected_to postagem_url(Postagem.last)

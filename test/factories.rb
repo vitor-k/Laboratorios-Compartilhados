@@ -22,6 +22,10 @@ FactoryBot.define do
       association :meta, factory: :aluno
     end
 
+    trait :aluno_vinculado do
+      association :meta, factory: [:aluno, :vinculado]
+    end
+    
     trait :docente do
       association :meta, factory: :docente
     end
@@ -38,6 +42,10 @@ FactoryBot.define do
   factory :aluno do
     nusp { rand(100000..11000000) }
     departamento { FFaker::Vehicle.make }
+
+    trait :vinculado do
+      association :laboratorio, factory: :laboratorio
+    end
   end
 
   factory :docente do
@@ -101,11 +109,17 @@ FactoryBot.define do
       association :servico, factory: :servico
     end
     after(:build) do |pedido|
-      pedido.laboratorio_id = create(:laboratorio).id
+      if(escolha)
+        pedido.laboratorio_id = pedido.equipamento.laboratorio_id
+      
+      else
+        pedido.laboratorio_id = pedido.servico.laboratorio_id
+      end
     end
   end
 
   factory :pedido_responsabilidade do
+    justificativa { FFaker::Book.description }
     after(:build) do |pedido_responsabilidade|
       docente_user = create(:user, :docente)
       # pedido_responsabilidade.id_docente = Docente.find(docente_user.meta_id).id

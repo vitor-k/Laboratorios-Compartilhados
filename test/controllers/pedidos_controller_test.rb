@@ -75,10 +75,16 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy pedido" do
+    solicitador = User.find(@pedido.user_id)
+    sign_out @aluno_user
+    sign_in solicitador
     assert_difference('Pedido.count', -1) do
       delete pedido_url(@pedido)
     end
 
-    assert_redirected_to pedidos_url
+    assert_redirected_to index_user_url(solicitador)
+
+    sign_out solicitador
+    sign_in @aluno_user
   end
 end

@@ -36,7 +36,7 @@ class PedidoResponsabilidadesControllerTest < ActionDispatch::IntegrationTest
   test "should create pedido_responsabilidade" do
     laboratorio2 = create(:laboratorio, tem_responsavel: false)
     assert_difference('PedidoResponsabilidade.count') do
-      post pedido_responsabilidades_url, params: { pedido_responsabilidade: { id_docente: @pedido_responsabilidade.id_docente, id_laboratorio: laboratorio2.id } }
+      post pedido_responsabilidades_url, params: { pedido_responsabilidade: { id_docente: @pedido_responsabilidade.id_docente, id_laboratorio: laboratorio2.id, justificativa: @pedido_responsabilidade.justificativa } }
     end
 
     assert_redirected_to account_url
@@ -53,8 +53,8 @@ class PedidoResponsabilidadesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pedido_responsabilidade" do
-    patch pedido_responsabilidade_url(@pedido_responsabilidade), params: { pedido_responsabilidade: { id_docente: @pedido_responsabilidade.id_docente, id_laboratorio: @pedido_responsabilidade.id_laboratorio } }
-    assert_redirected_to account_url
+    patch pedido_responsabilidade_url(@pedido_responsabilidade), params: { pedido_responsabilidade: { id_docente: @pedido_responsabilidade.id_docente, id_laboratorio: @pedido_responsabilidade.id_laboratorio, justificativa: @pedido_responsabilidade.justificativa } }
+    assert_redirected_to index_docente_url(@docente_user)
   end
 
   test "should destroy pedido_responsabilidade" do
@@ -62,6 +62,6 @@ class PedidoResponsabilidadesControllerTest < ActionDispatch::IntegrationTest
       delete pedido_responsabilidade_url(@pedido_responsabilidade)
     end
 
-    assert_redirected_to account_url
+    assert_redirected_to index_docente_url(@docente_user)
   end
 end
