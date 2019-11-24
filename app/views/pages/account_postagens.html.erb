@@ -2,9 +2,9 @@
 
 <h1> Suas Postagens </h1>
 
-<p>Signed in as <%= current_user.email %> of type <%= current_user.meta_type %></p>
+<p>Conectado como <%= current_user.email %> - <%= current_user.meta_type %></p>
 
-<table>
+  <table>
   <thead>
     <tr>
       <th>Título </th>
@@ -17,7 +17,11 @@
     <% Postagem.where(user_id: current_user.id).each do |postagem| %>
         <tr>
         <td><%= postagem.titulo %></td>
-        <td><%= postagem.laboratorio.nome %></td>
+        <% if postagem.laboratorio == nil %>
+          <td> Página Principal </td>
+        <% else %>
+          <td><%= postagem.laboratorio.nome %></td>
+        <% end %>
         <td><%= link_to 'Mostrar', postagem %></td>
         <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
         <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>

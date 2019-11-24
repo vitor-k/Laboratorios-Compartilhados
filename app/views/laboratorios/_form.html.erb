@@ -12,23 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :"Nome" %>
+    <%= form.label "Nome: " %>
     <%= form.text_area :nome %>
   </div>
 
   <div class="field">
-    <%= form.label :"Localização" %>
+    <%= form.label "Localização: " %>
     <%= form.text_area :localizacao %>
   </div>
 
   <div class="field">
-    <%= form.label :"Descrição" %>
+    <%= form.label "Descrição: " %>
     <%= form.text_area :descricao %>
   </div>
 
   <% if admin_signed_in? %>
     <div class="field">
-      <%= form.label "Responsável:" %>
+      <%= form.label "Responsável: " %>
       <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: "Selecionar responsável", include_blank: true) %>
     </div>
   <% end %>

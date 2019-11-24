@@ -1,8 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Lista de Pedidos do Usuário: <%= current_user.nome%> </h1> <br/>
+<h1> Solicitações de Recursos </h1>
 
-<h2>Solicitações de Equipamentos Pendentes do Usuário</h2>
+<p>Conectado como <%= current_user.email %> - <%= current_user.meta_type %></p>
+
+<strong>Solicitações de Equipamentos Pendentes do Usuário</strong><br/>
 
 <% if (!@equipamentos_espera.empty?) %>
     <table>
@@ -39,8 +41,9 @@
 <% end %>
 
 <br/>
+<br/>
 
-<h2>Solicitações de Serviços Pendentes do Usuário</h2>
+<strong>Solicitações de Serviços Pendentes do Usuário</strong><br/>
 
 <% if (!@servicos_espera.empty?) %>
     <table>
@@ -77,8 +80,9 @@
 <% end %>
 
 <br/>
+<br/>
 
-<h2>Solicitações de Equipamentos Aceitas do Usuário</h2>
+<strong>Solicitações de Equipamentos Aceitas do Usuário</strong><br/>
 
 <% if (!@equipamentos_aceito.empty?) %>
     <table>
@@ -114,8 +118,9 @@
 <% end %>
 
 <br/>
+<br/>
 
-<h2>Solicitações de Serviços Aceitas do Usuário</h2>
+<strong>Solicitações de Serviços Aceitas do Usuário</strong><br/>
 
 <% if (!@servicos_aceito.empty?) %>
     <table>
