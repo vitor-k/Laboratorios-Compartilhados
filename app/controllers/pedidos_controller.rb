@@ -69,6 +69,7 @@ class PedidosController < ApplicationController
   # PATCH/PUT /pedidos/1
   # PATCH/PUT /pedidos/1.json
   def update
+    @lab = Laboratorio.find(@pedido.laboratorio_id)
     if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
       respond_to do |format|
         if @pedido.update(pedido_params)

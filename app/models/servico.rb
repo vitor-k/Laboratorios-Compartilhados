@@ -9,7 +9,11 @@ class Servico < ApplicationRecord
     validates :taxa, presence: true, numericality: { only_decimal: true }
 
     def existe
-        self.errors.add(:nome, 'já existe.') if (Servico.where(nome: self.nome, laboratorio_id: self.laboratorio_id).exists?)
+        if (self.id == nil)
+            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome == ? AND laboratorio_id == ?", self.nome, self.laboratorio_id).any?
+        else
+            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome == ? AND laboratorio_id == ? AND id != ?", self.nome, self.laboratorio_id, self.id).any?
+        end
     end
 
 end

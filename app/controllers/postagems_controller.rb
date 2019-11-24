@@ -62,8 +62,10 @@ class PostagemsController < ApplicationController
           end
         end
       else
-        format.html { redirect_to new_postagem_url, notice: 'Não foi possível criar postagem.' }
+        respond_to do |format|
+          format.html { redirect_to new_postagem_url, notice: 'Não foi possível criar postagem.' }
           format.json { render :show, status: :created, location: @postagem }
+        end
       end
     end
   end
