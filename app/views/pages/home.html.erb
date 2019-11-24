@@ -19,15 +19,27 @@
 
 <p> <h2> Postagens dos Administradores </h2> </p>
 
-
-<% Admin.all.each do |cada| %>
-  <% cada.user.postagems do |postagem|%>
-    <tr>
-      <td><%= postagem.titulo %></td>
-      <td><%= postagem.laboratorio.nome %></td>
+<% Postagem.all.each do |postagem|%>
+  <tr>
+    
+    <% if User.find(postagem.user_id).meta_type == "Admin" then %> 
+      <p>
+      <td> <%= postagem.titulo %> </td>
       <td><%= link_to 'Mostrar', postagem %></td>
-      <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
-      <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
-    </tr>
-  <% end %>
+      </p>
+    <% end %>
+  </tr>
 <% end %>
+
+
+<%# Admin.all.each do |cada| %>
+  <%# cada.user.postagems do |postagem|%>
+    <tr>
+      <td><%#= postagem.titulo %></td>
+      <td><%#= postagem.laboratorio.nome %></td>
+      <td><%#= link_to 'Mostrar', postagem %></td>
+      <td><%#= link_to 'Editar', edit_postagem_path(postagem) %></td>
+      <td><%#= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+    </tr>
+  <%# end %>
+<%# end %>
