@@ -12,37 +12,49 @@
   </head>
 
   <body class='<%= controller.controller_name %>'>
-    <div id="banner">
-      <%= link_to image_tag('Logo.png'), root_path%>
-      <div id="row">
-        <ul>
-          <% if user_signed_in? %>
-            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-            <li><%= link_to current_user.nome + " - " + current_user.meta_type, account_path %></li>
-          <% else %>
-            <li><%= link_to 'Conectar', new_user_session_path %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-    <div id = "columns">
-      <div id = "side">
-        <ul>
-          <li><%= link_to "Página Principal", root_path %></li>
-          <li><%= link_to "Sobre nós", about_us_path %></li>
-          <li><%= link_to "Laboratorios", laboratorios_path %></li>
-            <li><%= link_to "Postagens", postagens_path %></li>
+    <nav class="navbar navbar-dark navbar-expand-md" style="background-color: #2683C6;">
+      <%= link_to root_path, class: 'navbar-brand' do %>
+        <%= image_tag 'Logo.png', width: 30, height: 30 %>
+        Laboratórios Compartilhados
+      <% end %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to "Laboratorios", laboratorios_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Postagens", postagens_path, class: 'nav-link' %>
+          </li>
           <% if admin_signed_in? %>
-            <li><%= link_to "Pedidos", pedidos_path %></li>
-            <li><%= link_to "Responsabilidades", pedido_responsabilidades_path %></li>
-            <li><%= link_to "Inidicadores globais", indicador_global_path %></li>
+            <li class="nav-item"><%= link_to "Pedidos", pedidos_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to "Responsabilidades", pedido_responsabilidades_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to "Indicadores globais", indicador_global_path, class: 'nav-link' %></li>
           <% end %>
         </ul>
+        <ul class="navbar-nav ">
+        <% if user_signed_in? %>
+          <li><%= link_to current_user.nome + " - " + current_user.meta_type, account_path, class: 'nav-link' %></li>
+          <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'nav-link' %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to 'Conectar', new_user_session_path, class: 'nav-link' %></li>
+        <% end %>
+        </ul>
       </div>
-      <div id="main">
-        <p class="alert"><%= alert %></p>
-        <%= yield %>
-      </div>
+    </nav>
+    <div id="main" class="container">
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
     </div>
+    <br>
+    <br>
+    <footer class="footer">
+      <div class="container">
+        <%= link_to "Sobre nós", about_us_path %>
+      </div>
+    </footer>
   </body>
 </html>
