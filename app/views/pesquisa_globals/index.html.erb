@@ -57,10 +57,10 @@
         <td><%= equipamento.nome %></td>
         <td><%= equipamento.funcao %></td>
         <td><%= equipamento.taxa %></td>
-        <td><%= link_to 'Show', [@laboratorio, @equipamento] %></td>
+        <td><%= link_to 'Show', [equipamento.laboratorio, equipamentos] %></td>
         <% if (user_signed_in? && current_user == equipamento.laboratorio.responsavel) %>
-            <td><%= link_to 'Edit', edit_laboratorio_equipamento_path(@equipamento.laboratorio, @equipamento) %></td>
-            <td><%= link_to 'Destroy', [@equipamento.laboratorio, @equipamento], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Edit', edit_laboratorio_equipamento_path(equipamentos.laboratorio, equipamentos) %></td>
+            <td><%= link_to 'Destroy', [equipamentos.laboratorio, equipamentos], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>

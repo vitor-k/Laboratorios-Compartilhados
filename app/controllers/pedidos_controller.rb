@@ -101,6 +101,7 @@ class PedidosController < ApplicationController
   # DELETE /pedidos/1.json
   def destroy
     @lab = Laboratorio.find(@pedido.laboratorio_id)
+    era_aceito = @pedido.aceito
     if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
       @pedido.destroy
       if (current_user == @solicitador)
@@ -119,7 +120,9 @@ class PedidosController < ApplicationController
           format.json { head :no_content }
         end
       end
-      @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + 1)
+      if (!era_aceito)
+        @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + 1)
+      end
     else
       respond_to do |format|
         format.html { redirect_to root_path, notice: 'Não tem permissão.' }
