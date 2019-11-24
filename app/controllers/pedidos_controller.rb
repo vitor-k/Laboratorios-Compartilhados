@@ -16,11 +16,8 @@ class PedidosController < ApplicationController
   end
 
   # GET /pedidos/new
-  def new    
-    @tipo = params[:tipo]    
-    @lab = params[:idLab]
-    @item = params[:idItem]
-
+  def new
+    get_cookies
     if (@user != nil)
       @pedido = Pedido.new
     else
@@ -42,7 +39,7 @@ class PedidosController < ApplicationController
 
   # POST /pedidos
   # POST /pedidos.json
-  def create        
+  def create
     if (@current_user != nil)
       @pedido = @current_user.pedidos.new(pedido_params)
       respond_to do |format|
@@ -69,6 +66,7 @@ class PedidosController < ApplicationController
   # PATCH/PUT /pedidos/1
   # PATCH/PUT /pedidos/1.json
   def update
+    @lab = Laboratorio.find(@pedido.laboratorio_id)
     if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
       respond_to do |format|
         if @pedido.update(pedido_params)
@@ -221,6 +219,12 @@ class PedidosController < ApplicationController
       else
         @tipo = "equipamento"
       end
+    end
+
+    def get_cookies      
+      @tipo = params[:tipo]    
+      @lab = params[:idLab]
+      @item = params[:idItem]
     end
 
 end
