@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Conta </h1>
+<h1> Suas Postagens </h1>
 
 <p>Signed in as <%= current_user.email %> of type <%= current_user.meta_type %></p>
 
@@ -25,3 +25,5 @@
     <% end %>
   </tbody>
 </table>
+
+<p><%= link_to('Voltar', account_path) %></p>
