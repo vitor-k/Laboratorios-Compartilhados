@@ -26,9 +26,11 @@
           <li class="nav-item">
             <%= link_to "Laboratorios", laboratorios_path, class: 'nav-link' %>
           </li>
+          <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to "Postagens", postagens_path, class: 'nav-link' %>
           </li>
+          <% end %>
           <% if admin_signed_in? %>
             <li class="nav-item"><%= link_to "Pedidos", pedidos_path, class: 'nav-link' %></li>
             <li class="nav-item"><%= link_to "Responsabilidades", pedido_responsabilidades_path, class: 'nav-link' %></li>
