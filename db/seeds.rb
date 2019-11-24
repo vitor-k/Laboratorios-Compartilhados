@@ -29,12 +29,14 @@ admin1 = Admin.create({nusp: 10343122, user_attributes: {nome: 'Gabriel',
 }})
 
 lmo = Laboratorio.create({nome: 'LMO', localizacao: 'Escola Politécnica (EPUSP)', 
-  descricao: 'Offshore Mechanics Laboratory', responsavel: docente1
+  descricao: 'Offshore Mechanics Laboratory', responsavel: docente1, 
+  numero_aceitos: 0, numero_rejeitados: 0
 })
 lmo.docentes << docente1
 
 gmsie = Laboratorio.create({nome: 'GMSIE', localizacao: 'Escola Politécnica (EPUSP)',
-  descricao: 'Grupo de Mecanica dos Solidos e Impacto em Estruturas', responsavel: docente3 
+  descricao: 'Grupo de Mecanica dos Solidos e Impacto em Estruturas', responsavel: docente3 ,
+  numero_aceitos: 0, numero_rejeitados: 0
 })
 gmsie.docentes << docente3
 
