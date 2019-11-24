@@ -16,3 +16,18 @@
 
   <%= f.submit 'Pesquisar', name: nil %>
 <% end %>
+
+<p> <h2> Postagens dos Administradores </h2> </p>
+
+
+<% Admin.all.each do |cada| %>
+  <% cada.user.postagems do |postagem|%>
+    <tr>
+      <td><%= postagem.titulo %></td>
+      <td><%= postagem.laboratorio.nome %></td>
+      <td><%= link_to 'Mostrar', postagem %></td>
+      <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+      <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+    </tr>
+  <% end %>
+<% end %>
