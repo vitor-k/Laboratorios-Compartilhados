@@ -1,6 +1,6 @@
 name: Ruby
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -16,6 +16,7 @@ jobs:
     - name: Build and test with Rake
       run: |
         sudo apt-get install libsqlite3-dev
+        sudo apt autoremove
         gem install bundler
         gem install sqlite3
         bundle install --jobs 4 --retry 3
