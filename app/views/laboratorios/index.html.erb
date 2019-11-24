@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Lista de Laboratorios</h1>
+<h1>Lista de Laboratórios</h1>
 
 <table class="table">
   <thead class="thead-dark">
@@ -27,7 +27,7 @@
         <td><%= link_to 'Mostrar', laboratorio %></td>
         <% if admin_signed_in? %>
           <td><%= link_to 'Editar', edit_laboratorio_path(laboratorio) %></td>
-          <td><%= link_to 'Deletar', laboratorio, method: :delete, data: { confirm: 'Confirmar?' }, class: 'btn-danger' %></td>
+          <td><%= link_to 'Deletar', laboratorio, method: :delete, data: { confirm: 'Confirmar?' }, class: 'text-danger' %></td>
         <% end %>
       </tr>
     <% end %>

@@ -11,21 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :"Título" %>
-    <%= form.text_area :titulo %>
+    <%= form.text_area :titulo, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :"Texto" %>
-    <%= form.text_area :texto %>
+    <%= form.text_area :texto, class: 'form-control' %>
   </div>
 
 
-  <div class="field">
+  <div class="form-group">
   <%= form.label :"Laboratório" %>
     <% if admin_signed_in? %>
-      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome, include_blank: "Principal" %>
+      <%= form.collection_select :laboratorio_id, Laboratorio.all, :id, :nome, {include_blank: "Principal"}, {class: 'form-control'} %>
     <% elsif aluno_signed_in? %>
       <% if current_aluno.laboratorio != nil %>
         <%= form.hidden_field :laboratorio_id, value: current_aluno.laboratorio.id %>
@@ -43,6 +43,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Criar postagem', class: 'btn btn-primary' %>
   </div>
 <% end %>

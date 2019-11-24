@@ -12,6 +12,11 @@
     <%= @responsavel.nome %>
   <% end %>
 </p>
+
+<% if (@user == @responsavel || admin_signed_in?) %>  
+    <%= link_to "Modificar dados", edit_laboratorio_path(@laboratorio), class: 'btn btn-warning' %>
+    <br>
+<% end %>
 <br>
 
 <%= form_with(model: @laboratorio, method: :get, url: :busca_laboratorio, local: true) do |f| %>
@@ -25,28 +30,6 @@
   </div>
 <% end %>
 
-<% if (@user == @responsavel || admin_signed_in?)%>
-  <p>
-    <strong>Pedidos em espera:</strong>
-    <%= Pedido.where("laboratorio_id = ? AND aceito = ?", @laboratorio.id, false).count() %>
-  </p>
-
-  <p>
-    <strong>Pedidos aceitos:</strong>
-    <%= @laboratorio.numero_aceitos %>
-  </p>
-
-  <p>
-    <strong>Pedidos rejeitados:</strong>
-    <%= @laboratorio.numero_rejeitados %>
-  </p>
-<% end %>
-
-
-<% if (@user == @responsavel || admin_signed_in?) %>  
-    <%= link_to "Modificar dados", edit_laboratorio_path(@laboratorio) %>
-<% end %>
-
 <br>
 
 <div class="list-group">
@@ -54,10 +37,41 @@
   <%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
   <%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
   <% if @user == @responsavel || admin_signed_in? %>
-    <%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
   <% end %>
 </div>
+
 <br>
+
+<% if (@user == @responsavel || admin_signed_in?)%>
+  <h2>Pedidos</h2>
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos em espera
+      <span class="badge badge-primary badge-pill">
+        <%= Pedido.where("laboratorio_id = ? AND aceito = ?", @laboratorio.id, false).count() %>
+      </span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos aceitos
+      <span class="badge badge-success badge-pill">
+        <%= @laboratorio.numero_aceitos %>
+      </span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Pedidos rejeitados
+      <span class="badge badge-danger badge-pill">
+        <%= @laboratorio.numero_rejeitados %>
+      </span>
+    </li>
+    <%= link_to "Lista de pedidos", show_laboratorio_pedidos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
+  </ul>
+
+<% end %>
+
+
+
+<br>
+
 <% if lab_has_postagem? %>
 <h2> Postagens </h2> 
 <% end %>

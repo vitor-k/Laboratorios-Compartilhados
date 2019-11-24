@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<% unless user_signed_in? %>
 <div class="jumbotron">
   <h1 class="display-4">Bem-vindo aos Laboratórios Compartilhados da USP!</h1>
   <p class="lead">Aqui é possível alugar equipamentos e requisitar serviços de diversos laboratórios da Universidade!</p>
@@ -8,9 +9,12 @@
   <%= link_to 'Registre-se', new_representante_externo_path, class: 'btn btn-primary btn-lg' %>
   <%= link_to 'Conecte-se', new_user_session_path, class: 'btn btn-secondary btn-lg' %>
 </div>
+<% else %>
+<h2>Bem-vindo, <%= current_user.nome %>!</h2>
+<% end %>
 
 <%= form_with(url: pesquisa_global_url, method: :get, local: true) do |f| %>
-  <h3>Pesquise no site</h3>
+  <h4>Pesquise no site</h4>
   <div class="form-row">
     <div class="form-group">
       <%= f.text_field :termo, class: 'form-control', placeholder: 'Termo para pesquisa' %>
@@ -42,7 +46,7 @@
 <br>
 
 <% if has_postagem_from_admin? %>
-<h3> Postagens dos Administradores </h3>
+<h4> Postagens dos Administradores </h4>
 <% end %>
 
 <div class="list-group">

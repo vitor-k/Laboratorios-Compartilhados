@@ -2,12 +2,12 @@
 
 <h1>Postagems</h1>
 
-<table>
+<table class="table">
   <% if admin_signed_in? %>
-    <thead>
+    <thead class="thead-dark">
       <tr>
-        <th>Título </th>
-        <th>Laboratório</th>
+        <th scope="col">Título </th>
+        <th scope="col">Laboratório</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -24,7 +24,7 @@
           <td><%= link_to 'Mostrar', postagem %></td>
           <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>
             <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
-            <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+            <td><%= link_to 'Deletar', postagem, method: :delete, class: 'text-danger', data: { confirm: 'Confirmar?' } %></td>
           <% end %>
         </tr>
       <% end %>
@@ -37,4 +37,5 @@
 
 <br>
 
-<%= link_to 'Nova Postagem', new_postagem_path %>
+
+<%= link_to 'Nova Postagem', new_postagem_path, class: 'btn btn-primary' %>
