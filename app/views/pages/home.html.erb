@@ -16,3 +16,17 @@
 
   <%= f.submit 'Pesquisar', name: nil %>
 <% end %>
+
+<p> <h2> Postagens dos Administradores </h2> </p>
+
+<% Postagem.all.each do |postagem|%>
+  <tr>
+    <% if User.find(postagem.user_id).meta_type == "Admin" then %> 
+      <p>
+      <td> <%= postagem.titulo %> </td>
+      <td><%= link_to 'Mostrar', postagem %></td>
+      </p>
+    <% end %>
+  </tr>
+<% end %>
+

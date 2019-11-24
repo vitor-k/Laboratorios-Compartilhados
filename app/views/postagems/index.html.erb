@@ -3,31 +3,36 @@
 <h1>Postagems</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Título </th>
-      <th>Laboratório</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @postagems.each do |postagem| %>
+  <% if admin_signed_in? %>
+    <thead>
       <tr>
-        <td><%= postagem.titulo %></td>
-        <% if postagem.laboratorio != nil %>
-          <td><%= postagem.laboratorio.nome %></td>
-        <% else %>
-          <td> Principal </td>
-        <% end %>
-        <td><%= link_to 'Mostrar', postagem %></td>
-        <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>
-          <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
-          <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
-        <% end %>
+        <th>Título </th>
+        <th>Laboratório</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
+    </thead>
+
+    <tbody>
+      <% @postagems.each do |postagem| %>
+        <tr>
+          <td><%= postagem.titulo %></td>
+          <% if postagem.laboratorio != nil %>
+            <td><%= postagem.laboratorio.nome %></td>
+          <% else %>
+            <td> Principal </td>
+          <% end %>
+          <td><%= link_to 'Mostrar', postagem %></td>
+          <%if admin_signed_in? || (user_signed_in? && postagem.user_id == current_user.id)%>
+            <td><%= link_to 'Editar', edit_postagem_path(postagem) %></td>
+            <td><%= link_to 'Deletar', postagem, method: :delete, data: { confirm: 'Confirmar?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <p>Sem permissão para visualizar todas as postagens</p>
+    <p>Entre em um dos laboratórios ou vá para a página principal para ver as mensagens dos administradores</p>
+  <% end %>
 </table>
 
 <br>

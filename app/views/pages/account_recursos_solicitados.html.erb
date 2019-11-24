@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Conta </h1>
+<h1> Recursos Solicitados </h1>
 
 <p>Signed in as <%= current_user.email %> of type <%= current_user.meta_type %></p>
-<p><b> Recursos Solicitados </b></p>
 <table>
 
   <tbody>
@@ -18,3 +17,5 @@
   </p>
   </tbody>
 </table>
+
+<p><%= link_to('Voltar', account_path) %></p>
