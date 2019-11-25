@@ -23,7 +23,7 @@
           <th scope="row">Laboratório vinculado</th>
           <td>
             <% if current_user.aluno? && Aluno.find(current_user.meta_id).laboratorio != nil %>
-                <%= Aluno.find(current_user.meta_id).laboratorio.nome %>
+                <%= link_to "#{Aluno.find(current_user.meta_id).laboratorio.nome}", laboratorio_path(Aluno.find(current_user.meta_id).laboratorio), method: :get %>
             <% else %>
                 Não está vinculado a nenhum laboratório
             <% end %>

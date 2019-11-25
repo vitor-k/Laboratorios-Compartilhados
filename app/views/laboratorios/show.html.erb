@@ -36,8 +36,6 @@
   <%= link_to "Lista de equipamentos", laboratorio_equipamentos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
   <%= link_to "Lista de serviços", laboratorio_servicos_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
   <%= link_to "Lista de vinculos", laboratorio_vinculo_index_path(@laboratorio), class: 'list-group-item list-group-item-action' %>
-  <% if @user == @responsavel || admin_signed_in? %>
-  <% end %>
 </div>
 
 <br>
@@ -92,6 +90,9 @@
         <td> <%= postagem.titulo %> </td>
         <td> <%= postagem.user.nome %> </td>
         <td><%= link_to 'Mostrar', postagem %></td>
+        <% if @user == @responsavel || admin_signed_in? %>
+          <td><%= link_to 'Deletar', postagem, method: :delete, class: 'text-danger', data: { confirm: 'Confirmar?' } %></td>        
+        <% end %>
       <% end %>
       </tr>
     <% end %>
