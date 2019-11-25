@@ -23,7 +23,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'pg'
 
 gem 'rails-html-sanitizer', '~> 1.2.0'
 
@@ -48,6 +47,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'sqlite3'
 end
 
 group :development do
@@ -55,6 +55,10 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'ruby-debug-ide'
   gem 'debase'
+end
+
+group :production do
+  gem 'pg'
 end
 
 group :test do
