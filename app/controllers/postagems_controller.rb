@@ -87,7 +87,11 @@ class PostagemsController < ApplicationController
   # DELETE /postagems/1
   # DELETE /postagems/1.json
   def destroy
-    if (@user == @poster || admin_signed_in?)
+    eh_responsavel = false
+    if (@user = @postagem.laboratorio.responsavel)
+      eh_responsavel = true
+    end
+    if (@user == @poster || admin_signed_in? || eh_responsavel)
       @postagem.destroy
       respond_to do |format|
         format.html { redirect_to postagems_url, notice: 'Postagem was successfully destroyed.' }

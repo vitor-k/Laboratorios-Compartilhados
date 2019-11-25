@@ -34,7 +34,7 @@
 <% end %>
 
 <% if (admin_signed_in? || @user == @responsavel) %>
-  <p><%= link_to 'Criar Serviço', new_laboratorio_servico_path(@laboratorio) %></p>
+  <%= link_to 'Criar Serviço', new_laboratorio_servico_path(@laboratorio) %> |
 <% end %>
 
-<p><%= link_to 'Voltar ao laboratório', @laboratorio %></p>
+<%= link_to 'Voltar ao laboratório', @laboratorio %>
