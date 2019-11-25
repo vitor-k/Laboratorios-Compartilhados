@@ -25,14 +25,17 @@
     <%= form.label :descricao, "Descrição" %>
     <%= form.text_area :descricao, class: 'form-control' %>
   </div>
+
   <% if admin_signed_in? %>
     <div class="form-group">
       <%= form.label "Responsável" %>
       <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: "Selecionar responsável", include_blank: "Nenhum") %>
     </div>
+  <% else %>
+    <%= form.hidden_field :responsavel_id, value: current_user.meta_id %>
   <% end %>
 
   <div class="actions">
-    <%= form.submit 'Criar novo laboratório',  class: 'btn btn-primary' %>
+    <%= form.submit  class: 'btn btn-primary' %>
   </div>
 <% end %>

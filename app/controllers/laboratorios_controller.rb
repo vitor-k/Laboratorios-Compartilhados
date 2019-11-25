@@ -72,7 +72,7 @@ class LaboratoriosController < ApplicationController
   def update
     if (permissao)
       responsavel_antigo = @laboratorio.responsavel
-      id = params[:laboratorio][:responsavel_id]
+      id = params[:laboratorio][:responsavel_id] 
       if (!id.empty?)
         responsavel_novo = Docente.find(id)
         if (responsavel_novo != responsavel_antigo && !@laboratorio.docentes.where(id: responsavel_novo.id).exists?)
