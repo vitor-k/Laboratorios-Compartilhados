@@ -27,12 +27,19 @@ Rails.application.routes.draw do
     resources :servicos
     resources :equipamentos
   end
-  
+
+  resource :accounts, only: [:edit_password] do
+    collection do
+      patch 'update_password'
+    end
+  end
+  get 'account/edit_password', to: 'accounts#edit_password'
+
   get 'about_us', to: 'pages#about_us'
   get 'indicador_global', to: 'pages#indicador_global'
-  get 'account', to: 'pages#account'
-  get 'account/postagens', to: 'pages#account_postagens'
-  get 'account/recursos_solicitados', to: 'pages#account_recursos_solicitados'
+  get 'account', to: 'accounts#account'
+  get 'account/postagens', to: 'accounts#account_postagens'
+  get 'account/recursos_solicitados', to: 'accounts#account_recursos_solicitados'
 
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
