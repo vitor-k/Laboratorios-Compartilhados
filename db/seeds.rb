@@ -10,12 +10,12 @@ aluno1 = Aluno.create({nusp: 10293102, departamento: 'PMR', user_attributes: {no
   email: 'roger@usp.br', password: 'achouerradootario', password_confirmation: 'achouerradootario'
 }})
 
-docente1 = Docente.create({nusp: 2293402, departamento: 'PEF', user_attributes: {nome: 'Provasi',
-  email: 'provasi@usp.br', password: 'sanderson', password_confirmation: 'sanderson'
+docente1 = Docente.create({nusp: 2293402, departamento: 'PEF', user_attributes: {nome: 'Péricles',
+  email: 'pericles@usp.br', password: 'sanderson', password_confirmation: 'sanderson'
 }})
 
-docente3 = Docente.create({nusp: 2922384, departamento: 'PMR', user_attributes: {nome: 'Rafael',
-  email: 'rafael@usp.br', password: 'letmein', password_confirmation: 'letmein'  
+docente3 = Docente.create({nusp: 2922384, departamento: 'PMR', user_attributes: {nome: 'Carlos',
+  email: 'carlos@usp.br', password: 'letmein', password_confirmation: 'letmein'  
 }})
 
 representante1 = RepresentanteExterno.create({RG: 109320129, UF: 'São Paulo', user_attributes: {
@@ -24,8 +24,8 @@ representante1 = RepresentanteExterno.create({RG: 109320129, UF: 'São Paulo', u
 }})
 
 admin1 = Admin.create({nusp: 10343122, user_attributes: {nome: 'Gabriel', 
-  email: 'gabriel@usp.br', password: 'saidoleft4deadLucas', 
-  password_confirmation: 'saidoleft4deadLucas'  
+  email: 'gabriel@usp.br', password: 'senhadoadmin', 
+  password_confirmation: 'senhadoadmin'  
 }})
 
 lmo = Laboratorio.create({nome: 'LMO', localizacao: 'Escola Politécnica (EPUSP)', 
@@ -57,17 +57,17 @@ admin2 = Admin.create!({nusp: 10343122, user_attributes: {nome: 'admin1',
   password_confirmation: '111111'  
 }})
 
-equip1 = Equipamento.create({nome: "Equi1", funcao: "equiparum", taxa: 100, laboratorio: gmsie})
+equip1 = Equipamento.create({nome: "Equipamento 1", funcao: "a função comum de um equipamento 1", taxa: 100, laboratorio: lmo})
 lmo.equipamentos << equip1
 
-equip2 = Equipamento.create({nome: "Equi2", funcao: "equipardois", taxa: 200, laboratorio: gmsie})
+equip2 = Equipamento.create({nome: "Equipamento 2", funcao: "a função comum de um equipamento 2", taxa: 200, laboratorio: lmo})
 lmo.equipamentos << equip2
 
 
-serv1 = Servico.create({nome: "Serv1", descricao: "servicum", taxa: 1000, laboratorio: gmsie})
+serv1 = Servico.create({nome: "Serviço 1", descricao: "fazemos o serviço 1", taxa: 1000, laboratorio: lmo})
 lmo.servicos << serv1
 
-serv2 = Servico.create({nome: "Serv2", descricao: "servicdois", taxa: 2000, laboratorio: gmsie})
+serv2 = Servico.create({nome: "Serviço 2", descricao: "fazemos o serviço 2", taxa: 2000, laboratorio: lmo})
 lmo.servicos << serv2
 
 aluno2.laboratorio = lmo

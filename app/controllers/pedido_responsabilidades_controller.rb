@@ -13,7 +13,7 @@ class PedidoResponsabilidadesController < ApplicationController
 
   #GET /account/:id/pedido_responsabilidade
   def index_docente
-    if (PedidoResponsabilidade.where(id_docente: current_user.id).exists?)
+    if (PedidoResponsabilidade.where(id_docente: current_user.id).exists?) # procura se o docente tem pedidos de responsabilidade
       @pedido_responsabilidades_this = PedidoResponsabilidade.where(id_docente: current_user.id)
     else
       @pedido_responsabilidades_this = nil
@@ -27,7 +27,7 @@ class PedidoResponsabilidadesController < ApplicationController
 
   # GET /pedido_responsabilidades/new
   def new
-    if (@permissao_novo)
+    if (@permissao_novo) # se tem permissao para criar um novo pedido 
       @pedido_responsabilidade = PedidoResponsabilidade.new
     end
   end
@@ -164,6 +164,7 @@ class PedidoResponsabilidadesController < ApplicationController
       params.require(:pedido_responsabilidade).permit(:id_laboratorio, :id_docente, :justificativa)
     end
 
+    # current_user
     def get_user
       @user ||=
         if aluno_signed_in?
@@ -183,18 +184,22 @@ class PedidoResponsabilidadesController < ApplicationController
         end
     end
 
+    # pega o usuario que criou o pedido
     def get_solicitador_responsabilidade
       @solicitador_responsabilidade = User.find(@pedido_responsabilidade.id_docente)
     end
 
+    # permissao para alterar um pedido existente
     def permissao_existente
       @permissao_existente = (@solicitador_responsabilidade ==  @user || admin_signed_in?)
     end
 
+    # permissao para criar um novo pedido
     def permissao_novo
       @permissao_novo = (docente_signed_in? || admin_signed_in?)
     end
 
+    # verifica se o laboratorio ja tem um responsavel e se ja tem um pedido do usuario para tal laboratorio
     def pode_criar
       @lab = pedido_responsabilidade_params[:id_laboratorio]
       @doc = current_user.id
@@ -203,18 +208,20 @@ class PedidoResponsabilidadesController < ApplicationController
       tem_responsavel && aberto == false
     end
 
+    # verifica se pode criar um pedido analisando os pedidos já abertos
     def pedido_aberto_criar
       if !@lab.empty?
-          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) #se existe um pedido sem ser esse
+          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) # se um pedido para o laboratorio desse usuario ja existe, aberto = true
               true
-          else
-            false
+          else # usuario nao tem pedido para esse lab
+            false 
           end
-      else
+      else # nao tem pedidos para esse lab
           false
       end
     end
 
+    # verifica se o usuario pode alterar um pedido de responsabilidade existente
     def pode_alterar
       @lab = pedido_responsabilidade_params[:id_laboratorio]
       @doc = current_user.id
@@ -223,18 +230,19 @@ class PedidoResponsabilidadesController < ApplicationController
       tem_responsavel && aberto == false
     end
 
+    # verifica se já há um pedido aberto sem ser esse
     def pedido_aberto_alterar
       if !@lab.empty?
-          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) #se existe um pedido sem ser esse
-            if PedidoResponsabilidade.find_by(id_laboratorio: @lab, id_docente: @doc).id == @pedido_responsabilidade.id
+          if PedidoResponsabilidade.exists?(id_laboratorio: @lab, id_docente: @doc) # se existe um pedido de responsabilidade do laboratorio desse docente
+            if PedidoResponsabilidade.find_by(id_laboratorio: @lab, id_docente: @doc).id == @pedido_responsabilidade.id # se o pedido for esse pedido, pode alterar
               false
-            else
+            else # se o pedido for outro pedido, ja esta aberto e nao pode alterar
               true
             end
-          else
-            false
+          else # nao tem pedidos desse docente
+            false 
           end
-      else
+      else # nao tem nenhum pedido de responsabilidade para o laboratorio
           false
       end
     end

@@ -17,7 +17,7 @@ class PedidosController < ApplicationController
 
   # GET /pedidos/new
   def new    
-    @tipo = params[:tipo]    
+    @tipo = params[:tipo] # pega os parametros do laboratorios novo
     @lab = params[:idLab]
     @item = params[:idItem]
 
@@ -43,8 +43,8 @@ class PedidosController < ApplicationController
   # POST /pedidos
   # POST /pedidos.json
   def create        
-    if (@current_user != nil)
-      @pedido = @current_user.pedidos.new(pedido_params)
+    if (@current_user != nil) # se esta logado
+      @pedido = @current_user.pedidos.new(pedido_params) # cria o pedido
       respond_to do |format|
         if @pedido.save
           format.html { redirect_to @pedido, notice: 'Pedido was successfully created.' }
@@ -54,8 +54,8 @@ class PedidosController < ApplicationController
           format.json { render json: @pedido.errors, status: :unprocessable_entity }
         end
       end      
-      @pedido.update_attribute(:aceito, false)
-      if (@pedido.invalid?)
+      @pedido.update_attribute(:aceito, false) # o pedido nao esta aceito
+      if (@pedido.invalid?) # se o pedido e invalido e ele foi criado, deletar ele
         @pedido.destroy()
       end
     else
@@ -68,27 +68,20 @@ class PedidosController < ApplicationController
 
   # PATCH/PUT /pedidos/1
   # PATCH/PUT /pedidos/1.json
-  def update
-    @lab = Laboratorio.find(@pedido.laboratorio_id)
-    if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
+  def update 
+    @lab = Laboratorio.find(@pedido.laboratorio_id) # pega o laboratorio do pedido
+    if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel) # precisa ter permissao: admin, responsavel ou a pessoa que fez o pedido
       respond_to do |format|
         if @pedido.update(pedido_params)
-          if (@pedido.equipamento_id != nil)
-            @pedido.update_attribute(:laboratorio_id, @pedido.equipamento.laboratorio_id)
+          if (@pedido.equipamento_id != nil) # descobre se e equipamento ou servico e escolhe o jeito certo de pegar o id do laboratorio
+            @pedido.update_attribute(:laboratorio_id, @pedido.equipamento.laboratorio_id) 
           else
             @pedido.update_attribute(:laboratorio_id, @pedido.servico.laboratorio_id)
           end
-          
-          if (@user == @solicitador)
-            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
-            format.json { render :show, status: :ok, location: @pedido }
-          elsif (admin_signed_in?)
-            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
-            format.json { render :show, status: :ok, location: @pedido }
-          else
-            format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
-            format.json { render :show, status: :ok, location: @pedido }
-          end
+
+          format.html { redirect_to @pedido, notice: 'Pedido was successfully updated.' }
+          format.json { render :show, status: :ok, location: @pedido }
+
         else
           format.html { render :edit }
           format.json { render json: @pedido.errors, status: :unprocessable_entity }
@@ -100,30 +93,30 @@ class PedidosController < ApplicationController
   # DELETE /pedidos/1
   # DELETE /pedidos/1.json
   def destroy
-    @lab = Laboratorio.find(@pedido.laboratorio_id)
-    era_aceito = @pedido.aceito
+    @lab = Laboratorio.find(@pedido.laboratorio_id) # pega o laboratorio
+    era_aceito = @pedido.aceito # se o pedido era aceito, ele nao incrementa a lista de pedidos rejeitados
     if (current_user == @solicitador || admin_signed_in? || @user = @lab.responsavel)
-      @pedido.destroy
-      if (current_user == @solicitador)
+      @pedido.destroy # destroi o pedido
+      if (current_user == @solicitador) # rota se o solicitador destroi
         respond_to do |format|
           format.html { redirect_to index_user_path(@user), notice: 'Pedido foi deletado.' }
           format.json { head :no_content }
         end
-      elsif (admin_signed_in? )
+      elsif (admin_signed_in? ) # rota se o admin destroi
         respond_to do |format|
           format.html { redirect_to pedidos_url, notice: 'Pedido foi deletado.' }
           format.json { head :no_content }
         end
-      else
+      else # rota se o responsavel destroi
         respond_to do |format|
           format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido foi deletado.' }
           format.json { head :no_content }
         end
       end
-      if (!era_aceito)
+      if (!era_aceito) # se nao era aceito, incrementa o numero de pedidos rejeitados
         @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + 1)
       end
-    else
+    else # rota se nao tem permissao
       respond_to do |format|
         format.html { redirect_to root_path, notice: 'Não tem permissão.' }
         format.json { head :no_content }
@@ -132,40 +125,40 @@ class PedidosController < ApplicationController
   end
 
   # get /laboratorios/1/pedidos
-  def show_lab
+  def show_lab # msotra todos os pedidos de um laboratorio
     @lab = Laboratorio.find(params[:idLab])
     @pedido_equipamentos = Pedido.none
     @pedido_servicos = Pedido.none
     @pedido_equipamentos_aceito = Pedido.none
     @pedido_servicos_aceito = Pedido.none
-    if (Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: false))
-      @pedido_equipamentos = Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: false)
+    if (Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: false)) 
+      @pedido_equipamentos = Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: false) # equipamentos em espera
     end
     if (Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: true))
-      @pedido_servicos = Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: false)
+      @pedido_servicos = Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: false) # servicos em espera
     end
     if (Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: true))
-      @pedido_equipamentos_aceito = Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: true)
+      @pedido_equipamentos_aceito = Pedido.where(laboratorio_id: @lab.id, servico_id: nil, aceito: true) # equipamentos aceitos
     end
     if (Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: true))
-      @pedido_servicos_aceito = Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: true)
+      @pedido_servicos_aceito = Pedido.where(laboratorio_id: @lab.id, equipamento_id: nil, aceito: true) # servicos aceitos
     end
   end
 
   # post /laboratorios/1/pedidos/1
   def aceitar_pedido    
-    @lab = Laboratorio.find(params[:idLab])
-    @pedido = Pedido.find(params[:idPedido])
-    if (admin_signed_in? || @user == @lab.responsavel)
-      @pedido.update_attribute(:aceito, true)
-      if (Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).exists?)
-         pedidos_deletados = Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id)
-         @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + pedidos_deletados.count())
-         pedidos_deletados.delete_all
+    @lab = Laboratorio.find(params[:idLab]) # pega o laboratorio
+    @pedido = Pedido.find(params[:idPedido]) # pega o pedido
+    if (admin_signed_in? || @user == @lab.responsavel) # se tem permissao para aceitar o pedido
+      @pedido.update_attribute(:aceito, true) # aceita o pedido
+      if (Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).exists?) # se existe algum pedido sem ser esse, com overlap de horario
+         pedidos_deletados = Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id) # seleciona os pedidos com overlap de horario
+         @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + pedidos_deletados.count()) # incrementa o numero de pedidos rejeitados de acordo com o numero de pedidos que deram overlap de horario
+         pedidos_deletados.delete_all # deleta todos os pedidos selecionados
       end
-      @lab.update_attribute(:numero_aceitos , @lab.numero_aceitos + 1)
+      @lab.update_attribute(:numero_aceitos , @lab.numero_aceitos + 1) # incrementa o numero de pedidos aceitos
       respond_to do |format|
-        format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido aceito com sucesso.'}
+        format.html { redirect_to show_laboratorio_pedidos_path(@lab), notice: 'Pedido aceito com sucesso.'} 
         format.json { head :no_content }
       end
     else
@@ -177,7 +170,7 @@ class PedidosController < ApplicationController
   end
 
   # get /account/1/pedidos
-  def index_user
+  def index_user # pega a lista de pedidso de um usuario, separando por tipo e se estao aceitos ou nao 
     @equipamentos_espera = current_user.pedidos.where(servico_id: nil, aceito: false)
     @servicos_espera = current_user.pedidos.where(equipamento_id: nil, aceito: false)
     @equipamentos_aceito = current_user.pedidos.where(servico_id: nil, aceito: true)
@@ -195,6 +188,7 @@ class PedidosController < ApplicationController
       params.require(:pedido).permit(:data_inicio, :data_fim, :descricao, :laboratorio_id, :servico_id, :equipamento_id)
     end
 
+    # current_user
     def get_user
       @user ||=
         if aluno_signed_in?
@@ -214,10 +208,12 @@ class PedidosController < ApplicationController
         end
     end
 
+    # pega o solicitador de um pedido
     def get_solicitador
       @solicitador = User.find(@pedido.user_id)
     end
     
+    # pega o tipo do pedido
     def get_tipo      
       # tem um @pedido
       if (@pedido.equipamento_id == nil)
