@@ -127,7 +127,7 @@
     <% end %>
 
     <div class="list-group">    
-    <%= link_to('Recursos solicitados', account_recursos_solicitados_path, class:'list-group-item list-group-item-action') %>
+    <%#= link_to('Recursos solicitados', account_recursos_solicitados_path, class:'list-group-item list-group-item-action') %>
     <%= link_to('Lista de Pedidos', index_user_path(current_user), class:'list-group-item list-group-item-action') %>
     <% if !(current_user.representante_externo?)%>
       <%= link_to('Postagens', account_postagens_path, class:'list-group-item list-group-item-action') %>
