@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2019_11_25_185214) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
     t.datetime "created_at", null: false
@@ -24,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
   create_table "alunos", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
-    t.bigint "laboratorio_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["laboratorio_id"], name: "index_alunos_on_laboratorio_id"
@@ -33,22 +30,22 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
   create_table "docentes", force: :cascade do |t|
     t.integer "nusp"
     t.string "departamento"
-    t.bigint "laboratorio_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["laboratorio_id"], name: "index_docentes_on_laboratorio_id"
   end
 
   create_table "docentes_laboratorios", id: false, force: :cascade do |t|
-    t.bigint "laboratorio_id", null: false
-    t.bigint "docente_id", null: false
+    t.integer "laboratorio_id", null: false
+    t.integer "docente_id", null: false
   end
 
   create_table "equipamentos", force: :cascade do |t|
     t.string "nome"
     t.text "funcao"
     t.decimal "taxa"
-    t.bigint "laboratorio_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["laboratorio_id"], name: "index_equipamentos_on_laboratorio_id"
@@ -62,7 +59,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
     t.datetime "updated_at", null: false
     t.integer "numero_aceitos", default: 0
     t.integer "numero_rejeitados", default: 0
-    t.bigint "responsavel_id"
+    t.integer "responsavel_id"
     t.index ["responsavel_id"], name: "index_laboratorios_on_responsavel_id"
   end
 
@@ -78,9 +75,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
     t.datetime "data_inicio"
     t.datetime "data_fim"
     t.text "descricao"
-    t.bigint "equipamento_id"
-    t.bigint "servico_id"
-    t.bigint "user_id"
+    t.integer "equipamento_id"
+    t.integer "servico_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "aceito"
@@ -93,9 +90,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
   create_table "postagems", force: :cascade do |t|
     t.text "texto"
     t.string "titulo"
-    t.bigint "user_id"
-    t.bigint "admin_id"
-    t.bigint "laboratorio_id"
+    t.integer "user_id"
+    t.integer "admin_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_postagems_on_admin_id"
@@ -114,7 +111,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
     t.string "nome"
     t.text "descricao"
     t.decimal "taxa"
-    t.bigint "laboratorio_id"
+    t.integer "laboratorio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["laboratorio_id"], name: "index_servicos_on_laboratorio_id"
@@ -130,11 +127,10 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "meta_type"
-    t.bigint "meta_id"
+    t.integer "meta_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["meta_type", "meta_id"], name: "index_users_on_meta_type_and_meta_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "laboratorios", "docentes", column: "responsavel_id"
 end
