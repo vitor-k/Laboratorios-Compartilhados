@@ -10,9 +10,9 @@ class Servico < ApplicationRecord
 
     def existe
         if (self.id == nil)
-            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome == ? AND laboratorio_id == ?", self.nome, self.laboratorio_id).any?
+            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome = ? AND laboratorio_id = ?", self.nome, self.laboratorio_id).any?
         else
-            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome == ? AND laboratorio_id == ? AND id != ?", self.nome, self.laboratorio_id, self.id).any?
+            self.errors.add(:nome, 'já existe.') if Equipamento.where("nome = ? AND laboratorio_id = ? AND id != ?", self.nome, self.laboratorio_id, self.id).any?
         end
     end
 

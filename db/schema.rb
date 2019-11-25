@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_23_171403) do
+ActiveRecord::Schema.define(version: 2019_11_25_172120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2019_11_23_171403) do
     t.datetime "updated_at", null: false
     t.integer "numero_aceitos", default: 0
     t.integer "numero_rejeitados", default: 0
+    t.bigint "responsavel_id"
+    t.index ["responsavel_id"], name: "index_laboratorios_on_responsavel_id"
   end
 
   create_table "pedido_responsabilidades", force: :cascade do |t|
@@ -134,4 +136,5 @@ ActiveRecord::Schema.define(version: 2019_11_23_171403) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "laboratorios", "docentes", column: "responsavel_id"
 end
