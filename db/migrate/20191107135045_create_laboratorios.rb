@@ -8,6 +8,5 @@ class CreateLaboratorios < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_reference :laboratorios, :responsavel, foreign_key: true
   end
 end
