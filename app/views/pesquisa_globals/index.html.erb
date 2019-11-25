@@ -1,10 +1,10 @@
-<h1>Busca por <%= @termo %></h1>
+<h1>Busca por: <%= @termo %></h1><br/>
 
 <% if !@laboratorios.nil? && @laboratorios.any? %>
 <h3>Laboratorios</h3>
 
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Nome</th>
       <th>Localizacao</th>
@@ -37,12 +37,12 @@
 
 <% elsif @laboratorio == '1' %>
 <h3>Sem laboratórios com o termo</h3>
-<% end %>
+<% end %><br/>
 
 <% if !@equipamentos.nil? && @equipamentos.any? %>
 <h3>Equipamentos</h3>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Nome</th>
       <th>Função</th>
@@ -68,11 +68,11 @@
 </table>
 <% elsif @equipamento == '1' %>
 <h3>Sem equipamentos com o termo</h3>
-<% end %>
+<% end %><br/>
 
 <% if !@servicos.nil? && @servicos.any? %>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Nome</th>
       <th>Função</th>
@@ -98,12 +98,12 @@
 </table>
 <% elsif @servico == '1' %>
 <h3>Sem serviços com o termo</h3>
-<% end %>
+<% end %><br/>
 
 <% if !@postagems.nil? && @postagems.any? %>
 <h3>Postagens</h3>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Texto</th>
       <th colspan="3"></th>
@@ -124,7 +124,8 @@
   </tbody>
 </table>
 <% elsif @postagem == '1' %>
-<h3>Sem postagens com o termo</h3>
+  <h3>Sem postagens com o termo</h3>
 <% end %>
+<br/>
 
 <%= link_to 'Voltar', root_path %>

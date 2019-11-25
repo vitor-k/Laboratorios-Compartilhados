@@ -11,29 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label "Nome: " %>
-    <%= form.text_area :nome %>
+  <div class="form-group">
+    <%= form.label :nome, "Nome" %>
+    <%= form.text_area :nome, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label "Localização: " %>
-    <%= form.text_area :localizacao %>
+  <div class="form-group">
+    <%= form.label :localizacao, "Localização" %>
+    <%= form.text_area :localizacao, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label "Descrição: " %>
-    <%= form.text_area :descricao %>
+  <div class="form-group">
+    <%= form.label :descricao, "Descrição" %>
+    <%= form.text_area :descricao, class: 'form-control' %>
   </div>
-
   <% if admin_signed_in? %>
-    <div class="field">
-      <%= form.label "Responsável: " %>
-      <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: "Selecionar responsável", include_blank: true) %>
+    <div class="form-group">
+      <%= form.label "Responsável" %>
+      <%= form.collection_select(:responsavel_id, Docente.all, :id, :nome, prompt: "Selecionar responsável", include_blank: "Nenhum") %>
     </div>
   <% end %>
 
-  <div class="actions">   
-    <%= form.submit %>
+  <div class="actions">
+    <%= form.submit 'Criar novo laboratório',  class: 'btn btn-primary' %>
   </div>
 <% end %>

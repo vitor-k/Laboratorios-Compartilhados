@@ -43,12 +43,8 @@
     <%= form.text_field :departamento, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :laboratorio, "Laboratório" %>
-    <%= form.collection_select(:laboratorio_id, Laboratorio.all, :id, :nome, {:include_blank => true}, {class: 'form-control'}) %>
-  </div>
-
   <div class="actions">
-    <%= form.submit 'Criar novo aluno',  class: 'btn btn-primary' %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
+  <br/>
 <% end %>

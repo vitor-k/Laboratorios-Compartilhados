@@ -111,10 +111,27 @@
         <br>
     <% end %>
 
+    <% if (current_user.representante_externo?) %>
+      <table class="table table-bordered table-hover">
+        <tbody>
+          <tr>
+            <th scope="row">RG:</th>
+            <td> <%= RepresentanteExterno.find(current_user.meta_id).RG %> </td>
+          </tr>
+          <tr>
+            <th scope="row">UF:</th>
+            <td><%= RepresentanteExterno.find(current_user.meta_id).UF %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+
     <div class="list-group">    
     <%= link_to('Recursos solicitados', account_recursos_solicitados_path, class:'list-group-item list-group-item-action') %>
     <%= link_to('Lista de Pedidos', index_user_path(current_user), class:'list-group-item list-group-item-action') %>
-    <%= link_to('Postagens', account_postagens_path, class:'list-group-item list-group-item-action') %>
+    <% if !(current_user.representante_externo?)%>
+      <%= link_to('Postagens', account_postagens_path, class:'list-group-item list-group-item-action') %>
+    <% end %>
     </div>
 
     <br>

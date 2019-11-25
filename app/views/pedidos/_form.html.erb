@@ -70,24 +70,26 @@
   </strong>
 
   <br/>
-
+  
   <div class="field">
     <%= form.label :"Data de Início" %>
-    <%= form.datetime_select :dataInicio, start_year: Date.today.year  %>
+    <%= form.datetime_select :dataInicio, start_year: Date.today.year, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :"Data de Término" %>
-    <%= form.datetime_select :dataFim, start_year: Date.today.year %>
+    <%= form.datetime_select :dataFim, start_year: Date.today.year, class: 'form-control'  %>
   </div>
 
   <div class="field">
     <%= form.label :"Descrição" %>
-    <%= form.text_area :descricao %>
+    <%= form.text_area :descricao, class: 'form-control'  %>
   </div>
 
+  <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
+  <br/>
   
 <% end %>

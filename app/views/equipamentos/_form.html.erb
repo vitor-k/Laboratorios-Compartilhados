@@ -11,22 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :"Nome" %>
-    <%= form.text_area :nome %>
+  <div class="form-group">
+    <%= form.label :nome, "Nome" %>
+    <%= form.text_field :nome, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :"Função" %>
-    <%= form.text_area :funcao %>
+<div class="form-group">
+    <%= form.label :funcao, "Função" %>
+    <%= form.text_field :funcao, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :"Taxa diária" %>
-    <%= form.text_field :taxa %>
+  <div class="form-group">
+    <%= form.label :taxa, "Taxa diária" %>
+    <%= form.number_field :taxa, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
+  <br/>
 <% end %>
