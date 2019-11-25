@@ -14,8 +14,8 @@ class PedidosTest < ApplicationSystemTestCase
     visit pedidos_url
     click_on "New Pedido"
 
-    fill_in "Datafim", with: @pedido.dataFim
-    fill_in "Datainicio", with: @pedido.dataInicio
+    fill_in "Datafim", with: @pedido.data_fim
+    fill_in "Datainicio", with: @pedido.data_inicio
     fill_in "Descricao", with: @pedido.descricao
     click_on "Create Pedido"
 
@@ -27,8 +27,8 @@ class PedidosTest < ApplicationSystemTestCase
     visit pedidos_url
     click_on "Edit", match: :first
 
-    fill_in "Datafim", with: @pedido.dataFim
-    fill_in "Datainicio", with: @pedido.dataInicio
+    fill_in "Datafim", with: @pedido.data_fim
+    fill_in "Datainicio", with: @pedido.data_inicio
     fill_in "Descricao", with: @pedido.descricao
     click_on "Update Pedido"
 

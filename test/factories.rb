@@ -97,8 +97,8 @@ FactoryBot.define do
   end
 
   factory :pedido do
-    dataInicio { FFaker::Time.datetime( {:year_latest => -1, :year_range => 1}) }
-    dataFim { FFaker::Time.datetime( {:year_latest => -3, :year_range => 1}) }
+    data_inicio { FFaker::Time.datetime( {:year_latest => -1, :year_range => 1}) }
+    data_fim { FFaker::Time.datetime( {:year_latest => -3, :year_range => 1}) }
     descricao { FFaker::Product.product_name }
     aceito { rand(100) > 50 }
     association :user, factory: [:user, :aluno]

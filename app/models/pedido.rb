@@ -11,20 +11,20 @@ class Pedido < ApplicationRecord
     # validate :checa_serv_equip
 
     def dates_in_order
-        self.errors.add(:dataInicio, "deve ser antes do fim da data") unless self.dataInicio < self.dataFim
+        self.errors.add(:data_inicio, "deve ser antes do fim da data") unless self.data_inicio < self.data_fim
     end
 
     def date_before_time
-        self.errors.add(:dataInicio, "deve ser depois do dia atual") unless dataInicio.beginning_of_day > Date.today.beginning_of_day
+        self.errors.add(:data_inicio, "deve ser depois do dia atual") unless data_inicio.beginning_of_day > Date.today.beginning_of_day
     end
 
     def em_horario_aceito
         if (self.id == nil)
-            #puts Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?)", self.dataFim, self.dataInicio, true, self.equipamento_id, self.servico_id).count()
-            self.errors.add(:dataInicio, "deve ser em uma data não pega") if Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?)", self.dataFim, self.dataInicio, true, self.equipamento_id, self.servico_id).any?
+            #puts Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?)", self.data_fim, self.data_inicio, true, self.equipamento_id, self.servico_id).count()
+            self.errors.add(:data_inicio, "deve ser em uma data não pega") if Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?)", self.data_fim, self.data_inicio, true, self.equipamento_id, self.servico_id).any?
         else
-            #puts Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", self.dataFim, self.dataInicio, true, self.equipamento_id, self.servico_id, self.id).count()
-            self.errors.add(:dataInicio, "deve ser em uma data não pega") if Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", self.dataFim, self.dataInicio, true, self.equipamento_id, self.servico_id, self.id).any?
+            #puts Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", self.data_fim, self.data_inicio, true, self.equipamento_id, self.servico_id, self.id).count()
+            self.errors.add(:data_inicio, "deve ser em uma data não pega") if Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", self.data_fim, self.data_inicio, true, self.equipamento_id, self.servico_id, self.id).any?
         end
     end
 

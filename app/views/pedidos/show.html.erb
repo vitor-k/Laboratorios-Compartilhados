@@ -4,12 +4,12 @@
 
 <p>
   <strong>Data de Início:</strong>
-  <%= @pedido.dataInicio %>
+  <%= @pedido.data_inicio %>
 </p>
 
 <p>
   <strong>Data de término:</strong>
-  <%= @pedido.dataFim %>
+  <%= @pedido.data_fim %>
 </p>
 
 <p>
@@ -35,7 +35,7 @@
 
   <p>
     <strong>Taxa total de uso do equipamento:</strong>
-    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Equipamento.find(@pedido.equipamento_id).taxa%>
+    <%= ((@pedido.data_fim -  @pedido.data_inicio)/(24*3600)).ceil * Equipamento.find(@pedido.equipamento_id).taxa%>
   </p>
 <% end %>
 
@@ -52,7 +52,7 @@
 
   <p>
     <strong>Taxa total do serviço:</strong>
-    <%= ((@pedido.dataFim -  @pedido.dataInicio)/(24*3600)).ceil * Servico.find(@pedido.servico_id).taxa%>
+    <%= ((@pedido.data_fim -  @pedido.data_inicio)/(24*3600)).ceil * Servico.find(@pedido.servico_id).taxa%>
   </p>
 <% end %>
 

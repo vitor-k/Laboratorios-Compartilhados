@@ -158,8 +158,8 @@ class PedidosController < ApplicationController
     @pedido = Pedido.find(params[:idPedido])
     if (admin_signed_in? || @user == @lab.responsavel)
       @pedido.update_attribute(:aceito, true)
-      if (Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.dataFim, @pedido.dataInicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).exists?)
-         pedidos_deletados = Pedido.where("(NOT ((dataInicio > ?) OR (dataFim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.dataFim, @pedido.dataInicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id)
+      if (Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id).exists?)
+         pedidos_deletados = Pedido.where("(NOT ((data_inicio > ?) OR (data_fim < ?))) AND (aceito = ?) AND (equipamento_id = ? OR servico_id = ?) AND (id != ?)", @pedido.data_fim, @pedido.data_inicio, false, @pedido.equipamento_id, @pedido.servico_id, @pedido.id)
          @lab.update_attribute(:numero_rejeitados , @lab.numero_rejeitados + pedidos_deletados.count())
          pedidos_deletados.delete_all
       end
@@ -192,7 +192,7 @@ class PedidosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pedido_params
-      params.require(:pedido).permit(:dataInicio, :dataFim, :descricao, :laboratorio_id, :servico_id, :equipamento_id)
+      params.require(:pedido).permit(:data_inicio, :data_fim, :descricao, :laboratorio_id, :servico_id, :equipamento_id)
     end
 
     def get_user

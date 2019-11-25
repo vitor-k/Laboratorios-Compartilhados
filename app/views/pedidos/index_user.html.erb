@@ -24,8 +24,8 @@
         <tr>
             <td><%= Equipamento.find(equipamento_espera.equipamento_id).nome %></td>
             <td><%= Laboratorio.find(equipamento_espera.laboratorio_id).nome %></td>
-            <td><%= equipamento_espera.dataInicio %></td>
-            <td><%= equipamento_espera.dataFim %></td>
+            <td><%= equipamento_espera.data_inicio %></td>
+            <td><%= equipamento_espera.data_fim %></td>
             <td><%= equipamento_espera.aceito %></td>
             <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
                 <td><%= link_to 'Mostrar', equipamento_espera %></td>
@@ -63,8 +63,8 @@
         <tr>
             <td><%= Servico.find(servico_espera.servico_id).nome %></td>
             <td><%= Laboratorio.find(servico_espera.laboratorio_id).nome %></td>
-            <td><%= servico_espera.dataInicio %></td>
-            <td><%= servico_espera.dataFim %></td>
+            <td><%= servico_espera.data_inicio %></td>
+            <td><%= servico_espera.data_fim %></td>
             <td><%= servico_espera.aceito %></td>
             <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
                 <td><%= link_to 'Mostrar', servico_espera %></td>
@@ -102,8 +102,8 @@
         <tr>
             <td><%= Equipamento.find(equipamento_aceito.equipamento_id).nome %></td>
             <td><%= Laboratorio.find(equipamento_aceito.laboratorio_id).nome %></td>
-            <td><%= equipamento_aceito.dataInicio %></td>
-            <td><%= equipamento_aceito.dataFim %></td>
+            <td><%= equipamento_aceito.data_inicio %></td>
+            <td><%= equipamento_aceito.data_fim %></td>
             <td><%= equipamento_aceito.aceito %></td>
             <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
                 <td><%= link_to 'Mostrar', equipamento_aceito %></td>
@@ -140,8 +140,8 @@
         <tr>
             <td><%= Servico.find(servico_aceito.servico_id).nome %></td>
             <td><%= Laboratorio.find(servico_aceito.laboratorio_id).nome %></td>
-            <td><%= servico_aceito.dataInicio %></td>
-            <td><%= servico_aceito.dataFim %></td>
+            <td><%= servico_aceito.data_inicio %></td>
+            <td><%= servico_aceito.data_fim %></td>
             <td><%= servico_aceito.aceito %></td>
             <% if @user == @solicitador || admin_signed_in? || @user = @lab.responsavel %>
                 <td><%= link_to 'Mostrar', servico_aceito %></td>

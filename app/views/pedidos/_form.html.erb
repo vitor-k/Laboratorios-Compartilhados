@@ -27,10 +27,10 @@
             </tr>
         </thead>
         <tbody>
-            <% Equipamento.find(cookies[:idItem]).pedidos.where(aceito: true).order(:dataInicio, :asc).each do |ocupado| %>
+            <% Equipamento.find(cookies[:idItem]).pedidos.where(aceito: true).order(:data_inicio, :asc).each do |ocupado| %>
             <tr>
-                <td><%= ocupado.dataInicio %></td>
-                <td><%= ocupado.dataFim %></td>
+                <td><%= ocupado.data_inicio %></td>
+                <td><%= ocupado.data_fim %></td>
             </tr>
             <% end %>
         </tbody>
@@ -54,10 +54,10 @@
             </tr>
         </thead>
         <tbody>
-            <% Servico.find(cookies[:idItem]).pedidos.where(aceito: true).order(:dataInicio, :asc).each do |ocupado| %>
+            <% Servico.find(cookies[:idItem]).pedidos.where(aceito: true).order(:data_inicio, :asc).each do |ocupado| %>
             <tr>
-                <td><%= ocupado.dataInicio %></td>
-                <td><%= ocupado.dataFim %></td>
+                <td><%= ocupado.data_inicio %></td>
+                <td><%= ocupado.data_fim %></td>
             </tr>
             <% end %>
         </tbody>
@@ -73,12 +73,12 @@
   
   <div class="field">
     <%= form.label :"Data de Início" %>
-    <%= form.datetime_select :dataInicio, start_year: Date.today.year, class: 'form-control' %>
+    <%= form.datetime_select :data_inicio, start_year: Date.today.year, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :"Data de Término" %>
-    <%= form.datetime_select :dataFim, start_year: Date.today.year, class: 'form-control'  %>
+    <%= form.datetime_select :data_fim, start_year: Date.today.year, class: 'form-control'  %>
   </div>
 
   <div class="field">

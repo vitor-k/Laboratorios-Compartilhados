@@ -31,8 +31,8 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Pedido.count') do
       post pedidos_url, params: { 
         pedido: {
-          dataInicio:  FFaker::Time.datetime( {:year_latest => -5, :year_range => 1}), 
-          dataFim: FFaker::Time.datetime( {:year_latest => -7, :year_range => 1}),
+          data_inicio:  FFaker::Time.datetime( {:year_latest => -5, :year_range => 1}), 
+          data_fim: FFaker::Time.datetime( {:year_latest => -7, :year_range => 1}),
           descricao: @pedido.descricao, 
           servico_id: @servico.id,
         }, 
@@ -47,8 +47,8 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Pedido.count') do
       post pedidos_url, params: { 
         pedido: {
-          dataInicio:  FFaker::Time.datetime( {:year_latest => -9, :year_range => 1}), 
-          dataFim: FFaker::Time.datetime( {:year_latest => -11, :year_range => 1}),
+          data_inicio:  FFaker::Time.datetime( {:year_latest => -9, :year_range => 1}), 
+          data_fim: FFaker::Time.datetime( {:year_latest => -11, :year_range => 1}),
           descricao: @pedido.descricao, 
           equipamento_id: @equipamento.id,
         } ,
@@ -70,7 +70,7 @@ class PedidosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pedido" do
-    patch pedido_url(@pedido), params: { pedido: { dataFim: @pedido.dataFim, dataInicio: @pedido.dataInicio, descricao: @pedido.descricao, user_id: @aluno_user.id } }
+    patch pedido_url(@pedido), params: { pedido: { data_fim: @pedido.data_fim, data_inicio: @pedido.data_inicio, descricao: @pedido.descricao, user_id: @aluno_user.id } }
     assert_redirected_to pedido_url(@pedido)
   end
 

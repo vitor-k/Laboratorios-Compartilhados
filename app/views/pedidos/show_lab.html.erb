@@ -18,8 +18,8 @@
         <% @pedido_equipamentos.each do |pedido_equipamento| %>
         <tr>
             <td><%= pedido_equipamento.equipamento.nome %></td>
-            <td><%= pedido_equipamento.dataInicio %></td>
-            <td><%= pedido_equipamento.dataFim %></td>
+            <td><%= pedido_equipamento.data_inicio %></td>
+            <td><%= pedido_equipamento.data_fim %></td>
             <% if (@user == Laboratorio.find(pedido_equipamento.laboratorio_id).responsavel || admin_signed_in?) %>
                 <td><%= link_to 'Mostrar', pedido_equipamento %></td>
                 <td><%= link_to 'Aceitar', aceitar_pedido_path(Laboratorio.find(pedido_equipamento.laboratorio_id), pedido_equipamento), method: :put %></td>
@@ -49,8 +49,8 @@
         <% @pedido_servicos.each do |pedido_servico| %>
         <tr>
             <td><%= pedido_servico.servico.nome %></td>
-            <td><%= pedido_servico.dataInicio %></td>
-            <td><%= pedido_servico.dataFim %></td>
+            <td><%= pedido_servico.data_inicio %></td>
+            <td><%= pedido_servico.data_fim %></td>
             <% if (@user == Laboratorio.find(pedido_servico.laboratorio_id).responsavel || admin_signed_in?) %>
                 <td><%= link_to 'Mostrar', pedido_servico %></td>
                 <td><%= link_to 'Aceitar', aceitar_pedido_path(Laboratorio.find(pedido_servico.laboratorio_id), pedido_servico), method: :put %></td>
@@ -80,8 +80,8 @@
         <% @pedido_equipamentos_aceito.each do |pedido_equipamento| %>
         <tr>
             <td><%= pedido_equipamento.equipamento.nome %></td>
-            <td><%= pedido_equipamento.dataInicio %></td>
-            <td><%= pedido_equipamento.dataFim %></td>
+            <td><%= pedido_equipamento.data_inicio %></td>
+            <td><%= pedido_equipamento.data_fim %></td>
             <% if (@user == Laboratorio.find(pedido_equipamento.laboratorio_id).responsavel || admin_signed_in?) %>
                 <td><%= link_to 'Mostrar', pedido_equipamento %></td>
                 <td><%= link_to 'Cancelar', pedido_equipamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -110,8 +110,8 @@
         <% @pedido_servicos_aceito.each do |pedido_servico| %>
         <tr>
             <td><%= pedido_servico.servico.nome %></td>
-            <td><%= pedido_servico.dataInicio %></td>
-            <td><%= pedido_servico.dataFim %></td>
+            <td><%= pedido_servico.data_inicio %></td>
+            <td><%= pedido_servico.data_fim %></td>
             <% if (@user == Laboratorio.find(pedido_servico.laboratorio_id).responsavel || admin_signed_in?) %>
                 <td><%= link_to 'Mostrar', pedido_servico %></td>
                 <td><%= link_to 'Cancelar', pedido_servico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
