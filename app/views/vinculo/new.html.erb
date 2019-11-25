@@ -6,18 +6,22 @@
  
     <%= form_with(url: laboratorio_vinculo_index_path) do |form|%>
         <div class="field">
-            <%= form.label :"Nome Completo: " %>
-            <%= form.text_field :nomeCompleto %>
+            <%= form.label :nomeCompleto, "Nome Completo" %>
+            <%= form.text_field :nomeCompleto, class: 'form-control'  %>
         </div>
 
         <div class="field">
-            <%= form.label :"Número USP: " %>
-            <%= form.text_field :nUSP %>
+            <%= form.label :nUSP, "Número USP" %>
+            <%= form.text_field :nUSP, class: 'form-control'  %>
         </div>
 
+        <br/>
+
         <div class="actions">
-            <%= form.submit "Criar" %>
+            <%= form.submit "Criar", class: 'btn btn-primary' %>
         </div>
+
+        <br/>
     <% end %>
 
 <% else %>

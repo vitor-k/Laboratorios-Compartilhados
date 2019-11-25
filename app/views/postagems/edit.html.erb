@@ -1,22 +1,22 @@
 <h1>Editar Postagem</h1>
 
-<% if (@user == nil) %>
+<% if (@user == nil) %><%# Avisa que não está logado %>
     <div id="error_explanation">
         <h2> Deve estar logado para editar </h2>
     </div>
-<% elsif (aluno_signed_in?) %>
+<% elsif (aluno_signed_in?) %> <%# Opções para o aluno %>
     <% if @user.laboratorio == nil %>
         Você não tem permissão
     <% else %>
         <%= render 'form', postagem: @postagem %>
     <% end %>
-<% elsif docente_signed_in? %>
+<% elsif docente_signed_in? %>  <%# Opções para o docente %>
     <% if !@user.laboratorios.exists?(@postagem.laboratorio.id) %>
         Você não tem permissão
     <% else %>
         <%= render 'form', postagem: @postagem %>
     <% end %>
-<% elsif admin_signed_in? %>
+<% elsif admin_signed_in? %>  <%# Opções para o admin %>
     <%= render 'form', postagem: @postagem %>
 <% else %>
     <div id="error_explanation">
@@ -25,4 +25,4 @@
 <% end %>
 
 <%= link_to 'Mostrar', @postagem %> |
-<%= link_to 'Voltar', postagems_path %>
+<%= link_to 'Voltar', :back %>

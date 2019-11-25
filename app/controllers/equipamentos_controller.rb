@@ -29,9 +29,8 @@ class EquipamentosController < ApplicationController
   # POST /equipamentos
   # POST /equipamentos.json
   def create
-    if (permissao)
-    # @equipamento = Equipamento.new(equipamento_params)
-      @equipamento = @laboratorio.equipamentos.build(equipamento_params)
+    if (permissao) # se tem permissao para criar (ver definição da função)
+      @equipamento = @laboratorio.equipamentos.build(equipamento_params) #cria equipamento dentro de laboratorio
       respond_to do |format|
         if @equipamento.save
           format.html { redirect_to laboratorio_equipamentos_url(@laboratorio), notice: 'Equipamento was successfully created.' }
@@ -52,7 +51,7 @@ class EquipamentosController < ApplicationController
   # PATCH/PUT /equipamentos/1
   # PATCH/PUT /equipamentos/1.json
   def update
-    if (permissao)
+    if (permissao) # se tem permissão para editar
       respond_to do |format|
         if @equipamento.update(equipamento_params)
           format.html { redirect_to laboratorio_equipamentos_url(@laboratorio), notice: 'Equipamento was successfully updated.' }
@@ -73,7 +72,7 @@ class EquipamentosController < ApplicationController
   # DELETE /equipamentos/1
   # DELETE /equipamentos/1.json
   def destroy
-    if (permissao)
+    if (permissao) # se tem permissão para destruir
       @equipamento.destroy
       respond_to do |format|
         format.html { redirect_to laboratorio_equipamentos_url(@laboratorio), notice: 'Equipamento was successfully destroyed.' }
@@ -99,10 +98,12 @@ class EquipamentosController < ApplicationController
       params.require(:equipamento).permit(:nome, :funcao, :taxa, :laboratorio_id)
     end
 
+    # pega o laboratório que vai receber o equipamento
     def get_laboratorio
       @laboratorio = Laboratorio.find(params[:laboratorio_id])
     end
 
+    # pega o tipo de usuário logado
     def get_user
       @user ||=
         if aluno_signed_in?
@@ -122,6 +123,7 @@ class EquipamentosController < ApplicationController
         end
     end
 
+    # pega o responsavel do laboratório
     def get_responsavel
       if (@laboratorio.responsavel_id != nil)
         @responsavel = Docente.find(@laboratorio.responsavel_id)
@@ -130,6 +132,7 @@ class EquipamentosController < ApplicationController
       end
     end
 
+    # define se o usuário logado tem permissão: deve ser admin ou o responsavel
     def permissao
       admin_signed_in? || @user == @responsavel
     end

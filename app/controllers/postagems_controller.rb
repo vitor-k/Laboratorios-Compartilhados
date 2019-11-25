@@ -5,12 +5,14 @@ class PostagemsController < ApplicationController
 
   # GET /postagems
   # GET /postagems.json
+  # padrão scaffold
   def index
     @postagems = Postagem.all
   end
 
   # GET /postagems/1
   # GET /postagems/1.json
+  # padrão scaffold
   def show
   end
 
@@ -18,7 +20,6 @@ class PostagemsController < ApplicationController
   def new
     if (@user != nil)
       @postagem = Postagem.new
-      #@postagem = @user.postagems.build(postagem_params)
     end
   end
 
@@ -30,7 +31,7 @@ class PostagemsController < ApplicationController
   # POST /postagems.json
   def create
     @postagem = @user.user.postagems.build(postagem_params)
-    if (admin_signed_in? || aluno_signed_in? || docente_signed_in? )
+    if (admin_signed_in? || aluno_signed_in? || docente_signed_in? ) # se é admin ou aluno ou docente
       if (admin_signed_in?) #admin logado pode criar vazio
         respond_to do |format|
           if @postagem.save(postagem_params)
@@ -41,7 +42,7 @@ class PostagemsController < ApplicationController
             format.json { render json: @postagem.errors, status: :unprocessable_entity }
           end
         end
-      elsif (aluno_signed_in? && current_aluno.laboratorio_id != nil)
+      elsif (aluno_signed_in? && current_aluno.laboratorio_id != nil) #aluno não pode criar vazio
         respond_to do |format|
           if @postagem.save(postagem_params)
             format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
@@ -51,7 +52,7 @@ class PostagemsController < ApplicationController
             format.json { render json: @postagem.errors, status: :unprocessable_entity }
           end
         end
-      elsif (docente_signed_in? && !current_docente.laboratorios.empty?)
+      elsif (docente_signed_in? && !current_docente.laboratorios.empty?) #docente não pode criar vazio
         respond_to do |format|
           if @postagem.save(postagem_params)
             format.html { redirect_to @postagem, notice: 'Postagem was successfully created.' }
@@ -72,6 +73,7 @@ class PostagemsController < ApplicationController
 
   # PATCH/PUT /postagems/1
   # PATCH/PUT /postagems/1.json
+  #update padrão do scaffold
   def update
     respond_to do |format|
       if @postagem.update(postagem_params)
@@ -87,12 +89,8 @@ class PostagemsController < ApplicationController
   # DELETE /postagems/1
   # DELETE /postagems/1.json
   def destroy
-    eh_responsavel = false
-    if (@user = @postagem.laboratorio.responsavel)
-      eh_responsavel = true
-    end
-    if (@user == @poster || admin_signed_in? || eh_responsavel)
-      @postagem.destroy
+    if (eh_poster_membro || admin_signed_in? || eh_responsavel) # condições para poder deletar: é o poster e ainda é membro, é admin, é responsavel
+      #@postagem.destroy
       respond_to do |format|
         format.html { redirect_to postagems_url, notice: 'Postagem was successfully destroyed.' }
         format.json { head :no_content }
@@ -149,5 +147,29 @@ class PostagemsController < ApplicationController
       elsif (poster_user.admin?)
           @poster = Admin.find(poster_user.meta_id)
       end
-  end
+    end
+
+    # o usuario é o poster e ainda é membro do laboratório
+    def eh_poster_membro
+      if (@user == @poster) # verifica se o user é o poster e se ele ainda está no laboratório
+        if (aluno_signed_in?)
+          true if (@user.laboratorio == @postagem.laboratorio)
+        elsif (docente_signed_in?)
+          true if (@user.laboratorios.exists?(@postagem.laboratorio.id))
+        else
+          false
+        end
+      else
+        false
+      end
+    end
+
+    # usuario é responsavel do laboratorio
+    def eh_responsavel
+      if (@user == @postagem.laboratorio.responsavel) # verifica se é o responsavel
+        true
+      else
+        false
+      end
+    end
 end
