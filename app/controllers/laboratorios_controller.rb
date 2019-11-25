@@ -71,6 +71,15 @@ class LaboratoriosController < ApplicationController
   # PATCH/PUT /laboratorios/1.json
   def update
     if (permissao)
+      responsavel_antigo = @laboratorio.responsavel
+      id = params[:laboratorio][:responsavel_id]
+      if (!id.empty?)
+        responsavel_novo = Docente.find(id)
+        if (responsavel_novo != responsavel_antigo && !@laboratorio.docentes.where(id: responsavel_novo.id).exists?)
+          @laboratorio.docentes << responsavel_novo
+          #responsavel_novo.laboratorios << @laboratorio
+        end
+      end
       respond_to do |format|
         if @laboratorio.update(laboratorio_params)
           format.html { redirect_to @laboratorio, notice: 'Laboratorio was successfully updated.' }
@@ -82,7 +91,7 @@ class LaboratoriosController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to laboratorios_path, notice: 'Laboratorio was successfully updated.' }
+        format.html { redirect_to laboratorios_path, notice: 'Não tem permissão.' }
         format.json { render :show, status: :ok, location: @laboratorio }
       end
     end

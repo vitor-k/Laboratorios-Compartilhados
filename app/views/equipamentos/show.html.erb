@@ -20,9 +20,9 @@
   <%= @equipamento.laboratorio.nome %>
 </p>
 
-<%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %>
+<%= link_to 'Página de equipamentos', laboratorio_equipamentos_path(@laboratorio) %> |
 <% if (@user == @responsavel) %>
-    <%= link_to 'Editar equipamento', edit_laboratorio_equipamento_path(@laboratorio) %>
+    <%= link_to 'Editar equipamento', edit_laboratorio_equipamento_path(@laboratorio) %> |
 <% end%>
 
 <% if (user_signed_in?) %>

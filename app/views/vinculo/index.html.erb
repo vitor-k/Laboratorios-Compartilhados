@@ -38,7 +38,7 @@
     <p> Não há docentes vinculados. </p>
 <% end %>
 
-<p> Alunos </p>
+<h3> Alunos </h3>
 <% if Aluno.where(laboratorio_id: @laboratorio.id).exists? %>
 <table class="table">
   <thead class="thead-dark">
@@ -75,7 +75,6 @@
 <% end %>
 
 <% if (@user == @responsavel || admin_signed_in?) %>
-  <p><%= link_to "Criar vínculo", new_laboratorio_vinculo_path(@laboratorio) %>
+  <p><%= link_to "Criar vínculo", new_laboratorio_vinculo_path(@laboratorio) %> |
 <% end %>
-
-<p><%= link_to 'Voltar ao laboratório', @laboratorio %></p>
+<%= link_to 'Voltar ao laboratório', @laboratorio %>
