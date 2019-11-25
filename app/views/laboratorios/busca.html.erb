@@ -1,9 +1,9 @@
-<h2>Busca por <%= @termo %></h2>
+<h2>Busca por: <%= @termo %></h2><br/>
 
 <% if @equipamentos.any? %>
 <h3>Equipamentos</h3>
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Nome</th>
       <th>Função</th>
@@ -29,11 +29,12 @@
 </table>
 <% else %>
 <h3>Sem equipamentos com o termo</h3>
-<% end %>
+<% end %><br/>
 
 <% if @servicos.any? %>
-<table>
-  <thead>
+<h3>Serviços</h3>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Nome</th>
       <th>Função</th>
@@ -59,12 +60,12 @@
 </table>
 <% else %>
 <h3>Sem serviços com o termo</h3>
-<% end %>
+<% end %><br/>
 
 <% if @postagems.any? %>
-
-<table>
-  <thead>
+<h3>Postagens</h3>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th>Texto</th>
       <th colspan="3"></th>
@@ -86,5 +87,7 @@
 <% else %>
 <h3>Sem postagens com o termo</h3>
 <% end %>
+
+<hr style="height:2px;background-color: black;width:100%;" class="line1"><br/>
 
 <%= link_to 'Voltar', laboratorio_path(@laboratorio) %>

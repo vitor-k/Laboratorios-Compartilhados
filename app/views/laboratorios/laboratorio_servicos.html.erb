@@ -3,7 +3,8 @@
 <h2> Página de Serviços do Laboratório: <%= @laboratorio.nome %></h2>
 
 <% if !@laboratorio.servicos.empty? %>
-  <thead>
+<table class="table">
+  <thead class="thead">
     <tr>
       <th>Nome</th>
       <th>Descrição</th>

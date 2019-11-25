@@ -1,5 +1,9 @@
-<h1>New Admin</h1>
+<h1>Cadastro Admin</h1>
 
-<%= render 'form', admin: @admin %>
-
-<%= link_to 'Back', admins_path %>
+<% if admin_signed_in? %>
+    <%= render 'form', admin: @admin %>
+    <%= link_to 'Voltar', :back %>
+<% else %>
+    <p> Não tem permissão. </p>
+    <%= link_to 'Página Principal', root_path %>
+<% end %>
