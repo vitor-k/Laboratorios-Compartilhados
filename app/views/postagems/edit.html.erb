@@ -4,11 +4,23 @@
     <div id="error_explanation">
         <h2> Deve estar logado para editar </h2>
     </div>
-<% elsif (@user == @poster || admin_signed_in?)%>
+<% elsif (aluno_signed_in?) %>
+    <% if @user.laboratorio == nil %>
+        Você não tem permissão
+    <% else %>
+        <%= render 'form', postagem: @postagem %>
+    <% end %>
+<% elsif docente_signed_in? %>
+    <% if !@user.laboratorios.exists?(@postagem.laboratorio.id) %>
+        Você não tem permissão
+    <% else %>
+        <%= render 'form', postagem: @postagem %>
+    <% end %>
+<% elsif admin_signed_in? %>
     <%= render 'form', postagem: @postagem %>
 <% else %>
     <div id="error_explanation">
-        <h2> Você não tem permissão para editar </h2>
+        <h2> Você não tem permissão </h2>
     </div>
 <% end %>
 
