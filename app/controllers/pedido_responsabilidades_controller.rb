@@ -41,7 +41,6 @@ class PedidoResponsabilidadesController < ApplicationController
   def create
     @lab = pedido_responsabilidade_params[:id_laboratorio]
     @doc = current_user.id
-    puts "Id laboratorio: #{@lab}"
     if (!@lab.empty?) #se tem laboratorio escolhido
       @pedido_responsabilidade = PedidoResponsabilidade.new(pedido_responsabilidade_params)
       if (@permissao_novo && pode_criar) #se tem permissão, o laboratorio n tem responsavel e não está em aberto
@@ -132,7 +131,6 @@ class PedidoResponsabilidadesController < ApplicationController
   # PUT
   def aceitar
     if (admin_signed_in?)
-      puts @pedido_responsabilidade
 
       Laboratorio.find(@pedido_responsabilidade.id_laboratorio).update(responsavel_id: User.find(@pedido_responsabilidade.id_docente).meta_id) #Adiciona o docente como responsavel
       Laboratorio.find(@pedido_responsabilidade.id_laboratorio).docentes << Docente.find(User.find(@pedido_responsabilidade.id_docente).meta_id) #Adiciona o responsavel como membro

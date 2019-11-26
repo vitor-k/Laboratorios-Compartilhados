@@ -42,10 +42,8 @@ class LaboratoriosController < ApplicationController
     if (admin_signed_in?) # se o admin está logado, pode criar o responsavel
       @laboratorio = Laboratorio.new(laboratorio_params)
       get_responsavel #roda a função para pegar o responsavel adicionado
-      puts "O responsavel é: #{@laboratorio.responsavel_id}"
       if (@responsavel != "sem_responsavel") #se tem responsavel, adiciona ele na lista de membros
         @laboratorio.docentes << Docente.find(@laboratorio.responsavel_id)
-        puts "Add relação entre #{@laboratorio.nome} e #{Docente.find(@laboratorio.responsavel_id).user.nome}"
       end
       @laboratorio.update_attribute(:numero_aceitos, 0) # inicia os contadores
       @laboratorio.update_attribute(:numero_rejeitados, 0) # inicia os contadores
