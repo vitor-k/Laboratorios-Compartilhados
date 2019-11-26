@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_185214) do
+ActiveRecord::Schema.define(version: 2019_11_26_010331) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "nusp"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_185214) do
   end
 
   create_table "representante_externos", force: :cascade do |t|
-    t.integer "RG"
+    t.string "RG"
     t.string "UF"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
