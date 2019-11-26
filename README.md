@@ -5,7 +5,7 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 
 
 * System dependencies
 
@@ -22,3 +22,8 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Tested with Ruby version 2.5.
+Currently using Sqlite3 for the development and test databases, with PostGreSQL for Heroku deployement.
+
+**This is a school project, and should not be taken seriously**
