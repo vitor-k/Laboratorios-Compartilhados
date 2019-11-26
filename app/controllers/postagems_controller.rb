@@ -90,13 +90,13 @@ class PostagemsController < ApplicationController
   # DELETE /postagems/1.json
   def destroy
     if (eh_poster_membro || admin_signed_in? || eh_responsavel) # condições para poder deletar: é o poster e ainda é membro, é admin, é responsavel
-      #@postagem.destroy
+      @postagem.destroy
       respond_to do |format|
         format.html { redirect_to postagems_url, notice: 'Postagem was successfully destroyed.' }
         format.json { head :no_content }
       end
-      else
-        respond_to do |format|
+    else
+      respond_to do |format|
         format.html { redirect_to postagems_url, notice: 'Você não tem permissão para deletar.' }
         format.json { head :no_content }
       end

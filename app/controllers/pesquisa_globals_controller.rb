@@ -11,10 +11,10 @@ class PesquisaGlobalsController < ApplicationController
       redirect_to root_path, notice: 'É preciso digitar algo para pesquisar'
     end
 
-    @laboratorios = Laboratorio.where('nome LIKE ?', var) if @laboratorio == '1'
-    @equipamentos = Equipamento.where('nome LIKE ?', var) if @equipamento == '1'
-    @servicos = Servico.where('nome LIKE ?', var) if @servico == '1'
-    @postagems = Postagem.where('titulo LIKE ? OR texto LIKE ?', var, var) if @postagem == '1'
+    @laboratorios = Laboratorio.where('lower(nome) LIKE ?', var.downcase) if @laboratorio == '1'
+    @equipamentos = Equipamento.where('lower(nome) LIKE ?', var.downcase) if @equipamento == '1'
+    @servicos = Servico.where('lower(nome) LIKE ?', var.downcase) if @servico == '1'
+    @postagems = Postagem.where('lower(titulo) LIKE ? OR lower(texto) LIKE ?', var.downcase, var.downcase) if @postagem == '1'
 
     if (@laboratorio + @equipamento + @servico + @postagem == '0000') then
       redirect_to root_path, notice: 'É preciso selecionar algo para pesquisar'
