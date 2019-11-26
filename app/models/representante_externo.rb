@@ -4,6 +4,5 @@ class RepresentanteExterno < ApplicationRecord
   accepts_nested_attributes_for :user
   
   validates :RG, presence: true, uniqueness: true
-  validates :RG, numericality: { only_integer: true }
   validates :UF, presence: true
 end
