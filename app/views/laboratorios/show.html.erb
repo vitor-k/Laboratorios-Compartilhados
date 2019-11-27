@@ -79,16 +79,18 @@
     <tr>
       <th scope="col">Título</th>
       <th scope="col">Autor</th>
+      <th scope="col">Feito em</th>
       <th scope="col">Link para a postagem</th>
       <th colspan="3"></th>
     </tr>
   </thead>
   <tbody>
-    <% Postagem.all.each do |postagem|%>
+    <% Postagem.all.order("created_at desc").each do |postagem|%>
       <tr>  
       <% if postagem.laboratorio_id == @laboratorio.id then %>
         <td> <%= postagem.titulo %> </td>
         <td> <%= postagem.user.nome %> </td>
+        <td><%= postagem.created_at.strftime("%H:%M de %d-%m-%Y") %></td>
         <td><%= link_to 'Mostrar', postagem %></td>
         <% if @user == @responsavel || admin_signed_in? %>
           <td><%= link_to 'Deletar', postagem, method: :delete, class: 'text-danger', data: { confirm: 'Confirmar?' } %></td>        

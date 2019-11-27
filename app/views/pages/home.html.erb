@@ -51,9 +51,9 @@
 <% end %>
 
 <div class="list-group">
-  <% Postagem.all.each do |postagem|%>
+  <% Postagem.all.order("created_at desc").each do |postagem|%>
     <% if postagem.laboratorio_id.nil? && User.find(postagem.user_id).meta_type == "Admin" then %> 
-      <%= link_to "#{postagem.titulo}", postagem, class: 'list-group-item list-group-item-action' %>
+      <%= link_to " #{postagem.titulo} - #{postagem.created_at.strftime("%H:%M de %d-%m-%Y")}", postagem, class: 'list-group-item list-group-item-action' %>
     <% end %>
   <% end %>
 </div>
