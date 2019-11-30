@@ -8,7 +8,6 @@ class RepresentanteExternosControllerTest < ActionDispatch::IntegrationTest
 
     @admin_user = create(:user, :admin)
 
-    #puts param
     sign_in @user
   end
 

@@ -11,7 +11,6 @@ class VinculoController < ApplicationController
   def create
     nomecompleto = params[:nomeCompleto]
     nusp = params[:nUSP]
-    puts(params)
 
     if (Docente.where(nusp: nusp, user: User.where(nome: nomecompleto)).exists?)
       membro = Docente.find_by(nusp: nusp, user: User.where(nome: nomecompleto))      
@@ -21,7 +20,6 @@ class VinculoController < ApplicationController
       membro = nil
     end 
 
-    puts membro
 
     if (membro == nil) #nao tem usuario, redireciona para new vinculo
       respond_to do |format|
