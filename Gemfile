@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'rails-html-sanitizer', '~> 1.2.0'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 
 gem 'bcrypt', '3.1.12'
 
